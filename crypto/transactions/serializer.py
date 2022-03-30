@@ -7,7 +7,7 @@ from binary.unsigned_integer.writer import write_bit8, write_bit16, write_bit32,
 
 from crypto.configuration.network import get_network
 from crypto.constants import TRANSACTION_TYPES
-from crypto.exceptions import ArkSerializerException
+from crypto.exceptions import SolarSerializerException
 from crypto.transactions.serializers.base import BaseSerializer
 
 
@@ -17,7 +17,7 @@ class Serializer(object):
 
     def __init__(self, transaction):
         if not transaction:
-            raise ArkSerializerException('No transaction data provided')
+            raise SolarSerializerException('No transaction data provided')
         self.transaction = transaction
 
     def serialize(self, skip_signature=True, skip_second_signature=True, skip_multi_signature=True, raw=False):

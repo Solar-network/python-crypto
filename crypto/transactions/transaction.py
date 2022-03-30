@@ -9,7 +9,7 @@ from crypto.constants import (
     TRANSACTION_DELEGATE_REGISTRATION, TRANSACTION_MULTI_SIGNATURE_REGISTRATION,
     TRANSACTION_SECOND_SIGNATURE_REGISTRATION, TRANSACTION_VOTE
 )
-from crypto.exceptions import ArkInvalidTransaction
+from crypto.exceptions import SolarInvalidTransaction
 from crypto.schnorr import schnorr
 from crypto.transactions.deserializer import Deserializer
 from crypto.transactions.serializer import Serializer
@@ -158,7 +158,7 @@ class Transaction(object):
         is_valid = schnorr.b410_schnorr_verify(self.to_bytes(), self.senderPublicKey, self.signature)
 
         if not is_valid:
-            raise ArkInvalidTransaction('Transaction could not be verified')
+            raise SolarInvalidTransaction('Transaction could not be verified')
 
         return is_valid
 
@@ -169,7 +169,7 @@ class Transaction(object):
         is_valid = schnorr.b410_schnorr_verify(self.to_bytes(False, True), secondPublicKey, self.signSignature)
         
         if not is_valid:
-            raise ArkInvalidTransaction('Transaction could not be verified')
+            raise SolarInvalidTransaction('Transaction could not be verified')
     
     def verify_schnorr_multisig(self):
         """Verify the multisignatures transaction. Method will raise an exception if invalid, it will
@@ -178,7 +178,7 @@ class Transaction(object):
         is_valid = schnorr.b410_schnorr_verify(self.to_bytes(True, True, False), self.senderPublicKey, self.signature)
 
         if not is_valid:
-            raise ArkInvalidTransaction('Transaction could not be verified')
+            raise SolarInvalidTransaction('Transaction could not be verified')
 
         return is_valid
 
