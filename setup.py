@@ -26,12 +26,12 @@ extras_require = {
 setup_requires = ['pytest-runner'] if {'pytest', 'test', 'ptr'}.intersection(sys.argv) else []
 
 setuptools.setup(
-    name='arkecosystem-crypto',
-    description='A simple Cryptography Implementation in Python for the Ark Blockchain.',
+    name='solarnetwork-crypto',
+    description='A simple Cryptography Implementation in Python for the Solar Blockchain.',
     version='2.0.0',
-    author='Ark Ecosystem',
-    author_email='info@ark.io',
-    url='https://github.com/ArkEcosystem/python-crypto',
+    author='Solar-Network',
+    author_email='hello@solar.org',
+    url='https://github.com/Solar-network/python-crypto',
     packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
     install_requires=requires,
     extras_require=extras_require,
