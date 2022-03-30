@@ -23,4 +23,4 @@ This project exists thanks to all the people who [contribute](../../contributors
 
 ## License
 
-[CC-BY-ND-4.0](LICENSE) © [Solar-Network](https://solar.org)
+Please read the separate [LICENSE](LICENSE) file for details.
