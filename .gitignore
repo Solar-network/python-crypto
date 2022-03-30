@@ -1,0 +1,16 @@
+__pycache__/
+*.egg-info/
+*.DS_Store
+*.sublime-*
+*.py[co]
+*.python-version
+*.eggs
+*.pytest_cache/
+.cache/
+build/
+dist/
+*.egg-info
+.vscode
+.vs
+venv
+venv/
