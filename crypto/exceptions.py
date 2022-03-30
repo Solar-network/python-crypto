@@ -1,10 +1,10 @@
-class ArkCryptoException(Exception):
+class SolarCryptoException(Exception):
     pass
 
 
-class ArkSerializerException(ArkCryptoException):
+class SolarSerializerException(SolarCryptoException):
     """Raised when there's a serializer related issue"""
 
 
-class ArkInvalidTransaction(ArkCryptoException):
+class SolarInvalidTransaction(SolarCryptoException):
     """Raised when transaction is not valid"""
