@@ -1,9 +1,9 @@
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.htlc_claim import HtlcClaim
 
-set_network(Devnet)
+set_network(Testnet)
 
 
 def test_htlc_claim_transaction():

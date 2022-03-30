@@ -3,11 +3,11 @@ import pytest
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
 from crypto.identity.public_key import PublicKey
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.transfer import Transfer
 
 
-set_network(Devnet)
+set_network(Testnet)
 
 
 def test_transfer_transaction():

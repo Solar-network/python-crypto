@@ -1,9 +1,9 @@
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_VOTE
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.vote import Vote
 
-set_network(Devnet)
+set_network(Testnet)
 
 
 def test_vote_transaction():

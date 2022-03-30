@@ -1,9 +1,9 @@
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_SECOND_SIGNATURE_REGISTRATION, TRANSACTION_TYPE_GROUP
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.second_signature_registration import SecondSignatureRegistration
 
-set_network(Devnet)
+set_network(Testnet)
 
 
 def test_second_signature_registration_transaction():

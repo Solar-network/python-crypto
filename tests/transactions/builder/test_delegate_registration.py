@@ -1,9 +1,9 @@
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_DELEGATE_REGISTRATION, TRANSACTION_TYPE_GROUP
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.delegate_registration import DelegateRegistration
 
-set_network(Devnet)
+set_network(Testnet)
 
 
 def test_delegate_registration_transaction():

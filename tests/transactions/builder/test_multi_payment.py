@@ -1,9 +1,9 @@
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_MULTI_PAYMENT, TRANSACTION_TYPE_GROUP
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.multi_payment import MultiPayment
 
-set_network(Devnet)
+set_network(Testnet)
 
 
 def test_multi_payment_transaction():
