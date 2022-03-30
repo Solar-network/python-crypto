@@ -11,7 +11,7 @@
 
 ## Documentation
 
-You can find installation instructions and detailed instructions on how to use this package at the [dedicated documentation site](https://ark.dev/docs/sdk/python/crypto/intro).
+You can find installation instructions and detailed instructions on how to use this package at the [dedicated documentation site](https://docs.solar.org/sdk/python/crypto/intro/).
 
 ## Security
 
@@ -23,4 +23,4 @@ This project exists thanks to all the people who [contribute](../../contributors
 
 ## License
 
-[MIT](LICENSE) © [ARK Ecosystem](https://ark.io)
+[CC-BY-ND-4.0](LICENSE) © [Solar-Network](https://solar.org)
