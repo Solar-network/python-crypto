@@ -1,4 +1,4 @@
-from crypto.networks.devnet import Devnet
+from crypto.networks.testnet import Testnet
 
 network = {}
 
@@ -7,7 +7,7 @@ def set_network(network_object):
     """Set what network you want to use in the crypto library
 
     Args:
-        network_object (Network object): Testnet, Devnet, Mainnet
+        network_object (Network object): Testnet, Mainnet
     """
     global network
     network = {
@@ -18,13 +18,13 @@ def set_network(network_object):
 
 
 def get_network():
-    """Get settings for a selected network, default network is devnet
+    """Get settings for a selected network, default network is testnet
 
     Returns:
-        dict: network settings (default network is devnet)
+        dict: network settings (default network is testnet)
     """
     if not network:
-        set_network(Devnet)
+        set_network(Testnet)
     return network
 
 
