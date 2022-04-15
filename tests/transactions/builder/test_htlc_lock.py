@@ -51,7 +51,8 @@ def test_htlc_lock_transation_amount_negative():
         )
 
 
-def test_htlc_lock_transaction():
+@pytest.mark.parametrize("version", [2, 3])
+def test_htlc_lock_transaction(version):
     """Test if timelock transaction gets built
     """
     secret_hash = _generate_secret_hash()
@@ -65,7 +66,8 @@ def test_htlc_lock_transaction():
 
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
-    transaction.schnorr_sign('testing')
+    transaction.set_version(version)
+    transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
     assert transaction_dict['recipientId'] == 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC'
@@ -73,17 +75,17 @@ def test_htlc_lock_transaction():
     assert transaction_dict['nonce'] == 1
     assert transaction_dict['signature']
     assert transaction_dict['type'] is TRANSACTION_HTLC_LOCK
-    assert transaction_dict['typeGroup'] == 1
     assert transaction_dict['typeGroup'] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict['fee'] == 10000000
     assert transaction_dict['asset']['lock']['secretHash'] == secret_hash
     assert transaction_dict['asset']['lock']['expiration']['type'] == 1
     assert transaction_dict['asset']['lock']['expiration']['value'] == 1573455822
 
-    transaction.schnorr_verify()  # if no exception is raised, it means the transaction is valid
+    transaction.verify()  # if no exception is raised, it means the transaction is valid
 
 
-def test_htlc_lock_transaction_custom_fee():
+@pytest.mark.parametrize("version", [2, 3])
+def test_htlc_lock_transaction_custom_fee(version):
     """Test if timelock transaction gets built with a custom fee
     """
     secret_hash = _generate_secret_hash()
@@ -98,7 +100,8 @@ def test_htlc_lock_transaction_custom_fee():
 
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
-    transaction.schnorr_sign('testing')
+    transaction.set_version(version)
+    transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
     assert transaction_dict['recipientId'] == 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC'
@@ -106,14 +109,13 @@ def test_htlc_lock_transaction_custom_fee():
     assert transaction_dict['nonce'] == 1
     assert transaction_dict['signature']
     assert transaction_dict['type'] is TRANSACTION_HTLC_LOCK
-    assert transaction_dict['typeGroup'] == 1
     assert transaction_dict['typeGroup'] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict['fee'] == 5
     assert transaction_dict['asset']['lock']['secretHash'] == secret_hash
     assert transaction_dict['asset']['lock']['expiration']['type'] == 1
     assert transaction_dict['asset']['lock']['expiration']['value'] == 1573455822
 
-    transaction.schnorr_verify()  # if no exception is raised, it means the transaction is valid
+    transaction.verify()  # if no exception is raised, it means the transaction is valid
 
 
 def _generate_secret_hash():

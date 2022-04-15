@@ -1,6 +1,7 @@
 import json
 from binascii import unhexlify
 from hashlib import sha256
+from btclib.ecc import ssa
 
 from binary.hex.writer import write_high
 from binary.unsigned_integer.writer import write_bit8
@@ -151,36 +152,76 @@ class Transaction(object):
         """
         return Deserializer(serialized).deserialize()
 
-    def verify_schnorr(self):
-        """Verify the transaction. Method will raise an exception if invalid, if it's valid it will
-        returns True
-        """
-        is_valid = schnorr.b410_schnorr_verify(self.to_bytes(), self.senderPublicKey, self.signature)
+    def verify(self):
+        msg = self.to_bytes()
+
+        if self.version > 2:
+            # schnorr bip340
+            is_valid = ssa.verify(msg, self.senderPublicKey, self.signature)
+        else:
+            # schnorr legacy
+            is_valid = schnorr.b410_schnorr_verify(msg, self.senderPublicKey, self.signature)
 
         if not is_valid:
             raise SolarInvalidTransaction('Transaction could not be verified')
 
-        return is_valid
+        return True
 
-    def verify_schnorr_secondsig(self, secondPublicKey):
-        """Verify the transaction. Method will raise an exception if invalid, if it's valid it will
-        returns True
-        """
-        is_valid = schnorr.b410_schnorr_verify(self.to_bytes(False, True), secondPublicKey, self.signSignature)
+    def verify_secondsig(self, secondPublicKey):
+        msg = self.to_bytes(False, True)
+
+        if self.version > 2:
+            # schnorr bip340
+            is_valid = ssa.verify(msg, secondPublicKey, self.signSignature)
+        else:
+            # schnorr legacy
+            is_valid = schnorr.b410_schnorr_verify(msg, secondPublicKey, self.signSignature)
+
+        if not is_valid:
+            raise SolarInvalidTransaction('Transaction could not be verified')
+
+        return True
+
+    def verify_signatures(self, multi_signature_asset):
+        if not multi_signature_asset:
+            raise SolarInvalidTransaction('Transaction could not be verified')
         
-        if not is_valid:
-            raise SolarInvalidTransaction('Transaction could not be verified')
-    
-    def verify_schnorr_multisig(self):
-        """Verify the multisignatures transaction. Method will raise an exception if invalid, it will
-        returns True
-        """
-        is_valid = schnorr.b410_schnorr_verify(self.to_bytes(True, True, False), self.senderPublicKey, self.signature)
-
-        if not is_valid:
+        signatures = self.signatures
+        if not signatures:
             raise SolarInvalidTransaction('Transaction could not be verified')
 
-        return is_valid
+        public_keys = multi_signature_asset["publicKeys"]
+        min_sigs = multi_signature_asset["min"]
+
+        msg = self.to_bytes(True, True, True)
+
+        public_key_indexes = {}
+        verified = False
+        verified_signatures = 0
+
+        for signature in signatures:
+            public_key_index = int(signature[0:2], 16)
+            if public_key_index in public_key_indexes.keys():
+                raise SolarInvalidTransaction('Transaction could not be verified')
+            
+            partial_signature = signature[2:130]
+            public_key = public_keys[public_key_index]
+            if self.version > 2:
+                # schnorr bip340
+                msg_hash = msg
+                is_valid = ssa.verify(msg_hash, public_key, partial_signature)
+            else:
+                # schnorr legacy
+                is_valid = schnorr.b410_schnorr_verify(msg, public_key, partial_signature)
+
+            if is_valid:
+                verified_signatures += 1
+
+            if verified_signatures >= min_sigs:
+                verified = True
+                break
+
+        return verified
 
     def _handle_transaction_type(self, bytes_data):
         """Handled each transaction type differently

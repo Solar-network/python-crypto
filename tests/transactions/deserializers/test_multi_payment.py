@@ -22,4 +22,4 @@ def test_multi_payment_deserializer():
     assert actual.asset['payments'][1]['amount'] == 2  # noqa
     assert actual.asset['payments'][1]['recipientId'] == 'AZFEPTWnn2Sn8wDZgCRF8ohwKkrmk2AZi1'  # noqa
 
-    actual.verify_schnorr()
+    actual.verify()
