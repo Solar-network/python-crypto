@@ -1,5 +1,4 @@
 from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP
-from crypto.exceptions import ArkInvalidTransaction
 from crypto.transactions.builder.base import BaseTransactionBuilder
 
 

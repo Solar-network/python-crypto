@@ -1,5 +1,5 @@
 import binascii
-import pytest
+
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP
 from crypto.networks.testnet import Testnet
@@ -61,7 +61,7 @@ def test_htlc_claim_transaction_unlock_secret_bad_length():
 
     transaction = HtlcClaim(lock_transaction_id, unlock_secret)
     transaction.set_nonce(1)
-    with pytest.raises(ArkSerializerException) as e:
+    with pytest.raises(SolarSerializerException) as e:
         transaction.schnorr_sign('testing')
     assert str(e.value) == 'Unlock secret must be 32 bytes long'
 
