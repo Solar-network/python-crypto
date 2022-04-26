@@ -11,7 +11,7 @@ class Burn(BaseTransactionBuilder):
         """Create a burn transaction
 
         Args:
-            amount (int): amount of coins you want to transfer
+            amount (int): amount of coins you want to burn
         """
         super().__init__()
 
