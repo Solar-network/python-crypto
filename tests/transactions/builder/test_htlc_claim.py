@@ -1,4 +1,5 @@
 import binascii
+import pytest
 
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP

@@ -121,8 +121,8 @@ def _generate_secret_hash():
 
   # secret code is a key ingredient used to unlock the htlc lock. To generate an unlock code one
   # must "hexify" it: `unlock_secret = hexlify(secret_h.encode()).decode()``
-  secret_code = sha256(secret.encode()).hexdigest()[:32]
+  secret_code = sha256(secret.encode()).digest()[:32]
 
   # secret_hash is the hashed secret code
-  secret_hash = sha256(secret_code.encode()).hexdigest()
+  secret_hash = sha256(secret_code).hexdigest()
   return secret_hash
