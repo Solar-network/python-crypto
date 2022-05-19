@@ -40,6 +40,16 @@ TRANSACTION_FEES = {
     TRANSACTION_HTLC_REFUND: 0,
 }
 
+SOLAR_TRANSACTION_BURN = 0
+
+SOLAR_TRANSACTION_TYPES = {
+    SOLAR_TRANSACTION_BURN: "burn",
+}
+
+SOLAR_TRANSACTION_FEES = {
+    SOLAR_TRANSACTION_BURN: 0,
+}
+
 
 class TRANSACTION_TYPE_GROUP(Enum):
     def __int__(self):
@@ -47,6 +57,7 @@ class TRANSACTION_TYPE_GROUP(Enum):
 
     TEST = 0
     CORE = 1
+    SOLAR = 2
     RESERVED = 1000  # Everything above is available to anyone
 
 

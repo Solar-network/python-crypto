@@ -5,7 +5,7 @@ from importlib import import_module
 
 from binary.unsigned_integer.reader import read_bit8, read_bit16, read_bit32, read_bit64
 
-from crypto.constants import TRANSACTION_TYPES
+from crypto.constants import SOLAR_TRANSACTION_TYPES, TRANSACTION_TYPE_GROUP, TRANSACTION_TYPES
 from crypto.transactions.deserializers.base import BaseDeserializer
 
 
@@ -45,7 +45,6 @@ class Deserializer(object):
             )[vendor_field_offset:vendorField_take]
 
         asset_offset = (58 + 1) * 2 + vendor_field_length * 2
-
         handled_transaction = self._handle_transaction_type(asset_offset, transaction)
         transaction.amount = handled_transaction.amount
         transaction.version = handled_transaction.version
@@ -66,7 +65,7 @@ class Deserializer(object):
         Returns:
             object: Transaction resource object of currently deserialized data
         """
-        deserializer_name = TRANSACTION_TYPES[transaction.type]
+        deserializer_name = self._get_deserializer_name(transaction)
         module = import_module('crypto.transactions.deserializers.{}'.format(deserializer_name))
         for attr in dir(module):
             # If attr name is `BaseDeserializer`, skip it as it's a class and also has a
@@ -94,3 +93,11 @@ class Deserializer(object):
         transaction.id = sha256(unhexlify(transaction.serialize(False, True, False))).hexdigest()
 
         return transaction
+
+    @staticmethod
+    def _get_deserializer_name(transaction):
+        if transaction.typeGroup == TRANSACTION_TYPE_GROUP.SOLAR.value:
+            name = SOLAR_TRANSACTION_TYPES[transaction.type]
+        else:
+            name = TRANSACTION_TYPES[transaction.type]
+        return name

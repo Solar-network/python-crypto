@@ -15,7 +15,10 @@ class BaseTransactionBuilder(object):
     def __init__(self):
         self.transaction = Transaction()
         self.transaction.type = getattr(self, 'transaction_type', None)
-        self.transaction.fee = get_fee(getattr(self, 'transaction_type', None))
+        self.transaction.fee = get_fee(
+            getattr(self, 'transaction_type', None),
+            getattr(self, 'typeGroup', 1)
+        )
         self.transaction.nonce = getattr(self, 'nonce', None)
         self.transaction.typeGroup = getattr(self, 'typeGroup', 1)
         self.transaction.signatures = getattr(self, 'signatures', None)
