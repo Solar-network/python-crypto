@@ -10,6 +10,8 @@ class HtlcClaim(BaseTransactionBuilder):
         """Create a timelock transaction
 
         Args:
+            lock_transaction_id (str): HTLC lock transaction ID we wish to claim
+            unlock_secret (str): unlock secret required to claim the transaction, must be 64 chars long
             fee (int, optional): fee used for the transaction (default is already set)
         """
         super().__init__()
