@@ -14,20 +14,19 @@ class Message(object):
                 raise TypeError('Invalid keyword argument %s' % k)
 
     @classmethod
-    def sign(cls, message, passphrase, nonce=None):
+    def sign(cls, message, passphrase):
         """Signs a message
 
         Args:
             message (str/bytes): a message you wish to sign
             passphrase (str): passphrase you wish to use to sign the message
-            nonce (int): deterministic nonce
 
         Returns:
             Message: returns a message object
         """
         message_bytes = message if isinstance(message, bytes) else message.encode()
         private_key = PrivateKey.from_passphrase(passphrase)
-        signature = sign_schnorr(message_bytes, private_key, nonce)
+        signature = sign_schnorr(message_bytes, private_key)
         return cls(message=message, signature=signature, publicKey=private_key.public_key)
 
     def verify(self):
