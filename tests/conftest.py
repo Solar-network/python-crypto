@@ -311,13 +311,13 @@ def message():
     data = {
         'camelCase_pk': {
             'publicKey': '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192',
-            'signature': '304402200fb4adddd1f1d652b544ea6ab62828a0a65b712ed447e2538db0caebfa68929e02205ecb2e1c63b29879c2ecf1255db506d671c8b3fa6017f67cfd1bf07e6edd1cc8',  # noqa
+            'signature': '79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798f9ee8f2b718dc55e840f906c5071f63694ddeb35af8858f2a54cfdb3bd36fce1',  # noqa
             'message': 'Hello World'
         },
 
         'snake_case_pk': {
           'publickey': '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192',
-          'signature': '304402200fb4adddd1f1d652b544ea6ab62828a0a65b712ed447e2538db0caebfa68929e02205ecb2e1c63b29879c2ecf1255db506d671c8b3fa6017f67cfd1bf07e6edd1cc8',  # noqa
+          'signature': '79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798f9ee8f2b718dc55e840f906c5071f63694ddeb35af8858f2a54cfdb3bd36fce1',  # noqa
           'message': 'Hello World'
         },
         'passphrase': 'this is a top secret passphrase'

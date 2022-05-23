@@ -14,6 +14,7 @@ from crypto.exceptions import SolarInvalidTransaction
 from crypto.schnorr import schnorr
 from crypto.transactions.deserializer import Deserializer
 from crypto.transactions.serializer import Serializer
+from crypto.utils.crypto import verify_schnorr, verify_schnorr_legacy
 
 TRANSACTION_ATTRIBUTES = {
     'amount': 0,
@@ -157,10 +158,10 @@ class Transaction(object):
 
         if self.version > 2:
             # schnorr bip340
-            is_valid = ssa.verify(msg, self.senderPublicKey, self.signature)
+            is_valid = verify_schnorr(msg, self.senderPublicKey, self.signature)
         else:
             # schnorr legacy
-            is_valid = schnorr.b410_schnorr_verify(msg, self.senderPublicKey, self.signature)
+            is_valid = verify_schnorr_legacy(msg, self.senderPublicKey, self.signature)
 
         if not is_valid:
             raise SolarInvalidTransaction('Transaction could not be verified')
@@ -172,10 +173,10 @@ class Transaction(object):
 
         if self.version > 2:
             # schnorr bip340
-            is_valid = ssa.verify(msg, secondPublicKey, self.signSignature)
+            is_valid = verify_schnorr(msg, secondPublicKey, self.signSignature)
         else:
             # schnorr legacy
-            is_valid = schnorr.b410_schnorr_verify(msg, secondPublicKey, self.signSignature)
+            is_valid = verify_schnorr_legacy(msg, secondPublicKey, self.signSignature)
 
         if not is_valid:
             raise SolarInvalidTransaction('Transaction could not be verified')
@@ -209,10 +210,10 @@ class Transaction(object):
             if self.version > 2:
                 # schnorr bip340
                 msg_hash = msg
-                is_valid = ssa.verify(msg_hash, public_key, partial_signature)
+                is_valid = verify_schnorr(msg_hash, public_key, partial_signature)
             else:
                 # schnorr legacy
-                is_valid = schnorr.b410_schnorr_verify(msg, public_key, partial_signature)
+                is_valid = verify_schnorr_legacy(msg, public_key, partial_signature)
 
             if is_valid:
                 verified_signatures += 1

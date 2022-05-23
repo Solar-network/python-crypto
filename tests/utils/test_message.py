@@ -3,9 +3,18 @@ import json
 from crypto.utils.message import Message
 
 
-def test_signing(message):
-    result = Message.sign(message['camelCase_pk']['message'], message['passphrase'])
+def test_signing_deterministic(message):
+    result = Message.sign(message['camelCase_pk']['message'], message['passphrase'], 1)
     assert result.to_dict() == message['camelCase_pk']
+
+def test_signing_non_deterministic(message):
+    first = Message.sign(message['camelCase_pk']['message'], message['passphrase'])
+    assert first.verify() is True
+
+    second = Message.sign(message['camelCase_pk']['message'], message['passphrase'])
+    assert second.verify() is True
+
+    assert first.signature != second.signature
 
 
 def test_verify_with_publickey(message):

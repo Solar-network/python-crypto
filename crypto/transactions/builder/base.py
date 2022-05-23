@@ -8,7 +8,7 @@ from crypto.identity.private_key import PrivateKey
 from crypto.identity.public_key import PublicKey
 from crypto.schnorr import schnorr
 from crypto.transactions.transaction import Transaction
-from crypto.utils.message import Message
+from crypto.utils.crypto import sign_schnorr, sign_schnorr_legacy
 
 
 class BaseTransactionBuilder(object):
@@ -45,14 +45,13 @@ class BaseTransactionBuilder(object):
 
         if self.transaction.version > 2:
             # schnorr bip340
-            sig = ssa.sign(msg, pvt.to_hex())
-            self.transaction.signature = sig.serialize().hex()
+            sig = sign_schnorr(msg, pvt)
+            self.transaction.signature = sig
             self.transaction.id = self.transaction.get_id()
         else:
             # schnorr legacy
-            secret = unhexlify(pvt.to_hex())
-            msg = hashlib.sha256(msg).digest()
-            self.transaction.signature = schnorr.bcrypto410_sign(msg, secret).hex()
+            sig = sign_schnorr_legacy(msg, pvt)
+            self.transaction.signature = sig
             self.transaction.id = self.transaction.get_id()
 
 
@@ -67,14 +66,13 @@ class BaseTransactionBuilder(object):
 
         if self.transaction.version > 2:
             # schnorr bip340
-            sig = ssa.sign(msg, pvt.private_key.to_int())
-            self.transaction.signSignature = sig.serialize().hex()
+            sig = sign_schnorr(msg, pvt)
+            self.transaction.signSignature = sig
             self.transaction.id = self.transaction.get_id()
         else:
             # schnorr legacy
-            msg = hashlib.sha256(msg).digest()
-            secret = unhexlify(pvt.to_hex())
-            self.transaction.signSignature = schnorr.bcrypto410_sign(msg, secret).hex() 
+            sig = sign_schnorr_legacy(msg, pvt)
+            self.transaction.signSignature = sig
             self.transaction.id = self.transaction.get_id()
 
     def multi_sign(self, passphrase, index):
@@ -88,15 +86,13 @@ class BaseTransactionBuilder(object):
 
         if self.transaction.version > 2:
             # schnorr bip340
-            sig = ssa.sign(msg, pvt.private_key.to_int());
-            indexed_signature = f"{index_formatted}{sig.serialize().hex()}";
-            self.transaction.signatures.append(indexed_signature);
+            sig = sign_schnorr(msg, pvt)
+            indexed_signature = f"{index_formatted}{sig}"
+            self.transaction.signatures.append(indexed_signature)
         else:
             # schnorr legacy
-            msg = hashlib.sha256(msg).digest()
-            secret = unhexlify(pvt.to_hex())
-            signature = schnorr.bcrypto410_sign(msg, secret).hex()
-            self.transaction.signatures.append(f"{index_formatted}{signature.decode()}")
+            sig = sign_schnorr_legacy(msg, pvt)
+            self.transaction.signatures.append(f"{index_formatted}{sig}")
 
     def verify(self):
         return self.transaction.verify()
