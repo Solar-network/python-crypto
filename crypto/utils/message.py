@@ -1,8 +1,8 @@
 import json
-from binascii import unhexlify
+from btclib.ecc import ssa
 
 from crypto.identity.private_key import PrivateKey
-from crypto.identity.public_key import PublicKey
+from crypto.utils.crypto import sign_schnorr, verify_schnorr
 
 
 class Message(object):
@@ -19,15 +19,14 @@ class Message(object):
 
         Args:
             message (str/bytes): a message you wish to sign
-            passphrase (str/byes): passphrase you wish to use to sign the message
+            passphrase (str): passphrase you wish to use to sign the message
 
         Returns:
             Message: returns a message object
         """
         message_bytes = message if isinstance(message, bytes) else message.encode()
-        passphrase = passphrase.decode() if isinstance(passphrase, bytes) else passphrase
         private_key = PrivateKey.from_passphrase(passphrase)
-        signature = private_key.sign(message_bytes)
+        signature = sign_schnorr(message_bytes, private_key)
         return cls(message=message, signature=signature, publicKey=private_key.public_key)
 
     def verify(self):
@@ -37,9 +36,8 @@ class Message(object):
             bool: returns a boolean - true if verified, false if not
         """
         message = self.message if isinstance(self.message, bytes) else self.message.encode()
-        key = PublicKey.from_hex(self.publickey) if hasattr(self, 'publickey') else PublicKey.from_hex(self.publicKey)
-        signature = unhexlify(self.signature)
-        is_verified = key.public_key.verify(signature, message)
+        public_key = self.publickey if hasattr(self, 'publickey') else self.publicKey
+        is_verified = verify_schnorr(message, public_key, self.signature)
         return is_verified
 
     def to_dict(self):

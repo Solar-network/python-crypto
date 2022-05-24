@@ -19,4 +19,4 @@ def test_second_signature_registration_deserializer():
     assert actual.id == '173a3230159b45d772b2e0348f42af53913bf3e376397f29b8e0bda290badbe4'
     assert actual.asset['signature']['publicKey'] == '03699e966b2525f9088a6941d8d94f7869964a000efe65783d78ac82e1199fe609'  # noqa
 
-    actual.verify_schnorr()
+    actual.verify()

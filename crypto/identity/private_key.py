@@ -10,17 +10,19 @@ class PrivateKey(object):
         self.private_key = PvtKey.from_hex(private_key)
         self.public_key = hexlify(self.private_key.public_key.format()).decode()
 
-    def sign(self, message):
+    def sign(self, message, nonce=None):
         """Sign a message with this private key object
 
         Args:
             message (bytes): bytes data you want to sign
+            nonce (int): deterministic nonce
 
         Returns:
             str: signature of the signed message
         """
-        signature = self.private_key.sign(message)
-        return hexlify(signature).decode()
+        from crypto.utils.crypto import sign_schnorr  # circular imports
+        signature = sign_schnorr(message, self.private_key, nonce)
+        return signature
 
     def to_hex(self):
         """Returns a private key in hex format

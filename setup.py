@@ -6,7 +6,8 @@ import setuptools
 requires = [
     'base58',
     'binary-helpers',
-    'coincurve'
+    'coincurve',
+    'btclib'
 ]
 
 tests_require = [
@@ -15,7 +16,7 @@ tests_require = [
     'flake8-print>=3.1.0',
     'flake8-quotes>=1.0.0',
     'pytest>=3.6.1',
-    'pytest-cov>=2.5.1'
+    'pytest-cov>=2.5.1',
 ]
 
 extras_require = {
@@ -28,7 +29,7 @@ setup_requires = ['pytest-runner'] if {'pytest', 'test', 'ptr'}.intersection(sys
 setuptools.setup(
     name='solarnetwork-crypto',
     description='A simple Cryptography Implementation in Python for the Solar Blockchain.',
-    version='2.0.0',
+    version='3.0.0',
     author='Solar-Network',
     author_email='hello@solar.org',
     url='https://github.com/Solar-network/python-crypto',

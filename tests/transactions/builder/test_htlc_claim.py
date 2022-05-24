@@ -1,5 +1,5 @@
-import binascii
 import pytest
+import binascii
 
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP
@@ -10,7 +10,8 @@ from crypto.transactions.builder.htlc_claim import HtlcClaim
 set_network(Testnet)
 
 
-def test_htlc_claim_transaction_ok():
+@pytest.mark.parametrize("version", [2, 3])
+def test_htlc_claim_transaction_ok(version):
     """Test if timelock transaction gets built
     """
     lock_transaction_id = '943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4'
@@ -21,7 +22,8 @@ def test_htlc_claim_transaction_ok():
 
     transaction = HtlcClaim(lock_transaction_id, unlock_secret)
     transaction.set_nonce(1)
-    transaction.schnorr_sign('testing')
+    transaction.set_version(version)
+    transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
     assert transaction_dict['nonce'] == 1
@@ -32,10 +34,11 @@ def test_htlc_claim_transaction_ok():
     assert transaction_dict['asset']['claim']['lockTransactionId'] == '943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4'
     assert transaction_dict['asset']['claim']['unlockSecret'] == unlock_secret
 
-    transaction.schnorr_verify()  # if no exception is raised, it means the transaction is valid
+    transaction.verify()  # if no exception is raised, it means the transaction is valid
 
 
-def test_htlc_claim_transaction_unlock_secret_not_hex():
+@pytest.mark.parametrize("version", [2, 3])
+def test_htlc_claim_transaction_unlock_secret_not_hex(version):
     """Test if timelock transaction errors if an invalid hex unlock_secret is given 
     """
     lock_transaction_id = '943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4'
@@ -45,13 +48,15 @@ def test_htlc_claim_transaction_unlock_secret_not_hex():
     unlock_secret = '643432323362663933653230323530356136613530313432316138a84a3966x1'
 
     transaction = HtlcClaim(lock_transaction_id, unlock_secret)
+    transaction.set_version(version)
     transaction.set_nonce(1)
     with pytest.raises(binascii.Error) as e:
-        transaction.schnorr_sign('testing')
+        transaction.sign('testing')
     assert str(e.value) == 'Non-hexadecimal digit found'
    
 
-def test_htlc_claim_transaction_unlock_secret_bad_length():
+@pytest.mark.parametrize("version", [2, 3])
+def test_htlc_claim_transaction_unlock_secret_bad_length(version):
     """Test if timelock transaction fails if the unlock_secret is too big
     """
     lock_transaction_id = '943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4'
@@ -61,13 +66,15 @@ def test_htlc_claim_transaction_unlock_secret_bad_length():
     unlock_secret = '326632383634643861626534336530363236363132643461636235623535666462'
 
     transaction = HtlcClaim(lock_transaction_id, unlock_secret)
+    transaction.set_version(version)
     transaction.set_nonce(1)
     with pytest.raises(SolarSerializerException) as e:
-        transaction.schnorr_sign('testing')
+        transaction.sign('testing')
     assert str(e.value) == 'Unlock secret must be 32 bytes long'
 
 
-def test_htlc_claim_transaction_custom_fee_ok():
+@pytest.mark.parametrize("version", [2, 3])
+def test_htlc_claim_transaction_custom_fee_ok(version):
     """Test if timelock transaction gets built with a custom fee
     """
     lock_transaction_id = '943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4'
@@ -78,7 +85,8 @@ def test_htlc_claim_transaction_custom_fee_ok():
 
     transaction = HtlcClaim(lock_transaction_id, unlock_secret, 5)
     transaction.set_nonce(1)
-    transaction.schnorr_sign('testing')
+    transaction.set_version(version)
+    transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
     assert transaction_dict['nonce'] == 1
@@ -89,4 +97,4 @@ def test_htlc_claim_transaction_custom_fee_ok():
     assert transaction_dict['asset']['claim']['lockTransactionId'] == '943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4'
     assert transaction_dict['asset']['claim']['unlockSecret'] == unlock_secret
 
-    transaction.schnorr_verify()  # if no exception is raised, it means the transaction is valid
+    transaction.verify()  # if no exception is raised, it means the transaction is valid
