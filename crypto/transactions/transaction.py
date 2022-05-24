@@ -196,14 +196,16 @@ class Transaction(object):
 
         msg = self.to_bytes(True, True, True)
 
-        public_key_indexes = {}
+        public_key_indexes = []
         verified = False
         verified_signatures = 0
 
         for signature in signatures:
             public_key_index = int(signature[0:2], 16)
-            if public_key_index in public_key_indexes.keys():
+            if public_key_index in public_key_indexes:
                 raise SolarInvalidTransaction('Transaction could not be verified')
+            else:
+                public_key_indexes.append(public_key_index)
             
             partial_signature = signature[2:130]
             public_key = public_keys[public_key_index]
