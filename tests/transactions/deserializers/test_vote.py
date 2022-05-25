@@ -35,7 +35,7 @@ def test_vote_with_vendor_field():
     assert actual.type == 3
     assert actual.amount == 0
     assert actual.fee == 100000000
-    assert actual.vendorField == b"hello world"
+    assert actual.vendorField == "hello world"
     assert actual.nonce == 1
     assert actual.senderPublicKey == '037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c'  # noqa
     assert actual.id == 'c751be6c2b9525fb1b089b06c942d581a854422eb1fa9567d728c0d00b0b9e6a'

@@ -42,7 +42,7 @@ class Deserializer(object):
         if vendor_field_length > 0:
             vendor_field_offset = 59
             vendorField_take = vendor_field_offset + vendor_field_length
-            transaction.vendorField = self.serialized[vendor_field_offset:vendorField_take]
+            transaction.vendorField = self.serialized[vendor_field_offset:vendorField_take].decode()
 
         asset_offset = (58 + 1) * 2 + vendor_field_length * 2
         handled_transaction = self._handle_transaction_type(asset_offset, transaction)
