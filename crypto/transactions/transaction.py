@@ -31,7 +31,6 @@ TRANSACTION_ATTRIBUTES = {
     'type': None,
     'typeGroup': None,
     'vendorField': None,
-    # 'vendorFieldHex': None,
     'version': None,
     'lockTransactionId': None,
     'lockSecret': None,

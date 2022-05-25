@@ -29,11 +29,11 @@ def test_htlc_lock_transation_amount_zero():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
-          amount=0,
-          secret_hash=secret_hash,
-          expiration_type=1,
-          expiration_value=1573455822
+            recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
+            amount=0,
+            secret_hash=secret_hash,
+            expiration_type=1,
+            expiration_value=1573455822
         )
 
 
@@ -43,11 +43,11 @@ def test_htlc_lock_transation_amount_negative():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
-          amount=-5,
-          secret_hash=secret_hash,
-          expiration_type=1,
-          expiration_value=1573455822
+            recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
+            amount=-5,
+            secret_hash=secret_hash,
+            expiration_type=1,
+            expiration_value=1573455822
         )
 
 
@@ -57,11 +57,11 @@ def test_htlc_lock_transaction(version):
     """
     secret_hash = _generate_secret_hash()
     transaction = HtlcLock(
-      recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
-      amount=200000000,
-      secret_hash=secret_hash,
-      expiration_type=1,
-      expiration_value=1573455822
+        recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
+        amount=200000000,
+        secret_hash=secret_hash,
+        expiration_type=1,
+        expiration_value=1573455822
     )
 
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
@@ -90,12 +90,12 @@ def test_htlc_lock_transaction_custom_fee(version):
     """
     secret_hash = _generate_secret_hash()
     transaction = HtlcLock(
-      recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
-      amount=200000000,
-      secret_hash=secret_hash,
-      expiration_type=1,
-      expiration_value=1573455822,
-      fee=5
+        recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
+        amount=200000000,
+        secret_hash=secret_hash,
+        expiration_type=1,
+        expiration_value=1573455822,
+        fee=5
     )
 
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
