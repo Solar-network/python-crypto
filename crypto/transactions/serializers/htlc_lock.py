@@ -5,6 +5,8 @@ from base58 import b58decode_check
 from binary.hex.writer import write_high
 from binary.unsigned_integer.writer import write_bit8, write_bit32, write_bit64
 
+from crypto.exceptions import SolarSerializerException
+from crypto.identity import address
 from crypto.transactions.serializers.base import BaseSerializer
 
 
@@ -13,6 +15,9 @@ class HtlcLockSerializer(BaseSerializer):
     """
 
     def serialize(self):
+        if not address.validate_address(self.transaction['recipientId']):
+            raise SolarSerializerException("Invalid recipient address")
+
         self.bytes_data += write_bit64(self.transaction['amount'])
         self.bytes_data += unhexlify(self.transaction['asset']['lock']['secretHash'].encode())
         self.bytes_data += write_bit8(self.transaction['asset']['lock']['expiration']['type'])

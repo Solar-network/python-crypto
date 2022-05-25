@@ -1,4 +1,5 @@
 from crypto.constants import TRANSACTION_HTLC_LOCK, TRANSACTION_TYPE_GROUP
+from crypto.identity import address
 from crypto.transactions.builder.base import BaseTransactionBuilder
 
 
@@ -19,6 +20,9 @@ class HtlcLock(BaseTransactionBuilder):
             fee (int, optional): fee used for the transaction (default is already set)
         """
         super().__init__()
+
+        if not address.validate_address(recipient_id):
+            raise ValueError("Invalid recipient address")
 
         self.transaction.recipientId = recipient_id
         

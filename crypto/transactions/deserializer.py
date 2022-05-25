@@ -6,6 +6,8 @@ from importlib import import_module
 from binary.unsigned_integer.reader import read_bit8, read_bit16, read_bit32, read_bit64
 
 from crypto.constants import SOLAR_TRANSACTION_TYPES, TRANSACTION_TYPE_GROUP, TRANSACTION_TYPES
+from crypto.exceptions import SolarDeserializerException, SolarSerializerException
+from crypto.identity import address
 from crypto.transactions.deserializers.base import BaseDeserializer
 
 
@@ -48,10 +50,13 @@ class Deserializer(object):
         handled_transaction = self._handle_transaction_type(asset_offset, transaction)
         transaction.amount = handled_transaction.amount
         transaction.version = handled_transaction.version
-        if transaction.version == 2:
-            transaction = self._handle_version_two(transaction)
-        else:
-            raise Exception('should this ever happen?')
+
+        if transaction.version not in [2, 3]:
+            raise SolarDeserializerException("%s is not a valid transaction version", transaction.version)
+
+        transaction.id = sha256(unhexlify(transaction.serialize(False, True, False))).hexdigest()
+
+        self._validate(transaction)
 
         return transaction
 
@@ -80,20 +85,6 @@ class Deserializer(object):
                 break
         return deserializer(self.serialized, asset_offset, transaction).deserialize()
 
-    def _handle_version_two(self, transaction):
-        """Handle deserialization for version two
-
-        Args:
-            transaction (object): Transaction resource object
-
-        Returns:
-            object: Transaction resource object of currently deserialized data
-        """
-
-        transaction.id = sha256(unhexlify(transaction.serialize(False, True, False))).hexdigest()
-
-        return transaction
-
     @staticmethod
     def _get_deserializer_name(transaction):
         if transaction.typeGroup == TRANSACTION_TYPE_GROUP.SOLAR.value:
@@ -101,3 +92,11 @@ class Deserializer(object):
         else:
             name = TRANSACTION_TYPES[transaction.type]
         return name
+
+    @staticmethod
+    def _validate(transaction):
+        if not transaction.recipientId:
+            return
+
+        if not address.validate_address(transaction.recipientId):
+            raise SolarSerializerException("Invalid recipient address")
