@@ -15,7 +15,7 @@ def test_htlc_lock_transation_amount_not_int():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+          recipient_id='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
           amount='bad amount number',
           secret_hash=secret_hash,
           expiration_type=1,
@@ -29,7 +29,7 @@ def test_htlc_lock_transation_amount_zero():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+          recipient_id='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
           amount=0,
           secret_hash=secret_hash,
           expiration_type=1,
@@ -57,7 +57,7 @@ def test_htlc_lock_transaction(version):
     """
     secret_hash = _generate_secret_hash()
     transaction = HtlcLock(
-      recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+      recipient_id='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
       amount=200000000,
       secret_hash=secret_hash,
       expiration_type=1,
@@ -70,7 +70,7 @@ def test_htlc_lock_transaction(version):
     transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
-    assert transaction_dict['recipientId'] == 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC'
+    assert transaction_dict['recipientId'] == 'D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib'
     assert transaction_dict['amount'] == 200000000
     assert transaction_dict['nonce'] == 1
     assert transaction_dict['signature']
@@ -90,7 +90,7 @@ def test_htlc_lock_transaction_custom_fee(version):
     """
     secret_hash = _generate_secret_hash()
     transaction = HtlcLock(
-      recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+      recipient_id='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
       amount=200000000,
       secret_hash=secret_hash,
       expiration_type=1,
@@ -104,7 +104,7 @@ def test_htlc_lock_transaction_custom_fee(version):
     transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
-    assert transaction_dict['recipientId'] == 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC'
+    assert transaction_dict['recipientId'] == 'D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib'
     assert transaction_dict['amount'] == 200000000
     assert transaction_dict['nonce'] == 1
     assert transaction_dict['signature']

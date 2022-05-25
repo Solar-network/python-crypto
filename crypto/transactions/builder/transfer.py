@@ -1,4 +1,5 @@
 from crypto.constants import TRANSACTION_TRANSFER
+from crypto.identity import address
 from crypto.transactions.builder.base import BaseTransactionBuilder
 
 
@@ -16,6 +17,9 @@ class Transfer(BaseTransactionBuilder):
             fee (int, optional): fee used for the transaction (default is already set)
         """
         super().__init__()
+
+        if not address.validate_address(recipientId):
+            raise ValueError("Invalid recipient address")
 
         self.transaction.recipientId = recipientId
 

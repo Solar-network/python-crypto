@@ -1,4 +1,5 @@
 from crypto.constants import TRANSACTION_MULTI_PAYMENT, TRANSACTION_TYPE_GROUP
+from crypto.identity import address
 from crypto.transactions.builder.base import BaseTransactionBuilder
 
 
@@ -28,4 +29,7 @@ class MultiPayment(BaseTransactionBuilder):
         return TRANSACTION_TYPE_GROUP.CORE.value
 
     def add_payment(self, amount, recipient_id):
+        if not address.validate_address(recipient_id):
+            raise ValueError("Invalid recipient address")
+
         self.transaction.asset['payments'].append({'amount': amount, 'recipientId': recipient_id})
