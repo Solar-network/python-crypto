@@ -15,8 +15,8 @@ def test_multi_payment_transaction(version):
     transaction = MultiPayment()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
-    transaction.add_payment(1, 'AHXtmB84sTZ9Zd35h9Y1vfFvPE2Xzqj8ri')
-    transaction.add_payment(2, 'ATK14wxyYxbELq2b91bAfBY8Vmh9J6MDej')
+    transaction.add_payment(1, 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz')
+    transaction.add_payment(2, 'DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4')
     transaction.set_version(version)
     transaction.sign('testing')
     transaction_dict = transaction.to_dict()
@@ -27,9 +27,9 @@ def test_multi_payment_transaction(version):
     assert transaction_dict['typeGroup'] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict['fee'] == 10000000
     assert transaction_dict['asset']['payments'][0]['amount'] == 1
-    assert transaction_dict['asset']['payments'][0]['recipientId'] == 'AHXtmB84sTZ9Zd35h9Y1vfFvPE2Xzqj8ri'
+    assert transaction_dict['asset']['payments'][0]['recipientId'] == 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz'
     assert transaction_dict['asset']['payments'][1]['amount'] == 2
-    assert transaction_dict['asset']['payments'][1]['recipientId'] == 'ATK14wxyYxbELq2b91bAfBY8Vmh9J6MDej'
+    assert transaction_dict['asset']['payments'][1]['recipientId'] == 'DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4'
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
@@ -42,8 +42,8 @@ def test_multi_payment_transaction_custom_fee(version):
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.set_version(version)
-    transaction.add_payment(1, 'AHXtmB84sTZ9Zd35h9Y1vfFvPE2Xzqj8ri')
-    transaction.add_payment(2, 'ATK14wxyYxbELq2b91bAfBY8Vmh9J6MDej')
+    transaction.add_payment(1, 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz')
+    transaction.add_payment(2, 'DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4')
     transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
@@ -53,8 +53,21 @@ def test_multi_payment_transaction_custom_fee(version):
     assert transaction_dict['typeGroup'] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict['fee'] == 5
     assert transaction_dict['asset']['payments'][0]['amount'] == 1
-    assert transaction_dict['asset']['payments'][0]['recipientId'] == 'AHXtmB84sTZ9Zd35h9Y1vfFvPE2Xzqj8ri'
+    assert transaction_dict['asset']['payments'][0]['recipientId'] == 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz'
     assert transaction_dict['asset']['payments'][1]['amount'] == 2
-    assert transaction_dict['asset']['payments'][1]['recipientId'] == 'ATK14wxyYxbELq2b91bAfBY8Vmh9J6MDej'
+    assert transaction_dict['asset']['payments'][1]['recipientId'] == 'DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4'
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
+
+
+@pytest.mark.parametrize("version", [2, 3])
+def test_multi_payment_transaction_invalid_recipient(version):
+    """Test if multi payment transaction gets built with a custom fee
+    """
+    transaction = MultiPayment(fee=5)
+    transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
+    transaction.set_nonce(1)
+    transaction.set_version(version)
+    transaction.add_payment(1, 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz')
+    with pytest.raises(ValueError):
+        transaction.add_payment(2, 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC')

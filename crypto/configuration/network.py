@@ -28,6 +28,11 @@ def get_network():
     return network
 
 
+def get_network_version():
+    network = get_network()
+    return network['version']
+
+
 def set_custom_network(epoch, version, wif):
     """Set custom network
 

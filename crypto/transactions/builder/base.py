@@ -128,3 +128,6 @@ class BaseTransactionBuilder(object):
 
     def set_version(self, version):
         self.transaction.version = version
+
+    def set_vendor_field(self, value):
+        self.transaction.vendorField = value if isinstance(value, bytes) else value.encode()

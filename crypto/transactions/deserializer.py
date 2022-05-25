@@ -6,6 +6,8 @@ from importlib import import_module
 from binary.unsigned_integer.reader import read_bit8, read_bit16, read_bit32, read_bit64
 
 from crypto.constants import SOLAR_TRANSACTION_TYPES, TRANSACTION_TYPE_GROUP, TRANSACTION_TYPES
+from crypto.exceptions import SolarDeserializerException
+from crypto.identity import address
 from crypto.transactions.deserializers.base import BaseDeserializer
 
 
@@ -38,20 +40,21 @@ class Deserializer(object):
 
         vendor_field_length = read_bit8(self.serialized, offset=58)
         if vendor_field_length > 0:
-            vendor_field_offset = (58 + 8) * 2
-            vendorField_take = vendor_field_length * 2
-            transaction.vendorFieldHex = hexlify(
-                self.serialized
-            )[vendor_field_offset:vendorField_take]
+            vendor_field_offset = 59
+            vendorField_take = vendor_field_offset + vendor_field_length
+            transaction.vendorField = self.serialized[vendor_field_offset:vendorField_take]
 
         asset_offset = (58 + 1) * 2 + vendor_field_length * 2
         handled_transaction = self._handle_transaction_type(asset_offset, transaction)
         transaction.amount = handled_transaction.amount
         transaction.version = handled_transaction.version
-        if transaction.version == 2:
+
+        if transaction.version == 2 or transaction.version == 3:
             transaction = self._handle_version_two(transaction)
         else:
-            raise Exception('should this ever happen?')
+            raise SolarDeserializerException(f"Unable to deserialize transaction version {transaction.version}")
+
+        self._validate(transaction)
 
         return transaction
 
@@ -80,7 +83,8 @@ class Deserializer(object):
                 break
         return deserializer(self.serialized, asset_offset, transaction).deserialize()
 
-    def _handle_version_two(self, transaction):
+    @staticmethod
+    def _handle_version_two(transaction):
         """Handle deserialization for version two
 
         Args:
@@ -101,3 +105,11 @@ class Deserializer(object):
         else:
             name = TRANSACTION_TYPES[transaction.type]
         return name
+
+    @staticmethod
+    def _validate(transaction):
+        if not transaction.recipientId:
+            return
+
+        if not address.validate_address(transaction.recipientId):
+            raise SolarDeserializerException("Invalid recipient address")

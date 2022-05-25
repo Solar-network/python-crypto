@@ -38,17 +38,14 @@ class Serializer(object):
 
         bytes_data += write_high(self.transaction.get('senderPublicKey'))
         bytes_data += write_bit64(self.transaction.get('fee'))
-
+        
         if self.transaction.get('vendorField'):
             vendorFieldLength = len(self.transaction.get('vendorField'))
             bytes_data += write_bit8(vendorFieldLength)
             bytes_data += self.transaction['vendorField'].encode()
-        elif self.transaction.get('vendorFieldHex'):
-            vendorField_hex_length = len(self.transaction['vendorFieldHex'])
-            bytes_data += write_bit8(vendorField_hex_length / 2)
-            bytes_data += self.transaction['vendorFieldHex']
         else:
             bytes_data += write_bit8(0x00)
+
         bytes_data = self._handle_transaction_type(bytes_data)
         bytes_data = self._handle_signature(bytes_data, skip_signature, skip_second_signature, skip_multi_signature)
 

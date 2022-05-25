@@ -15,9 +15,7 @@ class HtlcLockDeserializer(BaseDeserializer):
         self.transaction.amount = read_bit64(self.serialized, offset=starting_position)
 
         secret_hash = hexlify(self.serialized)[(starting_position + 8) * 2:(starting_position + 8 + 32) * 2]
-
         expiration_type = read_bit8(self.serialized, offset=99)
-
         expiration_value = read_bit32(self.serialized, offset=100)
 
         recipient_start_index = (starting_position + 45) * 2

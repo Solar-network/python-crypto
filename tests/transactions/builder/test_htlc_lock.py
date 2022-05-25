@@ -15,11 +15,11 @@ def test_htlc_lock_transation_amount_not_int():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
-          amount='bad amount number',
-          secret_hash=secret_hash,
-          expiration_type=1,
-          expiration_value=1573455822
+            recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
+            amount='bad amount number',
+            secret_hash=secret_hash,
+            expiration_type=1,
+            expiration_value=1573455822
         )
 
 
@@ -29,7 +29,7 @@ def test_htlc_lock_transation_amount_zero():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+          recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
           amount=0,
           secret_hash=secret_hash,
           expiration_type=1,
@@ -43,7 +43,7 @@ def test_htlc_lock_transation_amount_negative():
         """
         secret_hash = _generate_secret_hash()
         HtlcLock(
-          recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+          recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
           amount=-5,
           secret_hash=secret_hash,
           expiration_type=1,
@@ -57,7 +57,7 @@ def test_htlc_lock_transaction(version):
     """
     secret_hash = _generate_secret_hash()
     transaction = HtlcLock(
-      recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+      recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
       amount=200000000,
       secret_hash=secret_hash,
       expiration_type=1,
@@ -67,10 +67,10 @@ def test_htlc_lock_transaction(version):
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.set_version(version)
-    transaction.sign('testing')
+    transaction.sign('this is a random passphrase')
     transaction_dict = transaction.to_dict()
 
-    assert transaction_dict['recipientId'] == 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC'
+    assert transaction_dict['recipientId'] == 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz'
     assert transaction_dict['amount'] == 200000000
     assert transaction_dict['nonce'] == 1
     assert transaction_dict['signature']
@@ -90,7 +90,7 @@ def test_htlc_lock_transaction_custom_fee(version):
     """
     secret_hash = _generate_secret_hash()
     transaction = HtlcLock(
-      recipient_id='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+      recipient_id='DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz',
       amount=200000000,
       secret_hash=secret_hash,
       expiration_type=1,
@@ -104,7 +104,7 @@ def test_htlc_lock_transaction_custom_fee(version):
     transaction.sign('testing')
     transaction_dict = transaction.to_dict()
 
-    assert transaction_dict['recipientId'] == 'AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC'
+    assert transaction_dict['recipientId'] == 'DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz'
     assert transaction_dict['amount'] == 200000000
     assert transaction_dict['nonce'] == 1
     assert transaction_dict['signature']

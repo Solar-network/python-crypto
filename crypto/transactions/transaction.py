@@ -1,17 +1,16 @@
 import json
 from binascii import unhexlify
 from hashlib import sha256
-from btclib.ecc import ssa
 
 from binary.hex.writer import write_high
 from binary.unsigned_integer.writer import write_bit8
+from crypto.configuration.network import get_network_version
 
 from crypto.constants import (
     TRANSACTION_DELEGATE_REGISTRATION, TRANSACTION_MULTI_SIGNATURE_REGISTRATION,
     TRANSACTION_SECOND_SIGNATURE_REGISTRATION, TRANSACTION_VOTE
 )
 from crypto.exceptions import SolarInvalidTransaction
-from crypto.schnorr import schnorr
 from crypto.transactions.deserializer import Deserializer
 from crypto.transactions.serializer import Serializer
 from crypto.utils.crypto import verify_schnorr, verify_schnorr_legacy
@@ -32,11 +31,12 @@ TRANSACTION_ATTRIBUTES = {
     'type': None,
     'typeGroup': None,
     'vendorField': None,
-    'vendorFieldHex': None,
+    # 'vendorFieldHex': None,
     'version': None,
     'lockTransactionId': None,
     'lockSecret': None,
-    'expiration': None
+    'expiration': None,
+    'network': get_network_version,
 }
 
 
@@ -88,10 +88,12 @@ class Transaction(object):
         Returns:
             bytes: bytes representation of the transaction
         """
-        return Serializer(self.to_dict()).serialize(skip_signature=skip_signature,
-                                                    skip_second_signature=skip_second_signature,
-                                                    skip_multi_signature=skip_multi_signature,
-                                                    raw=True)
+        return Serializer(self.to_dict()).serialize(
+            skip_signature=skip_signature,
+            skip_second_signature=skip_second_signature,
+            skip_multi_signature=skip_multi_signature,
+            raw=True,
+        )
 
     def parse_signatures(self, serialized, start_offset):
         """Parse the signature, second signature and multi signatures

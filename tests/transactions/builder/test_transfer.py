@@ -15,7 +15,7 @@ def test_transfer_transaction(version):
     """Test if a transfer transaction gets built
     """
     transaction = Transfer(
-        recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+        recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
         amount=200000000,
     )
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
@@ -39,7 +39,7 @@ def test_transfer_transaction_update_amount(version):
     """Test if a transfer transaction can update an amount
     """
     transaction = Transfer(
-        recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+        recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
         amount=200000000
     )
     transaction.set_amount(10)
@@ -64,7 +64,7 @@ def test_transfer_transaction_custom_fee(version):
     """Test if a transfer transaction gets built with a custom fee
     """
     transaction = Transfer(
-        recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+        recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
         amount=200000000,
         fee=5
     )
@@ -88,7 +88,7 @@ def test_transfer_secondsig_transaction(version):
     """Test if a transfer transaction with second signature gets built
     """
     transaction = Transfer(
-        recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+        recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
         amount=200000000,
     )
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
@@ -125,7 +125,7 @@ def test_transfer_transaction_amount_not_int():
         """Test error handling in constructor for non-integer amount
         """
         Transfer(
-            recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+            recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
             amount='bad amount'
         )
 
@@ -135,6 +135,16 @@ def test_transfer_transaction_amount_zero():
         """Test error handling in constructor for non-integer amount
         """
         Transfer(
-            recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+            recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
             amount=0
+        )
+
+
+def test_transfer_transaction_invalid_address():
+    with pytest.raises(ValueError):
+        """Test error handling in constructor for non-integer amount
+        """
+        Transfer(
+            recipientId='AGeYmgbg2LgGxRW2vNNJvQ88PknEJsYizC',
+            amount=100
         )
