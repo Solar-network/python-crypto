@@ -128,3 +128,6 @@ class BaseTransactionBuilder(object):
 
     def set_version(self, version):
         self.transaction.version = version
+
+    def set_vendor_field(self, value: str):
+        self.transaction.vendorField = value.encode()
