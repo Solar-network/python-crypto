@@ -18,7 +18,7 @@ class MultiPayment(BaseTransactionBuilder):
 
         self.transaction.typeGroup = self.get_type_group()
 
-        self.transaction.asset['payments'] = []
+        self.transaction.asset["payments"] = []
 
         self.transaction.vendorField = vendorField.encode() if vendorField else None
 
@@ -32,4 +32,4 @@ class MultiPayment(BaseTransactionBuilder):
         if not address.validate_address(recipient_id):
             raise ValueError("Invalid recipient address")
 
-        self.transaction.asset['payments'].append({'amount': amount, 'recipientId': recipient_id})
+        self.transaction.asset["payments"].append({"amount": amount, "recipientId": recipient_id})

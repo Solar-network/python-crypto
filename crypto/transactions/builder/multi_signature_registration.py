@@ -15,9 +15,9 @@ class MultiSignatureRegistration(BaseTransactionBuilder):
         super().__init__()
 
         self.transaction.asset = {
-            'multiSignature': {
-                'min': None,
-                'publicKeys': [],
+            "multiSignature": {
+                "min": None,
+                "publicKeys": [],
             },
         }
 
@@ -25,13 +25,14 @@ class MultiSignatureRegistration(BaseTransactionBuilder):
             self.transaction.fee = fee
 
     def set_min(self, minimum_participants):
-        self.transaction.asset['multiSignature']['min'] = minimum_participants
+        self.transaction.asset["multiSignature"]["min"] = minimum_participants
 
     def set_public_keys(self, public_keys):
-        self.transaction.asset['multiSignature']['publicKeys'] = public_keys
+        self.transaction.asset["multiSignature"]["publicKeys"] = public_keys
         self.transaction.fee = (len(public_keys) + 1) * self.transaction.fee
 
     def add_participant(self, public_key):
-        self.transaction.asset['multiSignature']['publicKeys'].append(public_key)
-        self.transaction.fee = (len(self.transaction.asset['multiSignature']['publicKeys']) + 1) * \
-            TRANSACTION_FEES.get(TRANSACTION_MULTI_SIGNATURE_REGISTRATION)
+        self.transaction.asset["multiSignature"]["publicKeys"].append(public_key)
+        self.transaction.fee = (
+            len(self.transaction.asset["multiSignature"]["publicKeys"]) + 1
+        ) * TRANSACTION_FEES.get(TRANSACTION_MULTI_SIGNATURE_REGISTRATION)

@@ -18,4 +18,4 @@ class Burn(BaseTransactionBuilder):
         if type(amount) == int and amount > 0:
             self.transaction.amount = amount
         else:
-            raise ValueError('Amount is not valid')
+            raise ValueError("Amount is not valid")

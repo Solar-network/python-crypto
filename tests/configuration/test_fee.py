@@ -13,6 +13,10 @@ def test_set_fee():
     assert result == 1
 
     # set it back to the default fee so that other tests aren't affected
-    set_fee(TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP.CORE.value, TRANSACTION_FEES[TRANSACTION_TRANSFER])
+    set_fee(
+        TRANSACTION_TRANSFER,
+        TRANSACTION_TYPE_GROUP.CORE.value,
+        TRANSACTION_FEES[TRANSACTION_TRANSFER],
+    )
     result = get_fee(TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP.CORE.value)
     assert result == TRANSACTION_FEES[TRANSACTION_TRANSFER]

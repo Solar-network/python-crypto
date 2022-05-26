@@ -1,9 +1,10 @@
 import hashlib
 from binascii import unhexlify
+
 from btclib.ecc import ssa
 
-from crypto.schnorr import schnorr
 from crypto.identity.private_key import PrivateKey
+from crypto.schnorr import schnorr
 
 
 def sign_schnorr(msg: bytes, private_key: PrivateKey, nonce: int = None) -> str:

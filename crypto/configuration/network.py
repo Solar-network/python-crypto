@@ -11,9 +11,9 @@ def set_network(network_object):
     """
     global network
     network = {
-        'epoch': network_object.epoch,
-        'version': network_object.version,
-        'wif': network_object.wif,
+        "epoch": network_object.epoch,
+        "version": network_object.version,
+        "wif": network_object.wif,
     }
 
 
@@ -38,9 +38,9 @@ def set_custom_network(epoch, version, wif):
     """
     global network
     network = {
-        'epoch': epoch,
-        'version': version,
-        'wif': wif,
+        "epoch": epoch,
+        "version": version,
+        "wif": wif,
     }
 
 
