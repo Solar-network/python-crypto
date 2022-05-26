@@ -42,3 +42,13 @@ def set_custom_network(epoch, version, wif):
         'version': version,
         'wif': wif,
     }
+
+
+def get_network_version():
+    """Get currently set network version
+
+    Returns:
+        int: network version
+    """
+    network = get_network()
+    return network['version']
