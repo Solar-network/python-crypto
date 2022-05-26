@@ -17,8 +17,8 @@ class HtlcRefund(BaseTransactionBuilder):
 
         self.transaction.typeGroup = self.get_type_group()
 
-        self.transaction.asset['refund'] = {
-            'lockTransactionId': lock_transaction_id,
+        self.transaction.asset["refund"] = {
+            "lockTransactionId": lock_transaction_id,
         }
 
         if fee:

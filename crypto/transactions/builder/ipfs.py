@@ -15,7 +15,7 @@ class IPFS(BaseTransactionBuilder):
         """
         super().__init__()
 
-        self.transaction.asset['ipfs'] = ipfs_id
+        self.transaction.asset["ipfs"] = ipfs_id
         self.transaction.typeGroup = self.get_type_group()
 
         if fee:

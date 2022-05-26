@@ -18,9 +18,9 @@ class HtlcClaim(BaseTransactionBuilder):
 
         self.transaction.typeGroup = self.get_type_group()
 
-        self.transaction.asset['claim'] = {
-            'lockTransactionId': lock_transaction_id,
-            'unlockSecret': unlock_secret
+        self.transaction.asset["claim"] = {
+            "lockTransactionId": lock_transaction_id,
+            "unlockSecret": unlock_secret,
         }
 
         if fee:

@@ -1,5 +1,4 @@
 import json
-from btclib.ecc import ssa
 
 from crypto.identity.private_key import PrivateKey
 from crypto.utils.crypto import sign_schnorr, verify_schnorr
@@ -8,10 +7,10 @@ from crypto.utils.crypto import sign_schnorr, verify_schnorr
 class Message(object):
     def __init__(self, **kwargs):
         for k in kwargs.keys():
-            if k in ['message', 'signature', 'publickey', 'publicKey']:
+            if k in ["message", "signature", "publickey", "publicKey"]:
                 self.__setattr__(k, kwargs[k])
             else:
-                raise TypeError('Invalid keyword argument %s' % k)
+                raise TypeError("Invalid keyword argument %s" % k)
 
     @classmethod
     def sign(cls, message, passphrase):
@@ -36,7 +35,7 @@ class Message(object):
             bool: returns a boolean - true if verified, false if not
         """
         message = self.message if isinstance(self.message, bytes) else self.message.encode()
-        public_key = self.publickey if hasattr(self, 'publickey') else self.publicKey
+        public_key = self.publickey if hasattr(self, "publickey") else self.publicKey
         is_verified = verify_schnorr(message, public_key, self.signature)
         return is_verified
 
@@ -47,9 +46,11 @@ class Message(object):
             dict: dictionary consiting of public_key, signature and message
         """
         data = {
-            ('publicKey' if hasattr(self, 'publicKey') else 'publickey'): (self.publicKey if hasattr(self, 'publicKey') else self.publickey),
-            'signature': self.signature,
-            'message': self.message,
+            ("publicKey" if hasattr(self, "publicKey") else "publickey"): (
+                self.publicKey if hasattr(self, "publicKey") else self.publickey
+            ),
+            "signature": self.signature,
+            "message": self.message,
         }
         return data
 

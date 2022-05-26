@@ -1,31 +1,24 @@
-import hashlib
-from binascii import unhexlify
-from btclib.ecc import ssa
-
 from crypto.configuration.fee import get_fee
 from crypto.constants import HTLC_LOCK_EXPIRATION_TYPE, TRANSACTION_TYPE_GROUP
 from crypto.identity.private_key import PrivateKey
 from crypto.identity.public_key import PublicKey
-from crypto.schnorr import schnorr
 from crypto.transactions.transaction import Transaction
 from crypto.utils.crypto import sign_schnorr, sign_schnorr_legacy
 
 
 class BaseTransactionBuilder(object):
-
     def __init__(self):
         self.transaction = Transaction()
-        self.transaction.type = getattr(self, 'transaction_type', None)
+        self.transaction.type = getattr(self, "transaction_type", None)
         self.transaction.fee = get_fee(
-            getattr(self, 'transaction_type', None),
-            getattr(self, 'typeGroup', 1)
+            getattr(self, "transaction_type", None), getattr(self, "typeGroup", 1)
         )
-        self.transaction.nonce = getattr(self, 'nonce', None)
-        self.transaction.typeGroup = getattr(self, 'typeGroup', 1)
-        self.transaction.signatures = getattr(self, 'signatures', None)
-        self.transaction.version = getattr(self, 'version', 3)
+        self.transaction.nonce = getattr(self, "nonce", None)
+        self.transaction.typeGroup = getattr(self, "typeGroup", 1)
+        self.transaction.signatures = getattr(self, "signatures", None)
+        self.transaction.version = getattr(self, "version", 3)
         if self.transaction.type != 0:
-            self.transaction.amount = getattr(self, 'amount', 0)
+            self.transaction.amount = getattr(self, "amount", 0)
 
     def to_dict(self):
         return self.transaction.to_dict()
@@ -54,7 +47,6 @@ class BaseTransactionBuilder(object):
             self.transaction.signature = sig
             self.transaction.id = self.transaction.get_id()
 
-
     def second_sign(self, passphrase):
         """Sign the transaction using the given second passphrase
 
@@ -81,7 +73,7 @@ class BaseTransactionBuilder(object):
 
         index = len(self.transaction.signatures) if index == -1 else index
         pvt = PrivateKey.from_passphrase(passphrase)
-        index_formatted = hex(index).replace('x', '')
+        index_formatted = hex(index).replace("x", "")
         msg = self.transaction.to_bytes(True, True, True)
 
         if self.transaction.version > 2:
@@ -96,12 +88,12 @@ class BaseTransactionBuilder(object):
 
     def verify(self):
         return self.transaction.verify()
-    
+
     def verify_second(self, secondPublicKey):
         return self.transaction.verify_secondsig(secondPublicKey)
 
     def verify_multisig(self, multi_signature_asset):
-        return self.transaction.verify_signatures( multi_signature_asset)
+        return self.transaction.verify_signatures(multi_signature_asset)
 
     def set_nonce(self, nonce):
         self.transaction.nonce = nonce
@@ -116,14 +108,21 @@ class BaseTransactionBuilder(object):
         if type(expiration) == int:
             self.transaction.expiration = expiration
         else:
-            types = {HTLC_LOCK_EXPIRATION_TYPE.EPOCH_TIMESTAMP: 1, HTLC_LOCK_EXPIRATION_TYPE.BLOCK_HEIGHT: 2}
+            types = {
+                HTLC_LOCK_EXPIRATION_TYPE.EPOCH_TIMESTAMP: 1,
+                HTLC_LOCK_EXPIRATION_TYPE.BLOCK_HEIGHT: 2,
+            }
             self.transaction.expiration = types[expiration]
 
     def set_type_group(self, type_group):
         if type(type_group) == int:
             self.transaction.typeGroup = type_group
         else:
-            types = {TRANSACTION_TYPE_GROUP.TEST: 0, TRANSACTION_TYPE_GROUP.CORE: 1, TRANSACTION_TYPE_GROUP.RESERVED: 1000}
+            types = {
+                TRANSACTION_TYPE_GROUP.TEST: 0,
+                TRANSACTION_TYPE_GROUP.CORE: 1,
+                TRANSACTION_TYPE_GROUP.RESERVED: 1000,
+            }
             self.transaction.typeGroup = types[type_group]
 
     def set_version(self, version):

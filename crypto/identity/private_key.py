@@ -5,7 +5,6 @@ from coincurve import PrivateKey as PvtKey
 
 
 class PrivateKey(object):
-
     def __init__(self, private_key):
         self.private_key = PvtKey.from_hex(private_key)
         self.public_key = hexlify(self.private_key.public_key.format()).decode()
@@ -21,6 +20,7 @@ class PrivateKey(object):
             str: signature of the signed message
         """
         from crypto.utils.crypto import sign_schnorr  # circular imports
+
         signature = sign_schnorr(message, self.private_key, nonce)
         return signature
 

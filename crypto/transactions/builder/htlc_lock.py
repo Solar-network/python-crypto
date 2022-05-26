@@ -7,7 +7,16 @@ class HtlcLock(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_HTLC_LOCK
 
-    def __init__(self, recipient_id, amount, secret_hash, expiration_type, expiration_value, vendorField=None, fee=None):
+    def __init__(
+        self,
+        recipient_id,
+        amount,
+        secret_hash,
+        expiration_type,
+        expiration_value,
+        vendorField=None,
+        fee=None,
+    ):
         """Create a timelock transaction
 
         Args:
@@ -25,20 +34,17 @@ class HtlcLock(BaseTransactionBuilder):
             raise ValueError("Invalid recipient address")
 
         self.transaction.recipientId = recipient_id
-        
+
         if type(amount) == int and amount > 0:
             self.transaction.amount = amount
         else:
-            raise ValueError('Amount is not valid')
+            raise ValueError("Amount is not valid")
 
         self.transaction.typeGroup = self.get_type_group()
 
-        self.transaction.asset['lock'] = {
-            'secretHash': secret_hash,
-            'expiration': {
-                'type': expiration_type,
-                'value': expiration_value
-            }
+        self.transaction.asset["lock"] = {
+            "secretHash": secret_hash,
+            "expiration": {"type": expiration_type, "value": expiration_value},
         }
 
         self.transaction.vendorField = vendorField.encode() if vendorField else None

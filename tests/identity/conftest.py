@@ -3,15 +3,14 @@ import pytest
 
 @pytest.fixture
 def identity():
-    """Identity fixture
-    """
+    """Identity fixture"""
     data = {
-        'data': {
-            'private_key': 'd8839c2432bfd0a67ef10a804ba991eabba19f154a3d707917681d45822a5712',
-            'public_key': '034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192',
-            'address': 'D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
-            'wif': 'eQNmqaEKfoQEmYgj8A9R8nNPTpUefZUGCzoowLixQM3p19riAxsV'
+        "data": {
+            "private_key": "d8839c2432bfd0a67ef10a804ba991eabba19f154a3d707917681d45822a5712",
+            "public_key": "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192",
+            "address": "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
+            "wif": "eQNmqaEKfoQEmYgj8A9R8nNPTpUefZUGCzoowLixQM3p19riAxsV",
         },
-        'passphrase': 'this is a top secret passphrase'
+        "passphrase": "this is a top secret passphrase",
     }
     return data

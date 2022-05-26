@@ -35,7 +35,7 @@ class Deserializer(object):
         transaction.typeGroup = read_bit32(self.serialized, offset=3)
         transaction.type = read_bit16(self.serialized, offset=7)
         transaction.nonce = read_bit64(self.serialized, offset=9)
-        transaction.senderPublicKey = hexlify(self.serialized)[34:66+34].decode()
+        transaction.senderPublicKey = hexlify(self.serialized)[34 : 66 + 34].decode()
         transaction.fee = read_bit64(self.serialized, offset=50)
 
         vendor_field_length = read_bit8(self.serialized, offset=58)
@@ -50,7 +50,9 @@ class Deserializer(object):
         transaction.version = handled_transaction.version
 
         if transaction.version not in [2, 3]:
-            raise SolarDeserializerException("%s is not a valid transaction version", transaction.version)
+            raise SolarDeserializerException(
+                "%s is not a valid transaction version", transaction.version
+            )
 
         transaction.id = sha256(unhexlify(transaction.serialize(False, True, False))).hexdigest()
 
@@ -69,11 +71,11 @@ class Deserializer(object):
             object: Transaction resource object of currently deserialized data
         """
         deserializer_name = self._get_deserializer_name(transaction)
-        module = import_module('crypto.transactions.deserializers.{}'.format(deserializer_name))
+        module = import_module("crypto.transactions.deserializers.{}".format(deserializer_name))
         for attr in dir(module):
             # If attr name is `BaseDeserializer`, skip it as it's a class and also has a
             # subclass of BaseDeserializer
-            if attr == 'BaseDeserializer':
+            if attr == "BaseDeserializer":
                 continue
 
             attribute = getattr(module, attr)
