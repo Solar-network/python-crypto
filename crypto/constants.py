@@ -13,17 +13,17 @@ TRANSACTION_HTLC_CLAIM = 9
 TRANSACTION_HTLC_REFUND = 10
 
 TRANSACTION_TYPES = {
-    TRANSACTION_TRANSFER: 'transfer',
-    TRANSACTION_SECOND_SIGNATURE_REGISTRATION: 'second_signature_registration',
-    TRANSACTION_DELEGATE_REGISTRATION: 'delegate_registration',
-    TRANSACTION_VOTE: 'vote',
-    TRANSACTION_MULTI_SIGNATURE_REGISTRATION: 'multi_signature_registration',
-    TRANSACTION_IPFS: 'ipfs',
-    TRANSACTION_MULTI_PAYMENT: 'multi_payment',
-    TRANSACTION_DELEGATE_RESIGNATION: 'delegate_resignation',
-    TRANSACTION_HTLC_LOCK: 'htlc_lock',
-    TRANSACTION_HTLC_CLAIM: 'htlc_claim',
-    TRANSACTION_HTLC_REFUND: 'htlc_refund',
+    TRANSACTION_TRANSFER: "transfer",
+    TRANSACTION_SECOND_SIGNATURE_REGISTRATION: "second_signature_registration",
+    TRANSACTION_DELEGATE_REGISTRATION: "delegate_registration",
+    TRANSACTION_VOTE: "vote",
+    TRANSACTION_MULTI_SIGNATURE_REGISTRATION: "multi_signature_registration",
+    TRANSACTION_IPFS: "ipfs",
+    TRANSACTION_MULTI_PAYMENT: "multi_payment",
+    TRANSACTION_DELEGATE_RESIGNATION: "delegate_resignation",
+    TRANSACTION_HTLC_LOCK: "htlc_lock",
+    TRANSACTION_HTLC_CLAIM: "htlc_claim",
+    TRANSACTION_HTLC_REFUND: "htlc_refund",
 }
 
 TRANSACTION_FEES = {

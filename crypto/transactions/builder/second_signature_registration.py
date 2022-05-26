@@ -17,7 +17,7 @@ class SecondSignatureRegistration(BaseTransactionBuilder):
         super().__init__()
 
         public_key = PublicKey.from_passphrase(second_passphrase)
-        self.transaction.asset['signature'] = {'publicKey': public_key}
+        self.transaction.asset["signature"] = {"publicKey": public_key}
 
         if fee:
             self.transaction.fee = fee

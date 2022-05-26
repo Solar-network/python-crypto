@@ -16,7 +16,7 @@ class Vote(BaseTransactionBuilder):
         """
         super().__init__()
 
-        self.transaction.asset['votes'] = [vote]
+        self.transaction.asset["votes"] = [vote]
 
         if fee:
             self.transaction.fee = fee

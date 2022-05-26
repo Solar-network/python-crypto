@@ -16,12 +16,12 @@ class DelegateRegistration(BaseTransactionBuilder):
         """
         super().__init__()
 
-        self.transaction.asset['delegate'] = {'username': username}
+        self.transaction.asset["delegate"] = {"username": username}
 
         if fee:
             self.transaction.fee = fee
 
     def sign(self, passphrase):
         public_key = PublicKey.from_passphrase(passphrase)
-        self.transaction.asset['delegate']['publicKey'] = public_key
+        self.transaction.asset["delegate"]["publicKey"] = public_key
         super().sign(passphrase)
