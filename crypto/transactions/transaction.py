@@ -12,31 +12,33 @@ from crypto.constants import (
     TRANSACTION_VOTE,
 )
 from crypto.exceptions import SolarInvalidTransaction
+from crypto.configuration.network import get_network_version
+from crypto.schnorr import schnorr
 from crypto.transactions.deserializer import Deserializer
 from crypto.transactions.serializer import Serializer
 from crypto.utils.crypto import verify_schnorr, verify_schnorr_legacy
 
 TRANSACTION_ATTRIBUTES = {
-    "amount": 0,
-    "asset": dict,
-    "fee": None,
-    "id": None,
-    "network": None,
-    "recipientId": None,
-    "secondSignature": None,
-    "senderPublicKey": None,
-    "signature": None,
-    "signatures": None,
-    "signSignature": None,
-    "nonce": None,
-    "type": None,
-    "typeGroup": None,
-    "vendorField": None,
-    "vendorFieldHex": None,
-    "version": None,
-    "lockTransactionId": None,
-    "lockSecret": None,
-    "expiration": None,
+    'amount': 0,
+    'asset': dict,
+    'fee': None,
+    'id': None,
+    'network': get_network_version,
+    'recipientId': None,
+    'secondSignature': None,
+    'senderPublicKey': None,
+    'signature': None,
+    'signatures': None,
+    'signSignature': None,
+    'nonce': None,
+    'type': None,
+    'typeGroup': None,
+    'vendorField': None,
+    'vendorFieldHex': None,
+    'version': None,
+    'lockTransactionId': None,
+    'lockSecret': None,
+    'expiration': None
 }
 
 
