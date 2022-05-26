@@ -5,7 +5,7 @@ from importlib import import_module
 from binary.hex.writer import write_high
 from binary.unsigned_integer.writer import write_bit8, write_bit16, write_bit32, write_bit64
 
-from crypto.configuration.network import get_network
+from crypto.configuration.network import get_network_version
 from crypto.constants import SOLAR_TRANSACTION_TYPES, TRANSACTION_TYPE_GROUP, TRANSACTION_TYPES
 from crypto.exceptions import SolarSerializerException
 from crypto.transactions.serializers.base import BaseSerializer
@@ -26,12 +26,11 @@ class Serializer(object):
         Returns:
             bytes: bytes string
         """
-        network_config = get_network()
         bytes_data = bytes()
 
         bytes_data += write_bit8(0xff)
         bytes_data += write_bit8(self.transaction.get('version') or 0x02)
-        bytes_data += write_bit8(self.transaction.get('network') or network_config['version'])
+        bytes_data += write_bit8(self.transaction.get('network') or get_network_version())
         bytes_data += write_bit32(self.transaction.get('typeGroup') or 0x01)
         bytes_data += write_bit16(self.transaction.get('type'))
         bytes_data += write_bit64(self.transaction.get('nonce') or 0x01)

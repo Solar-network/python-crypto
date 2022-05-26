@@ -11,6 +11,7 @@ from crypto.constants import (
     TRANSACTION_SECOND_SIGNATURE_REGISTRATION, TRANSACTION_VOTE
 )
 from crypto.exceptions import SolarInvalidTransaction
+from crypto.configuration.network import get_network_version
 from crypto.schnorr import schnorr
 from crypto.transactions.deserializer import Deserializer
 from crypto.transactions.serializer import Serializer
@@ -21,7 +22,7 @@ TRANSACTION_ATTRIBUTES = {
     'asset': dict,
     'fee': None,
     'id': None,
-    'network': None,
+    'network': get_network_version,
     'recipientId': None,
     'secondSignature': None,
     'senderPublicKey': None,
