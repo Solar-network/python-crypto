@@ -46,3 +46,14 @@ def test_transfer_second_signature_deserializer():
     assert actual.signSignature == '02dd94f611e300ad77147d808a34e942b379c5468760d8605adc0304400a2578a2039468b844f30ad1f0515f9cce33855791296117bfe8ef3caa664152644fd6'
 
     actual.verify()
+
+
+def test_transfer_with_vendor_field_deserializer():
+    serialized = 'ff021e0100000000000100000000000000034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed19280969800000000000b68656c6c6f20776f726c6400c2eb0b00000000000000001e0995750207ecaf0ccf251c1265b92ad84f553662dc79fe9c166d898cf27e36e8897cb154925a48faa32738edb87d71acfae68cc5e384a9969374cc85b335bf89549342f17266cce370ff57c3401ff8ca90424086'
+
+    deserializer = Deserializer(serialized)
+    actual = deserializer.deserialize()
+
+    assert actual.vendorField == "hello world"
+
+    actual.verify()
