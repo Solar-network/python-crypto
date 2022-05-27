@@ -98,6 +98,9 @@ class BaseTransactionBuilder(object):
     def set_nonce(self, nonce):
         self.transaction.nonce = nonce
 
+    def set_fee(self, fee: int):
+        self.transaction.fee = fee
+
     def set_amount(self, amount):
         self.transaction.amount = amount
 
