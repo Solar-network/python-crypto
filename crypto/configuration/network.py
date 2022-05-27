@@ -51,4 +51,4 @@ def get_network_version():
         int: network version
     """
     network = get_network()
-    return network['version']
+    return network["version"]
