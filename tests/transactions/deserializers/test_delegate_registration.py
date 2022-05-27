@@ -23,6 +23,5 @@ def test_delegate_registration_deserializer():
         == "eaf4b4dfd7903c32cf6c145ddf0744e86536719f5790b4286b08f1a10f0ad183bc601efc8a49a2a7b41758601a1793693afa1781cf0a63a8f72b08d5a1aaba1e"
     )
     assert actual.amount == 0
-    assert actual.id == "cfd113d8cd9fd46b07030c14fac38c1d3fc0eca991e999eab9d0152ea96ab0dc"
 
     actual.verify()

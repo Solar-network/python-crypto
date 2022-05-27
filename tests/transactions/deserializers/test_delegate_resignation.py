@@ -22,6 +22,5 @@ def test_delegate_resignation_deserializer():
         == "bdc048ca7eb5688cc01921aecf5914118cfc78eacc23825efa6d75094a683127cc02512dc59e1e0631fa8956f482eabc54933d23011a8337ea9cab99abed504d"
     )
     assert actual.amount == 0
-    assert actual.id == "707b4deb339e717dfef44c40db0692015ce9bbab015c007b016b8a46b341e859"
 
     actual.verify()

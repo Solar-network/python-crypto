@@ -22,7 +22,6 @@ def test_multi_signature_registration_deserializer():
         data["signature"]
         == "f5e9859c955bf8917b308ea21c88daf58661686c2017e476dcf735ad7f00aebf8e6effda3fe99e5f33f6007db7db9c9155796d9b5d31c53bd6156364a6a765d0"
     )
-    assert data["id"] == "c868aad20165a336c35e324378f0c12008d18af4c1025291efcb7539c7c917f0"
     assert data["asset"]["multiSignature"]["min"] == 2
     assert data["asset"]["multiSignature"]["publicKeys"] == [
         "0205d9bbe71c343ac9a6a83a4344fd404c3534fc7349827097d0835d160bc2b896",
