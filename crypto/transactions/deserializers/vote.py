@@ -31,25 +31,16 @@ class VoteDeserializer(BaseDeserializer):
             else:
                 if self.transaction.version == 2:
                     offset += 1  # +1 due to NOT moving forwards when checking for `b"\xff"`
-                    length = read_bit8(
-                        self.serialized[starting_position + offset : starting_position + offset + 1]
-                    )
-                    offset += 1
 
-                    vote_buffer = self.serialized[
-                        starting_position + offset : starting_position + offset + length
-                    ]
-                    offset += length
-                else:
-                    length = read_bit8(
-                        self.serialized[starting_position + offset : starting_position + offset + 1]
-                    )
-                    offset += 1
+                length = read_bit8(
+                    self.serialized[starting_position + offset : starting_position + offset + 1]
+                )
+                offset += 1
 
-                    vote_buffer = self.serialized[
-                        starting_position + offset : starting_position + offset + length
-                    ]
-                    offset += length
+                vote_buffer = self.serialized[
+                    starting_position + offset : starting_position + offset + length
+                ]
+                offset += length
 
                 prefix = "+" if vote_buffer[0] == 1 else "-"
                 vote = f"{prefix}{vote_buffer[1::].decode()}"
