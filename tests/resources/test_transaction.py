@@ -14,7 +14,6 @@ def test_transaction_deserialize(transaction_type_0):
     assert data["amount"] == transaction_type_0["amount"]
     assert data["senderPublicKey"] == transaction_type_0["senderPublicKey"]
     assert data["recipientId"] == transaction_type_0["recipientId"]
-    assert data["id"] == transaction_type_0["id"]
     assert data["fee"] == transaction_type_0["fee"]
     assert data["signature"] == transaction_type_0["signature"]
     assert data["version"] == transaction_type_0["version"]

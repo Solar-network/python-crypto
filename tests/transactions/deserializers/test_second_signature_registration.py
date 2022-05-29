@@ -22,7 +22,6 @@ def test_second_signature_registration_deserializer():
         == "f9a1e2244c8318e8be85482fc02659e5c1775d246d73d5d0699ae4a1d5e3a3e84f9dcf68ee015f943d2a82eb829f35abd7901279761d96f6b43431520e955c67"
     )
     assert actual.amount == 0
-    assert actual.id == "173a3230159b45d772b2e0348f42af53913bf3e376397f29b8e0bda290badbe4"
     assert (
         actual.asset["signature"]["publicKey"]
         == "03699e966b2525f9088a6941d8d94f7869964a000efe65783d78ac82e1199fe609"

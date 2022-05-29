@@ -22,7 +22,6 @@ def test_htlc_claim_deserializer():
         == "dcd867411d20c7aa891e44cd92e916ea1d1e64ef1518dfcdfa227e4415d846a66c60718dc9d4bfc354afa69c2f8fa6e68f57e6eaf53c51b7a209ead5702ffd71"
     )
     assert actual.amount == 0
-    assert actual.id == "aad3fdb321e2543af1dd9d2d4d155473a8b49cacbc116fa1f3f1b95154b336d5"
     assert (
         actual.asset["claim"]["lockTransactionId"]
         == "943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4"

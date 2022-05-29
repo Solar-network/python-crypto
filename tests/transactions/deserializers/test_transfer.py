@@ -22,7 +22,6 @@ def test_transfer_deserializer(transaction_type_0):
         actual.senderPublicKey
         == "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192"
     )  # noqa
-    assert actual.id == "c868363929575b00d58846c55139143ada15fec07c917d7139b8a422874adaf0"
     assert (
         actual.signature
         == "20b4091da824dc1b630ec7a09f39fe491cb2ac39dabdbe67d48753a43e8dc8cd4f76eb4ff717efbb06889882aa99a07db7bf35de3b8d5f1ad74b8284e0a68420"
@@ -51,7 +50,6 @@ def test_transfer_second_signature_deserializer():
         actual.senderPublicKey
         == "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192"
     )  # noqa
-    assert actual.id == "be148ab83b75c199f9778f8963814a641a6ee937b6dd5b294082fbf7def94a45"
     assert (
         actual.signature
         == "136c29d921b58ae3194020b82e9808f9cd54f7178cb34678f570f28226b8e56ba0ad318297a3bacbb37ab22ddaa5dbf1901cda3ec2d2bca5ce98d6407839ab9b"

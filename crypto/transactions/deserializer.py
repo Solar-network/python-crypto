@@ -1,6 +1,5 @@
 import inspect
 from binascii import hexlify, unhexlify
-from hashlib import sha256
 from importlib import import_module
 
 from binary.unsigned_integer.reader import read_bit8, read_bit16, read_bit32, read_bit64
@@ -53,8 +52,6 @@ class Deserializer(object):
             raise SolarDeserializerException(
                 "%s is not a valid transaction version", transaction.version
             )
-
-        transaction.id = sha256(unhexlify(transaction.serialize(False, True, False))).hexdigest()
 
         self._validate(transaction)
 

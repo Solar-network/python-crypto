@@ -22,7 +22,6 @@ def test_htlc_lock_deserializer(transaction_type_8):
         == "6a35d659c7965d009254847cebf0d7b34a652a7e8599443e72ba414dd056864b95d05b55d0834dd859a0b1cc3eeee916b7938273fc2984bf9f813c5cf03a93f9"
     )
     assert actual.amount == 200000000
-    assert actual.id == "61c27654fba0cabdb7ba38ccf2c1dffe136f605572f465d9ec14d5001875ad65"
     assert actual.recipientId == "DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz"
     assert (
         actual.asset["lock"]["secretHash"]
