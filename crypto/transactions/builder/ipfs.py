@@ -6,16 +6,16 @@ class IPFS(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_IPFS
 
-    def __init__(self, ipfs_id, fee=None):
+    def __init__(self, ipfs_cid=None, fee=None):
         """Create an ipfs transaction
 
         Args:
-            ipfs_id (str): ipfs transaction identifier
+            ipfs_cid (str): ipfs cid
             fee (int, optional): fee used for the transaction (default is already set)
         """
         super().__init__()
 
-        self.transaction.asset["ipfs"] = ipfs_id
+        self.transaction.asset["ipfs"] = ipfs_cid
         self.transaction.typeGroup = self.get_type_group()
 
         if fee:
@@ -23,3 +23,6 @@ class IPFS(BaseTransactionBuilder):
 
     def get_type_group(self):
         return TRANSACTION_TYPE_GROUP.CORE.value
+
+    def set_ipfs_cid(self, cid: str):
+        self.transaction.asset["ipfs"] = cid
