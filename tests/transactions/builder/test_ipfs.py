@@ -12,21 +12,21 @@ set_network(Testnet)
 @pytest.mark.parametrize("version", [2, 3])
 def test_ipfs_transaction(version):
     """Test if ipfs transaction gets built"""
-    ipfs_id = b58encode("hello")
+    ipfs_cid = "QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4"
 
-    transaction = IPFS(ipfs_id)
-    transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
+    transaction = IPFS(ipfs_cid)
     transaction.set_nonce(1)
     transaction.set_version(version)
     transaction.sign("testing")
     transaction_dict = transaction.to_dict()
+    transaction.to_json()
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_IPFS
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 500000000
-    assert transaction_dict["asset"]["ipfs"] == ipfs_id
+    assert transaction_dict["asset"]["ipfs"] == ipfs_cid
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
@@ -34,12 +34,12 @@ def test_ipfs_transaction(version):
 @pytest.mark.parametrize("version", [2, 3])
 def test_ipfs_transaction_custom_fee(version):
     """Test if ipfs transaction gets built with custom fee"""
-    ipfs_id = b58encode("hello")
+    ipfs_cid = "QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4"
 
-    transaction = IPFS(ipfs_id, 5)
-    transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
+    transaction = IPFS()
     transaction.set_nonce(1)
     transaction.set_version(version)
+    transaction.set_ipfs_cid(ipfs_cid)
     transaction.sign("testing")
     transaction_dict = transaction.to_dict()
 
@@ -47,7 +47,6 @@ def test_ipfs_transaction_custom_fee(version):
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_IPFS
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 5
-    assert transaction_dict["asset"]["ipfs"] == ipfs_id
+    assert transaction_dict["asset"]["ipfs"] == ipfs_cid
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
