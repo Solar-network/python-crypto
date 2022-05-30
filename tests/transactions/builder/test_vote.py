@@ -26,7 +26,7 @@ def test_vote_transaction_with_pubkey(version):
     assert transaction_dict["asset"]["votes"]
     assert transaction_dict["type"] is TRANSACTION_VOTE
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 100000000
+    assert transaction_dict["fee"] == 5000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
@@ -48,7 +48,7 @@ def test_vote_transaction_with_username(version):
     assert transaction_dict["asset"]["votes"]
     assert transaction_dict["type"] is TRANSACTION_VOTE
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 100000000
+    assert transaction_dict["fee"] == 5000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
@@ -70,7 +70,7 @@ def test_vote_switch_transaction_with_username(version):
     assert transaction_dict["asset"]["votes"]
     assert transaction_dict["type"] is TRANSACTION_VOTE
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 100000000
+    assert transaction_dict["fee"] == 5000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 

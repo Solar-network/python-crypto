@@ -73,7 +73,7 @@ def test_htlc_lock_transaction(version):
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_HTLC_LOCK
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 10000000
+    assert transaction_dict["fee"] == 5000000
     assert transaction_dict["asset"]["lock"]["secretHash"] == secret_hash
     assert transaction_dict["asset"]["lock"]["expiration"]["type"] == 1
     assert transaction_dict["asset"]["lock"]["expiration"]["value"] == 1573455822

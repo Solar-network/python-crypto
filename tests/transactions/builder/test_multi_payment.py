@@ -24,7 +24,7 @@ def test_multi_payment_transaction(version):
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_MULTI_PAYMENT
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 10000000
+    assert transaction_dict["fee"] == 50000000
     assert transaction_dict["asset"]["payments"][0]["amount"] == 1
     assert (
         transaction_dict["asset"]["payments"][0]["recipientId"]
