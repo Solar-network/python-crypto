@@ -1,6 +1,7 @@
 from binascii import unhexlify
+from binary.unsigned_integer.writer import write_bit8
 
-from crypto.exceptions import SolarSerializerException
+
 from crypto.transactions.serializers.base import BaseSerializer
 
 
@@ -8,10 +9,9 @@ class HtlcClaimSerializer(BaseSerializer):
     """Serializer handling timelock claim data"""
 
     def serialize(self):
+        unlock_secret = unhexlify(self.transaction["asset"]["claim"]["unlockSecret"].encode())
+        self.bytes_data += write_bit8(self.transaction["asset"]["claim"]["hashType"])
         self.bytes_data += unhexlify(self.transaction["asset"]["claim"]["lockTransactionId"])
-        unlock_secret_bytes = unhexlify(self.transaction["asset"]["claim"]["unlockSecret"].encode())
-        if len(unlock_secret_bytes) != 32:
-            raise SolarSerializerException("Unlock secret must be 32 bytes long")
-
-        self.bytes_data += unlock_secret_bytes
+        self.bytes_data += write_bit8(len(unlock_secret))
+        self.bytes_data += unlock_secret
         return self.bytes_data

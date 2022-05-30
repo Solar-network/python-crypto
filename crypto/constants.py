@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 TRANSACTION_TRANSFER = 0
 TRANSACTION_SECOND_SIGNATURE_REGISTRATION = 1
 TRANSACTION_DELEGATE_REGISTRATION = 2
@@ -67,3 +68,15 @@ class HTLC_LOCK_EXPIRATION_TYPE(Enum):
 
     EPOCH_TIMESTAMP = 1
     BLOCK_HEIGHT = 2
+
+
+class HashingType(Enum):
+    SHA256 = 0
+    SHA384 = 1
+    SHA512 = 2
+    SHA3256 = 3
+    SHA3384 = 4
+    SHA3512 = 5
+    Keccak256 = 6
+    Keccak384 = 7
+    Keccak512 = 8

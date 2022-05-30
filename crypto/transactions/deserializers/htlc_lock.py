@@ -9,20 +9,29 @@ from crypto.transactions.deserializers.base import BaseDeserializer
 class HtlcLockDeserializer(BaseDeserializer):
     def deserialize(self):
         starting_position = int(self.asset_offset / 2)
+        offset = 0
 
         self.transaction.amount = read_bit64(self.serialized, offset=starting_position)
+        offset += 8
+
+        secret_hash_length = read_bit8(self.serialized, offset=starting_position + 8)
+        offset += 1
 
         secret_hash = hexlify(self.serialized)[
-            (starting_position + 8) * 2 : (starting_position + 8 + 32) * 2
+            (starting_position + offset) * 2 : (starting_position + offset + secret_hash_length) * 2
         ]
+        offset += secret_hash_length
 
-        expiration_type = read_bit8(self.serialized, offset=99)
+        expiration_type = read_bit8(self.serialized, offset=starting_position + offset)
+        offset += 1
 
-        expiration_value = read_bit32(self.serialized, offset=100)
+        expiration_value = read_bit32(self.serialized, offset=starting_position + offset)
+        offset += 4
 
-        recipient_start_index = (starting_position + 45) * 2
+        recipient_start_index = (starting_position + offset) * 2
         recipientId = hexlify(self.serialized)[recipient_start_index : recipient_start_index + 42]
         self.transaction.recipientId = b58encode_check(unhexlify(recipientId)).decode()
+        offset += 21
 
         self.transaction.asset["lock"] = {"secretHash": secret_hash.decode()}
 
@@ -32,7 +41,7 @@ class HtlcLockDeserializer(BaseDeserializer):
         }
 
         self.transaction.parse_signatures(
-            hexlify(self.serialized).decode(), self.asset_offset + (8 + 32 + 1 + 4 + 21) * 2
+            hexlify(self.serialized).decode(), self.asset_offset + (offset * 2)
         )
 
         return self.transaction
