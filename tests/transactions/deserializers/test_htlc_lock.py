@@ -1,8 +1,8 @@
 from crypto.transactions.deserializer import Deserializer
 
 
-def test_htlc_lock_deserializer(transaction_type_8):
-    serialized = transaction_type_8["serialized"]
+def test_htlc_lock_deserializer():
+    serialized = "ff031e0100000008000100000000000000037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c80969800000000000000c2eb0b00000000201691053581dd80959b68ec8941898837790a43ec883bb32a2a9ea10edbb57c2401ce07c95d1e0995750207ecaf0ccf251c1265b92ad84f553662d9377c6ff4e9b6b945b2c39606c8cac883d48b259fa5a3688363c8aef75bb0a8f2297249ff835bbf5d6bb3ec66520d3ff99393314258bb498971fbf925bc6b80"
 
     deserializer = Deserializer(serialized)
     actual = deserializer.deserialize()
@@ -14,15 +14,15 @@ def test_htlc_lock_deserializer(transaction_type_8):
     assert actual.nonce == 1
     assert (
         actual.senderPublicKey
-        == "0201cd64fbf55b9de92471c9eb123eeedd9850ebed8fa6703df3af7a6b38631a2f"
+        == "037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c"
     )
     assert actual.fee == 10000000
     assert (
         actual.signature
-        == "6a35d659c7965d009254847cebf0d7b34a652a7e8599443e72ba414dd056864b95d05b55d0834dd859a0b1cc3eeee916b7938273fc2984bf9f813c5cf03a93f9"
+        == "d9377c6ff4e9b6b945b2c39606c8cac883d48b259fa5a3688363c8aef75bb0a8f2297249ff835bbf5d6bb3ec66520d3ff99393314258bb498971fbf925bc6b80"
     )
     assert actual.amount == 200000000
-    assert actual.recipientId == "DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz"
+    assert actual.recipientId == "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib"
     assert (
         actual.asset["lock"]["secretHash"]
         == "1691053581dd80959b68ec8941898837790a43ec883bb32a2a9ea10edbb57c24"
