@@ -16,8 +16,11 @@ class HtlcLockSerializer(BaseSerializer):
         if not address.validate_address(self.transaction["recipientId"]):
             raise SolarSerializerException("Invalid recipient address")
 
+        secret_hash = unhexlify(self.transaction["asset"]["lock"]["secretHash"].encode())
+
         self.bytes_data += write_bit64(self.transaction["amount"])
-        self.bytes_data += unhexlify(self.transaction["asset"]["lock"]["secretHash"].encode())
+        self.bytes_data += write_bit8(len(secret_hash))
+        self.bytes_data += secret_hash
         self.bytes_data += write_bit8(self.transaction["asset"]["lock"]["expiration"]["type"])
         self.bytes_data += write_bit32(self.transaction["asset"]["lock"]["expiration"]["value"])
 

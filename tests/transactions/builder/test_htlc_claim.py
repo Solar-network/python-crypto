@@ -3,8 +3,7 @@ import binascii
 import pytest
 
 from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP
-from crypto.exceptions import SolarSerializerException
+from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP, HashingType
 from crypto.networks.testnet import Testnet
 from crypto.transactions.builder.htlc_claim import HtlcClaim
 
@@ -18,9 +17,9 @@ def test_htlc_claim_transaction_ok(version):
 
     # Secret required to unlock and claim funds from an HTLC. This secret should is revealed to you
     # on the blockchain which you can then use to claim funds.
-    unlock_secret = "6434323233626639336532303235303561366135303134323161383864396661"
+    unlock_secret = "1e9f2bbccc07c643316be6faae9f004cc16dec3910501387fd326cd8a39b4fdb"
 
-    transaction = HtlcClaim(lock_transaction_id, unlock_secret)
+    transaction = HtlcClaim(lock_transaction_id, unlock_secret, HashingType.SHA256)
     transaction.set_nonce(1)
     transaction.set_version(version)
     transaction.sign("testing")
@@ -58,32 +57,15 @@ def test_htlc_claim_transaction_unlock_secret_not_hex(version):
 
 
 @pytest.mark.parametrize("version", [2, 3])
-def test_htlc_claim_transaction_unlock_secret_bad_length(version):
-    """Test if timelock transaction fails if the unlock_secret is too big"""
-    lock_transaction_id = "943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4"
-
-    # Secret required to unlock and claim funds from an HTLC. This secret should is revealed to you
-    # on the blockchain which you can then use to claim funds.
-    unlock_secret = "326632383634643861626534336530363236363132643461636235623535666462"
-
-    transaction = HtlcClaim(lock_transaction_id, unlock_secret)
-    transaction.set_version(version)
-    transaction.set_nonce(1)
-    with pytest.raises(SolarSerializerException) as e:
-        transaction.sign("testing")
-    assert str(e.value) == "Unlock secret must be 32 bytes long"
-
-
-@pytest.mark.parametrize("version", [2, 3])
 def test_htlc_claim_transaction_custom_fee_ok(version):
     """Test if timelock transaction gets built with a custom fee"""
     lock_transaction_id = "943c220691e711c39c79d437ce185748a0018940e1a4144293af9d05627d2eb4"
 
     # Secret required to unlock and claim funds from an HTLC. This secret should is revealed to you
     # on the blockchain which you can then use to claim funds.
-    unlock_secret = "6434323233626639336532303235303561366135303134323161383864396661"
+    unlock_secret = "1e9f2bbccc07c643316be6faae9f004cc16dec3910501387fd326cd8a39b4fdb"
 
-    transaction = HtlcClaim(lock_transaction_id, unlock_secret, 5)
+    transaction = HtlcClaim(lock_transaction_id, unlock_secret, fee=5)
     transaction.set_nonce(1)
     transaction.set_version(version)
     transaction.sign("testing")
