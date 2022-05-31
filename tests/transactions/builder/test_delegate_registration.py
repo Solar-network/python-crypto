@@ -25,7 +25,7 @@ def test_delegate_registration_transaction(version):
     assert transaction_dict["asset"]["delegate"]["username"] == delegate_name
     assert transaction_dict["type"] is TRANSACTION_DELEGATE_REGISTRATION
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 2500000000
+    assert transaction_dict["fee"] == 7500000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 

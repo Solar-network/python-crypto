@@ -22,7 +22,7 @@ def test_delegate_resignation_transaction(version):
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_DELEGATE_RESIGNATION
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 2500000000
+    assert transaction_dict["fee"] == 0
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
@@ -43,7 +43,7 @@ def test_delegate_resignation_with_vendor_field_transaction(version):
     assert transaction_dict["vendorField"] == "bye mr delegate"
     assert transaction_dict["type"] is TRANSACTION_DELEGATE_RESIGNATION
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 2500000000
+    assert transaction_dict["fee"] == 0
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 

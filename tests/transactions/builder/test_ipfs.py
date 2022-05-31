@@ -25,8 +25,8 @@ def test_ipfs_transaction(version):
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_IPFS
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 500000000
-    assert transaction_dict["asset"]["ipfs"] == ipfs_cid
+    assert transaction_dict["fee"] == 5000000
+    assert transaction_dict["asset"]["ipfs"] == ipfs_id
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 

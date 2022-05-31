@@ -22,7 +22,7 @@ def test_second_signature_registration_transaction(version):
     assert transaction_dict["signature"]
     assert transaction_dict["type"] is TRANSACTION_SECOND_SIGNATURE_REGISTRATION
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 500000000
+    assert transaction_dict["fee"] == 5000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 

@@ -27,7 +27,7 @@ def test_transfer_transaction(version):
     assert transaction_dict["version"] == version
     assert transaction_dict["type"] is TRANSACTION_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 10000000
+    assert transaction_dict["fee"] == 5000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
@@ -52,7 +52,7 @@ def test_transfer_transaction_with_vendor_field(version):
     assert transaction_dict["version"] == version
     assert transaction_dict["type"] is TRANSACTION_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict["fee"] == 10000000
+    assert transaction_dict["fee"] == 5000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
