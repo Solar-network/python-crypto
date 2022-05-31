@@ -1,6 +1,8 @@
 import hashlib
 from binascii import unhexlify
 
+from Crypto.Hash import RIPEMD160
+
 from base58 import b58decode_check, b58encode_check
 from binary.unsigned_integer.writer import write_bit8
 
@@ -22,7 +24,8 @@ def address_from_public_key(public_key, network_version=None):
         network = get_network()
         network_version = network["version"]
 
-    ripemd160 = hashlib.new("ripemd160", unhexlify(public_key.encode()))
+    ripemd160 = RIPEMD160.new()
+    ripemd160.update(unhexlify(public_key))
     seed = write_bit8(network_version) + ripemd160.digest()
     return b58encode_check(seed).decode()
 
@@ -42,7 +45,8 @@ def address_from_private_key(private_key, network_version=None):
         network_version = network["version"]
 
     private_key = PrivateKey.from_hex(private_key)
-    ripemd160 = hashlib.new("ripemd160", unhexlify(private_key.public_key))
+    ripemd160 = RIPEMD160.new()
+    ripemd160.update(unhexlify(private_key.public_key))
     seed = write_bit8(network_version) + ripemd160.digest()
     return b58encode_check(seed).decode()
 
