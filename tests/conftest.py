@@ -125,18 +125,17 @@ def transaction_type_4():
 def transaction_type_5():
     """Transaction of type "ipfs" """
     data = {
-        "version": 2,
-        "network": 23,
+        "version": 3,
+        "network": 30,
         "typeGroup": 1,
         "type": 5,
         "nonce": 1,
-        "senderPublicKey": "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192",
+        "senderPublicKey": "037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c",
         "fee": 500000000,
         "amount": 0,
-        "asset": {"ipfs": "QmR45FmbVVrixReBwJkhEKde2qwHYaQzGxu4ZoDeswuF9w"},
-        "signature": "0b6e81b123de99e953d3073a8760d3213ab5f5cf512e65a2dd73aebb410966d8fbc59e775deb4f23c51be0847402b5e1d4ee68732b3e6d8e8914d259d7e373eb",
-        "id": "818228ce634b46c488f3b2df8fd02bd50331ebdedb44df5b9b11b97b01e9fb36",
-        "serialized": "ff02170100000005000100000000000000034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed1920065cd1d000000000012202853f0f11ab91d73b73a2a86606103f45dd469ad2e89ec6f9a25febe8758d3fe0b6e81b123de99e953d3073a8760d3213ab5f5cf512e65a2dd73aebb410966d8fbc59e775deb4f23c51be0847402b5e1d4ee68732b3e6d8e8914d259d7e373eb",
+        "asset": {"ipfs": "QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4"},
+        "signature": "90d6b66d19a21ba90b2a7bb400835e511f9037f60ecbc94ed2623876807ee6e64383cc7efdd6927ad4db91cce7d0ca81b0d29ff5babf1be311167a332b456239",
+        "serialized": "ff031e0100000005000100000000000000037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c0065cd1d00000000001220b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde990d6b66d19a21ba90b2a7bb400835e511f9037f60ecbc94ed2623876807ee6e64383cc7efdd6927ad4db91cce7d0ca81b0d29ff5babf1be311167a332b456239",
     }
     return data
 

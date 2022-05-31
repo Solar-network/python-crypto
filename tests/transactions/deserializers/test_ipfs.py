@@ -1,27 +1,53 @@
 from crypto.transactions.deserializer import Deserializer
 
 
-def test_ipfs_deserializer():
-    serialized = "ff02170100000005000100000000000000034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed1920065cd1d000000000012202853f0f11ab91d73b73a2a86606103f45dd469ad2e89ec6f9a25febe8758d3fe0b6e81b123de99e953d3073a8760d3213ab5f5cf512e65a2dd73aebb410966d8fbc59e775deb4f23c51be0847402b5e1d4ee68732b3e6d8e8914d259d7e373eb"  # noqa
+def test_ipfs_deserializer_v2():
+    serialized = "ff021e0100000005000100000000000000037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c0065cd1d00000000001220b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde91c553734d23d2c41d6be3ed07d7644730a94be98a3e8301798b6449da9394a2f971b10fcddd09ba34d9d900ac5b093f49431242ee4006aced50da56c994f02b9"  # noqa
 
     deserializer = Deserializer(serialized)
     actual = deserializer.deserialize()
 
     assert actual.version == 2
-    assert actual.network == 23
+    assert actual.network == 30
     assert actual.typeGroup == 1
     assert actual.type == 5
     assert actual.nonce == 1
     assert (
         actual.senderPublicKey
-        == "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192"
+        == "037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c"
     )
     assert actual.fee == 500000000
     assert (
         actual.signature
-        == "0b6e81b123de99e953d3073a8760d3213ab5f5cf512e65a2dd73aebb410966d8fbc59e775deb4f23c51be0847402b5e1d4ee68732b3e6d8e8914d259d7e373eb"
+        == "1c553734d23d2c41d6be3ed07d7644730a94be98a3e8301798b6449da9394a2f971b10fcddd09ba34d9d900ac5b093f49431242ee4006aced50da56c994f02b9"
     )
     assert actual.amount == 0
-    assert actual.asset["ipfs"] == "QmR45FmbVVrixReBwJkhEKde2qwHYaQzGxu4ZoDeswuF9w"  # noqa
+    assert actual.asset["ipfs"] == "QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4"  # noqa
+
+    actual.verify()
+
+
+def test_ipfs_deserializer_v3():
+    serialized = "ff031e0100000005000100000000000000037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c0065cd1d00000000001220b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde990d6b66d19a21ba90b2a7bb400835e511f9037f60ecbc94ed2623876807ee6e64383cc7efdd6927ad4db91cce7d0ca81b0d29ff5babf1be311167a332b456239"  # noqa
+
+    deserializer = Deserializer(serialized)
+    actual = deserializer.deserialize()
+
+    assert actual.version == 3
+    assert actual.network == 30
+    assert actual.typeGroup == 1
+    assert actual.type == 5
+    assert actual.nonce == 1
+    assert (
+        actual.senderPublicKey
+        == "037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c"
+    )
+    assert actual.fee == 500000000
+    assert (
+        actual.signature
+        == "90d6b66d19a21ba90b2a7bb400835e511f9037f60ecbc94ed2623876807ee6e64383cc7efdd6927ad4db91cce7d0ca81b0d29ff5babf1be311167a332b456239"
+    )
+    assert actual.amount == 0
+    assert actual.asset["ipfs"] == "QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4"  # noqa
 
     actual.verify()
