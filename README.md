@@ -1,4 +1,24 @@
-# Solar Python - Crypto
+# Solar Crypto Python Package
+
+## Install
+
+`pip install solar-crypto`
+
+## Example usage
+
+```py
+from solar_crypto.configuration.network import set_network
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.transfer import Transfer
+set_network(Testnet)
+transaction = Transfer(
+    recipientId="D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
+    amount=200000000,
+)
+transaction.set_nonce(1)
+transaction.sign("super secret passphrase")
+transaction.verify()
+```
 
 ## Guide for contributing
 
