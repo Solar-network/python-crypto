@@ -2,13 +2,7 @@ import sys
 
 import setuptools
 
-requires = [
-    "base58==2.1.1",
-    "binary-helpers==0.0.4",
-    "coincurve==16.0.0",
-    "btclib==2022.2.9",
-    "pycryptodome==3.14.1",
-]
+requires = ["base58", "binary-helpers", "coincurve", "btclib", "pycryptodome"]
 
 tests_require = [
     "flake8==4.0.1",
