@@ -80,8 +80,7 @@ def test_transfer_transaction_update_amount(version):
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_transfer_transaction_custom_fee_via_kwargs(version):
-    """Test if a transfer transaction gets built with a custom fee
-    """
+    """Test if a transfer transaction gets built with a custom fee"""
     transaction = Transfer(
         recipientId="D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib", amount=200000000, fee=5
     )
@@ -102,24 +101,23 @@ def test_transfer_transaction_custom_fee_via_kwargs(version):
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_transfer_transaction_custom_fee_via_method(version):
-    """Test if a transfer transaction gets built with a custom fee
-    """
+    """Test if a transfer transaction gets built with a custom fee"""
     transaction = Transfer(
-        recipientId='D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib',
+        recipientId="D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
         amount=200000000,
     )
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.set_fee(1337)
     transaction.set_version(version)
-    transaction.sign('this is a top secret passphrase')
+    transaction.sign("this is a top secret passphrase")
     transaction_dict = transaction.to_dict()
 
-    assert transaction_dict['nonce'] == 1
-    assert transaction_dict['signature']
-    assert transaction_dict['type'] is TRANSACTION_TRANSFER
-    assert transaction_dict['typeGroup'] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict['fee'] == 1337
+    assert transaction_dict["nonce"] == 1
+    assert transaction_dict["signature"]
+    assert transaction_dict["type"] is TRANSACTION_TRANSFER
+    assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
+    assert transaction_dict["fee"] == 1337
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 

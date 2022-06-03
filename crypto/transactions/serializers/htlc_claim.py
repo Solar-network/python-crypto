@@ -1,6 +1,6 @@
 from binascii import unhexlify
-from binary.unsigned_integer.writer import write_bit8
 
+from binary.unsigned_integer.writer import write_bit8
 
 from crypto.transactions.serializers.base import BaseSerializer
 
