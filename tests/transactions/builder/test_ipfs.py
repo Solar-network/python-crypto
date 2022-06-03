@@ -1,5 +1,4 @@
 import pytest
-from base58 import b58encode
 
 from crypto.configuration.network import set_network
 from crypto.constants import TRANSACTION_IPFS, TRANSACTION_TYPE_GROUP

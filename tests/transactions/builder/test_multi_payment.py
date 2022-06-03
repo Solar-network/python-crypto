@@ -41,8 +41,7 @@ def test_multi_payment_transaction(version):
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_multi_payment_transaction_custom_fee_via_kwargs(version):
-    """Test if multi payment transaction gets built with a custom fee
-    """
+    """Test if multi payment transaction gets built with a custom fee"""
     transaction = MultiPayment(fee=5)
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
@@ -73,26 +72,31 @@ def test_multi_payment_transaction_custom_fee_via_kwargs(version):
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_multi_payment_transaction_custom_fee_via_method(version):
-    """Test if multi payment transaction gets built with a custom fee
-    """
+    """Test if multi payment transaction gets built with a custom fee"""
     transaction = MultiPayment()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.set_version(version)
     transaction.set_fee(1337)
-    transaction.add_payment(1, 'D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib')
-    transaction.add_payment(2, 'DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o')
-    transaction.sign('testing')
+    transaction.add_payment(1, "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib")
+    transaction.add_payment(2, "DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o")
+    transaction.sign("testing")
     transaction_dict = transaction.to_dict()
 
-    assert transaction_dict['nonce'] == 1
-    assert transaction_dict['signature']
-    assert transaction_dict['type'] is TRANSACTION_MULTI_PAYMENT
-    assert transaction_dict['typeGroup'] == TRANSACTION_TYPE_GROUP.CORE.value
-    assert transaction_dict['fee'] == 1337
-    assert transaction_dict['asset']['payments'][0]['amount'] == 1
-    assert transaction_dict['asset']['payments'][0]['recipientId'] == 'D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib'
-    assert transaction_dict['asset']['payments'][1]['amount'] == 2
-    assert transaction_dict['asset']['payments'][1]['recipientId'] == 'DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o'
+    assert transaction_dict["nonce"] == 1
+    assert transaction_dict["signature"]
+    assert transaction_dict["type"] is TRANSACTION_MULTI_PAYMENT
+    assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
+    assert transaction_dict["fee"] == 1337
+    assert transaction_dict["asset"]["payments"][0]["amount"] == 1
+    assert (
+        transaction_dict["asset"]["payments"][0]["recipientId"]
+        == "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib"
+    )
+    assert transaction_dict["asset"]["payments"][1]["amount"] == 2
+    assert (
+        transaction_dict["asset"]["payments"][1]["recipientId"]
+        == "DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o"
+    )
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
