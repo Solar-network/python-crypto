@@ -1,9 +1,9 @@
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_VOTE
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.vote import Vote
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_VOTE
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.vote import Vote
 
 set_network(Testnet)
 

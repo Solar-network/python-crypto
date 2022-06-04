@@ -1,4 +1,4 @@
-from crypto.transactions.deserializer import Deserializer
+from solar_crypto.transactions.deserializer import Deserializer
 
 
 def test_multi_signature_registration_deserializer():

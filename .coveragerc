@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = crypto
+source = solar_crypto
 
 [report]
 exclude_lines =

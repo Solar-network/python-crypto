@@ -1,4 +1,4 @@
-from crypto.identity.wif import wif_from_passphrase
+from solar_crypto.identity.wif import wif_from_passphrase
 
 
 def test_wif_from_passphrase(identity):

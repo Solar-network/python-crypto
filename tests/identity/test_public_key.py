@@ -1,4 +1,4 @@
-from crypto.identity.public_key import PublicKey
+from solar_crypto.identity.public_key import PublicKey
 
 
 def test_private_key_from_passphrase(identity):

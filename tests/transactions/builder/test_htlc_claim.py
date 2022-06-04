@@ -2,10 +2,10 @@ import binascii
 
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP, HashingType
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.htlc_claim import HtlcClaim
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP, HashingType
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.htlc_claim import HtlcClaim
 
 set_network(Testnet)
 

@@ -1,9 +1,9 @@
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_DELEGATE_RESIGNATION, TRANSACTION_TYPE_GROUP
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.delegate_resignation import DelegateResignation
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_DELEGATE_RESIGNATION, TRANSACTION_TYPE_GROUP
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.delegate_resignation import DelegateResignation
 
 set_network(Testnet)
 

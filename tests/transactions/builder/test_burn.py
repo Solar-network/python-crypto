@@ -1,9 +1,13 @@
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import SOLAR_TRANSACTION_BURN, SOLAR_TRANSACTION_FEES, TRANSACTION_TYPE_GROUP
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.burn import Burn
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import (
+    SOLAR_TRANSACTION_BURN,
+    SOLAR_TRANSACTION_FEES,
+    TRANSACTION_TYPE_GROUP,
+)
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.burn import Burn
 
 set_network(Testnet)
 

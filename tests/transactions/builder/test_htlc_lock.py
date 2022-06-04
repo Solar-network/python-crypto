@@ -2,10 +2,10 @@ from hashlib import sha256
 
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_HTLC_LOCK, TRANSACTION_TYPE_GROUP
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.htlc_lock import HtlcLock
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_HTLC_LOCK, TRANSACTION_TYPE_GROUP
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.htlc_lock import HtlcLock
 
 set_network(Testnet)
 
