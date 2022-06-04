@@ -1,9 +1,11 @@
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_MULTI_SIGNATURE_REGISTRATION, TRANSACTION_TYPE_GROUP
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.multi_signature_registration import MultiSignatureRegistration
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_MULTI_SIGNATURE_REGISTRATION, TRANSACTION_TYPE_GROUP
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.multi_signature_registration import (
+    MultiSignatureRegistration,
+)
 
 set_network(Testnet)
 

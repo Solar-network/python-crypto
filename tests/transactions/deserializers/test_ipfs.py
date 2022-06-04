@@ -1,4 +1,4 @@
-from crypto.transactions.deserializer import Deserializer
+from solar_crypto.transactions.deserializer import Deserializer
 
 
 def test_ipfs_deserializer_v2():

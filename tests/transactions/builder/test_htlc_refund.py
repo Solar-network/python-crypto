@@ -1,9 +1,9 @@
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_HTLC_REFUND, TRANSACTION_TYPE_GROUP
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.htlc_refund import HtlcRefund
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_HTLC_REFUND, TRANSACTION_TYPE_GROUP
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.htlc_refund import HtlcRefund
 
 set_network(Testnet)
 

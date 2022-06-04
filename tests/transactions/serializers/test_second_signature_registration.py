@@ -1,4 +1,4 @@
-from crypto.transactions.serializer import Serializer
+from solar_crypto.transactions.serializer import Serializer
 
 
 def test_serializer(transaction_type_1):

@@ -1,10 +1,10 @@
 import pytest
 
-from crypto.configuration.network import set_network
-from crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
-from crypto.identity.public_key import PublicKey
-from crypto.networks.testnet import Testnet
-from crypto.transactions.builder.transfer import Transfer
+from solar_crypto.configuration.network import set_network
+from solar_crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
+from solar_crypto.identity.public_key import PublicKey
+from solar_crypto.networks.testnet import Testnet
+from solar_crypto.transactions.builder.transfer import Transfer
 
 set_network(Testnet)
 

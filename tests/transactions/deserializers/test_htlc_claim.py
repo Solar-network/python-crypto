@@ -1,5 +1,5 @@
-from crypto.constants import HashingType
-from crypto.transactions.deserializer import Deserializer
+from solar_crypto.constants import HashingType
+from solar_crypto.transactions.deserializer import Deserializer
 
 
 def test_htlc_claim_deserializer():

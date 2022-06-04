@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from crypto.configuration.network import get_network, set_custom_network, set_network
-from crypto.networks.mainnet import Mainnet
-from crypto.networks.testnet import Testnet
+from solar_crypto.configuration.network import get_network, set_custom_network, set_network
+from solar_crypto.networks.mainnet import Mainnet
+from solar_crypto.networks.testnet import Testnet
 
 
 def test_get_network():

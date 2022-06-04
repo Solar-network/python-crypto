@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from crypto.utils.slot import get_epoch, get_time
+from solar_crypto.utils.slot import get_epoch, get_time
 
 
 def test_get_epoch():

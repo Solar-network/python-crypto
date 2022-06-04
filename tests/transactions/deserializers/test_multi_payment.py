@@ -1,4 +1,4 @@
-from crypto.transactions.deserializer import Deserializer
+from solar_crypto.transactions.deserializer import Deserializer
 
 
 def test_multi_payment_deserializer(transaction_type_6):

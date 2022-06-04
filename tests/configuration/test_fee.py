@@ -1,5 +1,5 @@
-from crypto.configuration.fee import get_fee, set_fee
-from crypto.constants import TRANSACTION_FEES, TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
+from solar_crypto.configuration.fee import get_fee, set_fee
+from solar_crypto.constants import TRANSACTION_FEES, TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
 
 
 def test_get_fee():

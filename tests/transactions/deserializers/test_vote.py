@@ -1,7 +1,7 @@
 import pytest
 
-from crypto.exceptions import SolarDeserializerException
-from crypto.transactions.deserializer import Deserializer
+from solar_crypto.exceptions import SolarDeserializerException
+from solar_crypto.transactions.deserializer import Deserializer
 
 
 def test_vote_deserializer_v2_pubkey():

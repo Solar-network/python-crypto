@@ -1,6 +1,6 @@
 import json
 
-from crypto.utils.message import Message
+from solar_crypto.utils.message import Message
 
 
 def test_signing_non_deterministic(message):
