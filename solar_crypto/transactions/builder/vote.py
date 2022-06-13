@@ -1,38 +1,56 @@
 import typing
+from math import trunc
 
-from solar_crypto.constants import TRANSACTION_VOTE
-from solar_crypto.identity.address import address_from_passphrase
+from solar_crypto.constants import SOLAR_TRANSACTION_VOTE, TRANSACTION_TYPE_GROUP
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
 
 class Vote(BaseTransactionBuilder):
 
-    transaction_type = TRANSACTION_VOTE
+    transaction_type = SOLAR_TRANSACTION_VOTE
+    typeGroup = TRANSACTION_TYPE_GROUP.SOLAR.value
 
-    def __init__(self, vote=None, fee=None):
-        """Create a second signature registration transaction
-
-        Args:
-            vote (str): address of a delegate you want to vote
-            fee (int, optional): fee used for the transaction (default is already set)
-        """
+    def __init__(self):
         super().__init__()
 
         self.transaction.asset["votes"] = []
-        if vote:
-            self.transaction.asset["votes"].append(vote)
 
-        if fee:
-            self.transaction.fee = fee
-
-    def set_votes(self, votes: typing.List[str]):
-        """Set votes/unvotes
+    def set_votes(
+        self,
+        votes: typing.Union[typing.List[str], typing.Dict[str, typing.Union[int, float]]] = dict,
+    ):
+        """Set votes
 
         Args:
-            votes (List[str]): list of votes
+            votes
         """
+        vote_object: typing.Dict[str, typing.Union[float, int]] = {}
+
+        if isinstance(votes, list):
+            vote_list = filter(lambda vote: not vote.startswith("-"), votes)
+            vote_list = list(map(lambda vote: vote[1:], vote_list))
+            weight = round((trunc((100 / len(vote_list)) * 100) / 100) * 100)
+            remainder = 10000
+
+            if len(vote_list) > 0:
+                for vote in vote_list:
+                    vote_object[vote] = weight / 100
+                    remainder -= weight
+
+                for index in range(remainder):
+                    key = list(vote_object.keys())[index]
+                    vote_object[key] = round((vote_object[key] + 0.01) * 100) / 100
+
+            votes = vote_object
+
+        if votes:
+            nr_of_votes = len(votes.keys())
+            if nr_of_votes > 0:
+                votes = sort_votes(votes)
+
         self.transaction.asset["votes"] = votes
 
-    def sign(self, passphrase):
-        self.transaction.recipientId = address_from_passphrase(passphrase)
-        super().sign(passphrase)
+
+def sort_votes(votes: typing.Dict[str, typing.Union[float, int]]):
+    sorted_votes = sorted(votes.items(), key=lambda vote: vote[1])
+    return dict(sorted_votes)
