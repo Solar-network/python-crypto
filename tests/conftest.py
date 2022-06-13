@@ -68,8 +68,8 @@ def transaction_type_2():
 
 
 @pytest.fixture
-def transaction_type_3():
-    """Transaction of type "vote" """
+def transaction_type_legacy_vote():
+    """Transaction of type "legacy vote" """
     data = {
         "version": 2,
         "network": 23,
@@ -292,5 +292,25 @@ def message():
             "message": "Hello World",
         },
         "passphrase": "this is a top secret passphrase",
+    }
+    return data
+
+
+@pytest.fixture
+def transaction_type_vote():
+    """Transaction of type "vote" """
+    data = {
+        "version": 3,
+        "network": 30,
+        "typeGroup": 2,
+        "type": 2,
+        "nonce": 1,
+        "senderPublicKey": "037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c",
+        "fee": 100000000,
+        "asset": {"votes": {"deadlock": 50.33}},
+        "signature": "4b3f1fc10a11302109b123decceadcf5601053079919f90f7e0c28d502771a0e19553b8019579762373a957eb7876474fcfc5d12d6ea898205f54e62ce3f2c7c",  # noqa
+        "amount": 0,
+        "id": "a7789f2eb62bae9782db053b045ed35a4475147c0b9bab5f964d69af2422a9ac",
+        "serialized": "ff031e0200000002000100000000000000037fde73baaa48eb75c013fe9ff52a74a096d48b9978351bdcb5b72331ca37487c00e1f50500000000000108646561646c6f636ba9134b3f1fc10a11302109b123decceadcf5601053079919f90f7e0c28d502771a0e19553b8019579762373a957eb7876474fcfc5d12d6ea898205f54e62ce3f2c7c",  # noqa
     }
     return data
