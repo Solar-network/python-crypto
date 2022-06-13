@@ -29,17 +29,21 @@ class Vote(BaseTransactionBuilder):
         if isinstance(votes, list):
             vote_list = filter(lambda vote: not vote.startswith("-"), votes)
             vote_list = list(map(lambda vote: vote[1:], vote_list))
+
+            if len(vote_list) == 0:
+                self.transaction.asset["votes"] = {}
+                return
+
             weight = round((trunc((100 / len(vote_list)) * 100) / 100) * 100)
             remainder = 10000
 
-            if len(vote_list) > 0:
-                for vote in vote_list:
-                    vote_object[vote] = weight / 100
-                    remainder -= weight
+            for vote in vote_list:
+                vote_object[vote] = weight / 100
+                remainder -= weight
 
-                for index in range(remainder):
-                    key = list(vote_object.keys())[index]
-                    vote_object[key] = round((vote_object[key] + 0.01) * 100) / 100
+            for index in range(remainder):
+                key = list(vote_object.keys())[index]
+                vote_object[key] = round((vote_object[key] + 0.01) * 100) / 100
 
             votes = vote_object
 
