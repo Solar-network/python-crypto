@@ -1,7 +1,9 @@
+from collections import OrderedDict
+
 from solar_crypto.configuration.network import set_network
 from solar_crypto.constants import SOLAR_TRANSACTION_VOTE, TRANSACTION_TYPE_GROUP
 from solar_crypto.networks.testnet import Testnet
-from solar_crypto.transactions.builder.vote import Vote
+from solar_crypto.transactions.builder.vote import Vote, sort_votes
 
 set_network(Testnet)
 
@@ -44,7 +46,7 @@ def test_vote_transaction_multiple_votes():
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
 
-def test_vote_transaction_multiple_votes():
+def test_vote_transaction_using_list():
     transaction = Vote()
     transaction.set_votes(["-awesome"])
     transaction.set_nonce(1)
@@ -59,3 +61,15 @@ def test_vote_transaction_multiple_votes():
     assert transaction_dict["fee"] == 100000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
+
+
+def test_sort_votes():
+    votes = {
+        "ddd": 50,
+        "aaa": 15,
+        "bbb": 15,
+        "ccc": 20,
+    }
+
+    votes_sorted = sort_votes(votes)
+    assert OrderedDict(votes_sorted) == OrderedDict({"ddd": 50, "ccc": 20, "aaa": 15, "bbb": 15})

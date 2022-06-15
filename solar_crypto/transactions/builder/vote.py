@@ -56,5 +56,6 @@ class Vote(BaseTransactionBuilder):
 
 
 def sort_votes(votes: typing.Dict[str, typing.Union[float, int]]):
-    sorted_votes = sorted(votes.items(), key=lambda vote: vote[1])
+    sorted_votes = sorted(votes.items(), key=lambda vote: vote[0], reverse=True)
+    sorted_votes = sorted(votes.items(), key=lambda vote: vote[1], reverse=True)
     return dict(sorted_votes)
