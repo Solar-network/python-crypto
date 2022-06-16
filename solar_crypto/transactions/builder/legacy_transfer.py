@@ -1,11 +1,11 @@
-from solar_crypto.constants import TRANSACTION_TRANSFER
+from solar_crypto.constants import TRANSACTION_LEGACY_TRANSFER
 from solar_crypto.identity import address
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
 
-class Transfer(BaseTransactionBuilder):
+class LegacyTransfer(BaseTransactionBuilder):
 
-    transaction_type = TRANSACTION_TRANSFER
+    transaction_type = TRANSACTION_LEGACY_TRANSFER
 
     def __init__(self, recipientId, amount, vendorField=None, fee=None):
         """Create a transfer transaction

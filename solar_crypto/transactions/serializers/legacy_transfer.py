@@ -9,7 +9,7 @@ from solar_crypto.identity import address
 from solar_crypto.transactions.serializers.base import BaseSerializer
 
 
-class TransferSerializer(BaseSerializer):
+class LegacyTransferSerializer(BaseSerializer):
     """Serializer handling transfer data"""
 
     def serialize(self):
