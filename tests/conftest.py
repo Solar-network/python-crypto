@@ -146,7 +146,7 @@ def transaction_type_6():
     data = {
         "amount": 0,
         "asset": {
-            "payments": [
+            "transfers": [
                 {"amount": 1, "recipientId": "DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz"},
                 {"amount": 2, "recipientId": "DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4"},
             ]

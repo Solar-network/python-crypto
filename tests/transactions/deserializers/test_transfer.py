@@ -22,13 +22,13 @@ def test_deserializer(transaction_type_6):
         == "4b09083a78f12d54b3b320b5793de8fafca95927ff368a6102e78bca87645efee92ca076c72062727e05f2e5033ad4980251894a696925588ff4a90665a6b231"
     )
     assert actual.amount == 0
-    assert actual.asset["payments"][0]["amount"] == 1  # noqa
+    assert actual.asset["transfers"][0]["amount"] == 1  # noqa
     assert (
-        actual.asset["payments"][0]["recipientId"] == "DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz"
+        actual.asset["transfers"][0]["recipientId"] == "DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz"
     )  # noqa
-    assert actual.asset["payments"][1]["amount"] == 2  # noqa
+    assert actual.asset["transfers"][1]["amount"] == 2  # noqa
     assert (
-        actual.asset["payments"][1]["recipientId"] == "DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4"
+        actual.asset["transfers"][1]["recipientId"] == "DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4"
     )  # noqa
 
     actual.verify()

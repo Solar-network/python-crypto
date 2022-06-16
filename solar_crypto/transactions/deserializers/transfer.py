@@ -12,11 +12,11 @@ class TransferDeserializer(BaseDeserializer):
 
         payment_length = read_bit16(self.serialized, starting_position) & 0xFF
 
-        self.transaction.asset["payments"] = []
+        self.transaction.asset["transfers"] = []
 
         index = 0
 
-        for payment in range(payment_length):
+        for _ in range(payment_length):
             amount = read_bit64(self.serialized, offset=starting_position + 2 + index)
 
             recipient_start_index = (starting_position + 10 + index) * 2
@@ -25,7 +25,7 @@ class TransferDeserializer(BaseDeserializer):
             ]
             recipientId = b58encode_check(unhexlify(recipientId)).decode()
 
-            self.transaction.asset["payments"].append(
+            self.transaction.asset["transfers"].append(
                 {"amount": amount, "recipientId": recipientId}
             )
 

@@ -25,14 +25,14 @@ def test_transaction(version):
     assert transaction_dict["type"] is TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 50000000
-    assert transaction_dict["asset"]["payments"][0]["amount"] == 1
+    assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
     assert (
-        transaction_dict["asset"]["payments"][0]["recipientId"]
+        transaction_dict["asset"]["transfers"][0]["recipientId"]
         == "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib"
     )
-    assert transaction_dict["asset"]["payments"][1]["amount"] == 2
+    assert transaction_dict["asset"]["transfers"][1]["amount"] == 2
     assert (
-        transaction_dict["asset"]["payments"][1]["recipientId"]
+        transaction_dict["asset"]["transfers"][1]["recipientId"]
         == "DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o"
     )
 
@@ -56,14 +56,14 @@ def test_transaction_custom_fee_via_kwargs(version):
     assert transaction_dict["type"] is TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 5
-    assert transaction_dict["asset"]["payments"][0]["amount"] == 1
+    assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
     assert (
-        transaction_dict["asset"]["payments"][0]["recipientId"]
+        transaction_dict["asset"]["transfers"][0]["recipientId"]
         == "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib"
     )
-    assert transaction_dict["asset"]["payments"][1]["amount"] == 2
+    assert transaction_dict["asset"]["transfers"][1]["amount"] == 2
     assert (
-        transaction_dict["asset"]["payments"][1]["recipientId"]
+        transaction_dict["asset"]["transfers"][1]["recipientId"]
         == "DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o"
     )
 
@@ -88,15 +88,40 @@ def test_transaction_custom_fee_via_method(version):
     assert transaction_dict["type"] is TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 1337
-    assert transaction_dict["asset"]["payments"][0]["amount"] == 1
+    assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
     assert (
-        transaction_dict["asset"]["payments"][0]["recipientId"]
+        transaction_dict["asset"]["transfers"][0]["recipientId"]
         == "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib"
     )
-    assert transaction_dict["asset"]["payments"][1]["amount"] == 2
+    assert transaction_dict["asset"]["transfers"][1]["amount"] == 2
     assert (
-        transaction_dict["asset"]["payments"][1]["recipientId"]
+        transaction_dict["asset"]["transfers"][1]["recipientId"]
         == "DNSBvFTJtQpS4hJfLerEjSXDrBT7K6HL2o"
+    )
+
+    transaction.verify()  # if no exception is raised, it means the transaction is valid
+
+
+def test_transaction_one_transfer():
+    """Test if transfer works with one transfer"""
+    transaction = Transfer()
+    transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
+    transaction.set_nonce(1)
+    transaction.set_version(3)
+    transaction.set_fee(1337)
+    transaction.add_payment(1, "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib")
+    transaction.sign("testing")
+    transaction_dict = transaction.to_dict()
+
+    assert transaction_dict["nonce"] == 1
+    assert transaction_dict["signature"]
+    assert transaction_dict["type"] is TRANSFER
+    assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
+    assert transaction_dict["fee"] == 1337
+    assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
+    assert (
+        transaction_dict["asset"]["transfers"][0]["recipientId"]
+        == "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib"
     )
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
