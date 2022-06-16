@@ -1,7 +1,7 @@
 from solar_crypto.transactions.deserializer import Deserializer
 
 
-def test_multi_payment_deserializer(transaction_type_6):
+def test_deserializer(transaction_type_6):
     serialized = transaction_type_6["serialized"]
 
     deserializer = Deserializer(serialized)

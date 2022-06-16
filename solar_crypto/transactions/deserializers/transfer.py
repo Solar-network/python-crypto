@@ -6,7 +6,7 @@ from binary.unsigned_integer.reader import read_bit16, read_bit64
 from solar_crypto.transactions.deserializers.base import BaseDeserializer
 
 
-class MultiPaymentDeserializer(BaseDeserializer):
+class TransferDeserializer(BaseDeserializer):
     def deserialize(self):
         starting_position = int(self.asset_offset / 2)
 

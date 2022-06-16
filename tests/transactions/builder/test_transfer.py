@@ -1,17 +1,17 @@
 import pytest
 
 from solar_crypto.configuration.network import set_network
-from solar_crypto.constants import TRANSACTION_MULTI_PAYMENT, TRANSACTION_TYPE_GROUP
+from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSFER
 from solar_crypto.networks.testnet import Testnet
-from solar_crypto.transactions.builder.multi_payment import MultiPayment
+from solar_crypto.transactions.builder.transfer import Transfer
 
 set_network(Testnet)
 
 
 @pytest.mark.parametrize("version", [2, 3])
-def test_multi_payment_transaction(version):
+def test_transaction(version):
     """Test if multi payment transaction gets built"""
-    transaction = MultiPayment()
+    transaction = Transfer()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.add_payment(1, "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib")
@@ -22,7 +22,7 @@ def test_multi_payment_transaction(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSACTION_MULTI_PAYMENT
+    assert transaction_dict["type"] is TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 50000000
     assert transaction_dict["asset"]["payments"][0]["amount"] == 1
@@ -40,9 +40,9 @@ def test_multi_payment_transaction(version):
 
 
 @pytest.mark.parametrize("version", [2, 3])
-def test_multi_payment_transaction_custom_fee_via_kwargs(version):
+def test_transaction_custom_fee_via_kwargs(version):
     """Test if multi payment transaction gets built with a custom fee"""
-    transaction = MultiPayment(fee=5)
+    transaction = Transfer(fee=5)
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.set_version(version)
@@ -53,7 +53,7 @@ def test_multi_payment_transaction_custom_fee_via_kwargs(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSACTION_MULTI_PAYMENT
+    assert transaction_dict["type"] is TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 5
     assert transaction_dict["asset"]["payments"][0]["amount"] == 1
@@ -71,9 +71,9 @@ def test_multi_payment_transaction_custom_fee_via_kwargs(version):
 
 
 @pytest.mark.parametrize("version", [2, 3])
-def test_multi_payment_transaction_custom_fee_via_method(version):
+def test_transaction_custom_fee_via_method(version):
     """Test if multi payment transaction gets built with a custom fee"""
-    transaction = MultiPayment()
+    transaction = Transfer()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
     transaction.set_version(version)
@@ -85,7 +85,7 @@ def test_multi_payment_transaction_custom_fee_via_method(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSACTION_MULTI_PAYMENT
+    assert transaction_dict["type"] is TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 1337
     assert transaction_dict["asset"]["payments"][0]["amount"] == 1

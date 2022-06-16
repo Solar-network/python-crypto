@@ -9,7 +9,7 @@ from solar_crypto.identity import address
 from solar_crypto.transactions.serializers.base import BaseSerializer
 
 
-class MultiPaymentSerializer(BaseSerializer):
+class TransferSerializer(BaseSerializer):
     """Serializer handling multi payment data"""
 
     def serialize(self):
