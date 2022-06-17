@@ -1,7 +1,7 @@
 import pytest
 
 from solar_crypto.configuration.network import set_network
-from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSFER
+from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_TRANSFER
 from solar_crypto.networks.testnet import Testnet
 from solar_crypto.transactions.builder.transfer import Transfer
 
@@ -22,7 +22,7 @@ def test_transaction(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSFER
+    assert transaction_dict["type"] is TRANSACTION_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 50000000
     assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
@@ -53,7 +53,7 @@ def test_transaction_custom_fee_via_kwargs(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSFER
+    assert transaction_dict["type"] is TRANSACTION_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 5
     assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
@@ -85,7 +85,7 @@ def test_transaction_custom_fee_via_method(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSFER
+    assert transaction_dict["type"] is TRANSACTION_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 1337
     assert transaction_dict["asset"]["transfers"][0]["amount"] == 1
@@ -115,7 +115,7 @@ def test_transaction_one_transfer():
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["type"] is TRANSFER
+    assert transaction_dict["type"] is TRANSACTION_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
     assert transaction_dict["fee"] == 1337
     assert transaction_dict["asset"]["transfers"][0]["amount"] == 1

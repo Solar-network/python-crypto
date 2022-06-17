@@ -1,11 +1,11 @@
-from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSFER
+from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_TRANSFER
 from solar_crypto.identity import address
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
 
 class Transfer(BaseTransactionBuilder):
 
-    transaction_type = TRANSFER
+    transaction_type = TRANSACTION_TRANSFER
 
     def __init__(self, vendorField=None, fee=None):
         """Create a multi payment transaction
