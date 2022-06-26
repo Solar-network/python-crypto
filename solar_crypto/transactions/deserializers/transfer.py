@@ -10,13 +10,13 @@ class TransferDeserializer(BaseDeserializer):
     def deserialize(self):
         starting_position = int(self.asset_offset / 2)
 
-        payment_length = read_bit16(self.serialized, starting_position) & 0xFF
+        transfer_length = read_bit16(self.serialized, starting_position) & 0xFF
 
         self.transaction.asset["transfers"] = []
 
         index = 0
 
-        for _ in range(payment_length):
+        for _ in range(transfer_length):
             amount = read_bit64(self.serialized, offset=starting_position + 2 + index)
 
             recipient_start_index = (starting_position + 10 + index) * 2
@@ -33,7 +33,7 @@ class TransferDeserializer(BaseDeserializer):
 
         self.transaction.parse_signatures(
             hexlify(self.serialized).decode(),
-            self.asset_offset + 4 + (payment_length * (21 + 8)) * 2,
+            self.asset_offset + 4 + (transfer_length * (21 + 8)) * 2,
         )
 
         return self.transaction

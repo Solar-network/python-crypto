@@ -10,7 +10,7 @@ set_network(Testnet)
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_transaction(version):
-    """Test if multi payment transaction gets built"""
+    """Test if transfer transaction gets built"""
     transaction = Transfer()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
@@ -41,7 +41,7 @@ def test_transaction(version):
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_transaction_custom_fee_via_kwargs(version):
-    """Test if multi payment transaction gets built with a custom fee"""
+    """Test if transfer transaction gets built with a custom fee"""
     transaction = Transfer(fee=5)
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)
@@ -72,7 +72,7 @@ def test_transaction_custom_fee_via_kwargs(version):
 
 @pytest.mark.parametrize("version", [2, 3])
 def test_transaction_custom_fee_via_method(version):
-    """Test if multi payment transaction gets built with a custom fee"""
+    """Test if transfer transaction gets built with a custom fee"""
     transaction = Transfer()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(1)

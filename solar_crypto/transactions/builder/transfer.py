@@ -8,7 +8,7 @@ class Transfer(BaseTransactionBuilder):
     transaction_type = TRANSACTION_TRANSFER
 
     def __init__(self, vendorField=None, fee=None):
-        """Create a multi payment transaction
+        """Create a transfer transaction
 
         Args:
             vendorField (str): value for the vendor field aka smartbridge

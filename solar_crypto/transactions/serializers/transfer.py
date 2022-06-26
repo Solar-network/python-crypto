@@ -10,7 +10,7 @@ from solar_crypto.transactions.serializers.base import BaseSerializer
 
 
 class TransferSerializer(BaseSerializer):
-    """Serializer handling multi payment data"""
+    """Serializer handling transfer data"""
 
     def serialize(self):
         self.bytes_data += write_bit16(len(self.transaction["asset"]["transfers"]))
