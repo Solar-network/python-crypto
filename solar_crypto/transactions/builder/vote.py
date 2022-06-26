@@ -1,9 +1,11 @@
 import re
 import typing
+from decimal import Decimal
 from functools import cmp_to_key
 from math import trunc
 
 from solar_crypto.constants import SOLAR_TRANSACTION_VOTE, TRANSACTION_TYPE_GROUP
+from solar_crypto.exceptions import SolarInvalidTransaction
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
 
@@ -19,7 +21,9 @@ class Vote(BaseTransactionBuilder):
 
     def set_votes(
         self,
-        votes: typing.Union[typing.List[str], typing.Dict[str, typing.Union[int, float]]] = dict,
+        votes: typing.Union[
+            typing.List[str], typing.Dict[str, typing.Union[int, float, Decimal]]
+        ] = dict,
     ):
         """Set votes
 
@@ -30,24 +34,34 @@ class Vote(BaseTransactionBuilder):
 
         if isinstance(votes, list):
             vote_list = filter(lambda vote: not vote.startswith("-"), votes)
-            vote_list = list(map(lambda vote: vote[1:], vote_list))
+            vote_list = list(
+                map(lambda vote: vote[1:] if vote.startswith("+") else vote, vote_list)
+            )
+
+            if len(vote_list) > 53:
+                raise SolarInvalidTransaction("Unable to vote for more than 53 delegates")
 
             if len(vote_list) == 0:
                 self.transaction.asset["votes"] = {}
                 return
 
-            weight = round((trunc((100 / len(vote_list)) * 100) / 100) * 100)
+            weight = trunc(((((100 / len(vote_list))) * 100) / 100) * 100)
             remainder = 10000
 
             for vote in vote_list:
                 vote_object[vote] = weight / 100
                 remainder -= weight
 
-            for index in range(remainder):
+            for index in range(int(remainder)):
                 key = list(vote_object.keys())[index]
                 vote_object[key] = round((vote_object[key] + 0.01) * 100) / 100
 
             votes = vote_object
+        else:
+            for key, val in votes.items():
+                votes[key] = val
+
+        validate(votes)
 
         if votes:
             nr_of_votes = len(votes.keys())
@@ -55,6 +69,22 @@ class Vote(BaseTransactionBuilder):
                 votes = sort_votes(votes)
 
         self.transaction.asset["votes"] = votes
+
+
+def validate(votes):
+    for value in votes.values():
+        if not valid_precision(value):
+            raise SolarInvalidTransaction("Only two decimal places are allowed.")
+
+
+def valid_precision(value, max_precision=2):
+    if isinstance(value, Decimal):
+        if abs(value.as_tuple().exponent) <= max_precision:
+            return True
+    elif isinstance(value, float) or isinstance(value, str):
+        if str(value)[::-1].find(".") <= max_precision:
+            return True
+    return False
 
 
 def cmp(a: typing.List[typing.Union[int, str]], b: typing.List[typing.Union[int, str]]):
