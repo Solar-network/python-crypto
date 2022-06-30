@@ -10,7 +10,7 @@ class TransferDeserializer(BaseDeserializer):
     def deserialize(self):
         starting_position = int(self.asset_offset / 2)
 
-        transfer_length = read_bit16(self.serialized, starting_position) & 0xFF
+        transfer_length = read_bit16(self.serialized, starting_position) & 0xFFFF
 
         self.transaction.asset["transfers"] = []
 
