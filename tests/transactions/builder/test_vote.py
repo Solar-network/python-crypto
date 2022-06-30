@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from decimal import Decimal
 
 import pytest
 
@@ -12,7 +13,7 @@ set_network(Testnet)
 
 
 def test_vote_transaction_input_error():
-    vote = {"deadlock": 50.3333}
+    vote = {"fun": 50.67, "deadlock": 50.3333}
 
     transaction = Vote()
     with pytest.raises(SolarInvalidTransaction) as e:
@@ -20,9 +21,12 @@ def test_vote_transaction_input_error():
     assert str(e.value) == "Only two decimal places are allowed."
 
 
-def test_vote_transaction_multiple_votes():
-    vote = {"fun": 35.3, "deadlock": 64.7}
-
+@pytest.mark.parametrize("vote", [
+    {"fun": 35.3, "deadlock": 64.7},
+    {"fun": 50, "deadlock": 50},
+    {"fun": Decimal(50), "deadlock": Decimal(50)},
+])
+def test_vote_transaction_multiple_votes(vote):
     transaction = Vote()
     transaction.set_votes(vote)
     transaction.set_nonce(1)
@@ -37,6 +41,17 @@ def test_vote_transaction_multiple_votes():
     assert transaction_dict["fee"] == 9000000
 
     transaction.verify()  # if no exception is raised, it means the transaction is valid
+
+
+@pytest.mark.parametrize("vote", [
+    {"fun": 50, "deadlock": 55},
+    {"fun": 50},
+])
+def test_vote_transaction_must_equal_100(vote):
+    transaction = Vote()
+    with pytest.raises(SolarInvalidTransaction) as e:
+        transaction.set_votes(vote)
+    assert str(e.value) == "Total vote weight must equal 100."
 
 
 def test_vote_transaction_using_empty_list():

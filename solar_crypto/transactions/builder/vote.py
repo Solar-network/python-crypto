@@ -76,12 +76,15 @@ def validate(votes):
         if not valid_precision(value):
             raise SolarInvalidTransaction("Only two decimal places are allowed.")
 
+    if Decimal(sum(votes.values())) != Decimal("100"):
+        raise SolarInvalidTransaction("Total vote weight must equal 100.")
+
 
 def valid_precision(value, max_precision=2):
     if isinstance(value, Decimal):
         if abs(value.as_tuple().exponent) <= max_precision:
             return True
-    elif isinstance(value, float) or isinstance(value, str):
+    elif isinstance(value, float) or isinstance(value, str) or isinstance(value, int):
         if str(value)[::-1].find(".") <= max_precision:
             return True
     return False
