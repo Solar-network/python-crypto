@@ -32,3 +32,10 @@ def test_deserializer(transaction_type_6):
     )  # noqa
 
     actual.verify()
+
+def test_deserializer_two_fifty_six_transfers(transaction_type_6_256):
+    serialized = transaction_type_6_256["serialized"]
+    deserializer = Deserializer(serialized)
+    transaction_dict =  deserializer.deserialize().to_dict()
+
+    assert len(transaction_dict["asset"]["transfers"]) == 256
