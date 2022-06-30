@@ -15,12 +15,12 @@ class TransferSerializer(BaseSerializer):
     def serialize(self):
         self.bytes_data += write_bit16(len(self.transaction["asset"]["transfers"]))
 
-        for payment in self.transaction["asset"]["transfers"]:
-            if not address.validate_address(payment["recipientId"]):
+        for transfer in self.transaction["asset"]["transfers"]:
+            if not address.validate_address(transfer["recipientId"]):
                 raise SolarSerializerException("Invalid recipient address")
 
-            self.bytes_data += write_bit64(payment["amount"])
-            recipientId = hexlify(b58decode_check(payment["recipientId"]))
+            self.bytes_data += write_bit64(transfer["amount"])
+            recipientId = hexlify(b58decode_check(transfer["recipientId"]))
             self.bytes_data += write_high(recipientId)
 
         return self.bytes_data

@@ -28,10 +28,6 @@ class Transfer(BaseTransactionBuilder):
     def get_type_group(self):
         return TRANSACTION_TYPE_GROUP.CORE.value
 
-    def add_payment(self, amount, recipient_id):
-        """Legacy method that is deprecated"""
-        self.add_transfer(amount, recipient_id)
-
     def add_transfer(self, amount, recipient_id):
         if not address.validate_address(recipient_id):
             raise ValueError("Invalid recipient address")
