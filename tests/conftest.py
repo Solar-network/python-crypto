@@ -142,11 +142,11 @@ def transaction_type_5():
 
 @pytest.fixture
 def transaction_type_6():
-    """Transaction of type "multi payment" """
+    """Transaction of type "transfer" """
     data = {
         "amount": 0,
         "asset": {
-            "payments": [
+            "transfers": [
                 {"amount": 1, "recipientId": "DEMvpU4Qq6KvSzF3sRNjGCkm6Kj7cFfVaz"},
                 {"amount": 2, "recipientId": "DQveGkK7te33dWJwHgKpGKDr5amxAE7PF4"},
             ]

@@ -1,6 +1,6 @@
 from solar_crypto.transactions.serializer import Serializer
 
 
-def test_serializer(transaction_type_0):
-    result = Serializer(transaction_type_0).serialize(False, True)
-    assert result == transaction_type_0["serialized"]
+def test_serializer(transaction_type_6):
+    result = Serializer(transaction_type_6).serialize(False, True)
+    assert result == transaction_type_6["serialized"]
