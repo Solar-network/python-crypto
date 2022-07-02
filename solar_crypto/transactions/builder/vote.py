@@ -45,7 +45,7 @@ class Vote(BaseTransactionBuilder):
                 self.transaction.asset["votes"] = {}
                 return
 
-            weight = trunc(((((100 / len(vote_list))) * 100) / 100) * 100)
+            weight = trunc(10000 / len(vote_list))
             remainder = 10000
 
             for vote in vote_list:
