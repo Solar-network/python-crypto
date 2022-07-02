@@ -44,10 +44,10 @@ class Serializer(object):
         bytes_data += write_high(self.transaction.get("senderPublicKey"))
         bytes_data += write_bit64(self.transaction.get("fee"))
 
-        if self.transaction.get("vendorField"):
-            vendorFieldLength = len(self.transaction.get("vendorField"))
-            bytes_data += write_bit8(vendorFieldLength)
-            bytes_data += self.transaction["vendorField"].encode()
+        if self.transaction.get("memo"):
+            memo_length = len(self.transaction.get("memo"))
+            bytes_data += write_bit8(memo_length)
+            bytes_data += self.transaction["memo"].encode()
         else:
             bytes_data += write_bit8(0x00)
 

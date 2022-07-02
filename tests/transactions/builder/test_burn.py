@@ -32,10 +32,10 @@ def test_burn_transaction(version):
 
 
 @pytest.mark.parametrize("version", [2, 3])
-def test_burn_transaction_with_vendor_field(version):
+def test_burn_transaction_with_memo(version):
     """Test if a transfer transaction gets built"""
     transaction = Burn(amount=200000000)
-    transaction.set_vendor_field("hello world")
+    transaction.set_memo("hello world")
     transaction.set_nonce(1)
     transaction.set_version(version)
     transaction.sign("this is a top secret passphrase")
@@ -43,7 +43,7 @@ def test_burn_transaction_with_vendor_field(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["vendorField"] == "hello world"
+    assert transaction_dict["memo"] == "hello world"
     assert transaction_dict["version"] == version
     assert transaction_dict["type"] is SOLAR_TRANSACTION_BURN
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.SOLAR.value

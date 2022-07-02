@@ -33,14 +33,14 @@ def test_transfer_transaction(version):
 
 
 @pytest.mark.parametrize("version", [2, 3])
-def test_transfer_transaction_with_vendor_field(version):
+def test_transfer_transaction_with_memo(version):
     """Test if a transfer transaction gets built"""
     transaction = LegacyTransfer(
         recipientId="D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib",
         amount=200000000,
     )
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
-    transaction.set_vendor_field("hello world")
+    transaction.set_memo("hello world")
     transaction.set_nonce(1)
     transaction.set_version(version)
     transaction.sign("this is a top secret passphrase")
@@ -48,7 +48,7 @@ def test_transfer_transaction_with_vendor_field(version):
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert transaction_dict["vendorField"] == "hello world"
+    assert transaction_dict["memo"] == "hello world"
     assert transaction_dict["version"] == version
     assert transaction_dict["type"] is TRANSACTION_LEGACY_TRANSFER
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.CORE.value
