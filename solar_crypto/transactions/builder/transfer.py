@@ -7,11 +7,11 @@ class Transfer(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_TRANSFER
 
-    def __init__(self, vendorField=None, fee=None):
+    def __init__(self, memo=None, fee=None):
         """Create a transfer transaction
 
         Args:
-            vendorField (str): value for the vendor field aka smartbridge
+            memo (str): value for the optional text field
             fee (int, optional): fee used for the transaction (default is already set)
         """
         super().__init__()
@@ -20,7 +20,7 @@ class Transfer(BaseTransactionBuilder):
 
         self.transaction.asset["transfers"] = []
 
-        self.transaction.vendorField = vendorField.encode() if vendorField else None
+        self.transaction.memo = memo.encode() if memo else None
 
         if fee:
             self.transaction.fee = fee

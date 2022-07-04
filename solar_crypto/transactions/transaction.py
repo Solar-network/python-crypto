@@ -32,7 +32,7 @@ TRANSACTION_ATTRIBUTES = {
     "nonce": None,
     "type": None,
     "typeGroup": None,
-    "vendorField": None,
+    "memo": None,
     "version": None,
     "lockTransactionId": None,
     "lockSecret": None,

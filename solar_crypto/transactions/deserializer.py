@@ -41,13 +41,13 @@ class Deserializer(object):
         transaction.senderPublicKey = hexlify(self.serialized)[34 : 66 + 34].decode()
         transaction.fee = read_bit64(self.serialized, offset=50)
 
-        vendor_field_length = read_bit8(self.serialized, offset=58)
-        if vendor_field_length > 0:
-            vendor_field_offset = 59
-            vendorField_end = vendor_field_offset + vendor_field_length
-            transaction.vendorField = self.serialized[vendor_field_offset:vendorField_end].decode()
+        memo_length = read_bit8(self.serialized, offset=58)
+        if memo_length > 0:
+            memo_offset = 59
+            memo_end = memo_offset + memo_length
+            transaction.memo = self.serialized[memo_offset:memo_end].decode()
 
-        asset_offset = (58 + 1) * 2 + vendor_field_length * 2
+        asset_offset = (58 + 1) * 2 + memo_length * 2
         handled_transaction = self._handle_transaction_type(asset_offset, transaction)
         transaction.amount = handled_transaction.amount
         transaction.version = handled_transaction.version

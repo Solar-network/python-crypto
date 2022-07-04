@@ -14,7 +14,7 @@ class HtlcLock(BaseTransactionBuilder):
         secret_hash,
         expiration_type,
         expiration_value,
-        vendorField=None,
+        memo=None,
         fee=None,
     ):
         """Create a timelock transaction
@@ -25,7 +25,7 @@ class HtlcLock(BaseTransactionBuilder):
             secret_hash (str): a hash of the secret. The SAME hash must be used in the corresponding “claim” transaction
             expiration_type (int): type of the expiration. Either block height or network epoch timestamp based
             expiration_value (int): Expiration of transaction in seconds or height depending on expiration_type
-            vendorField (str): value for the vendor field aka smartbridge
+            memo (str): value for the optional text field
             fee (int, optional): fee used for the transaction (default is already set)
         """
         super().__init__()
@@ -47,7 +47,7 @@ class HtlcLock(BaseTransactionBuilder):
             "expiration": {"type": expiration_type, "value": expiration_value},
         }
 
-        self.transaction.vendorField = vendorField.encode() if vendorField else None
+        self.transaction.memo = memo.encode() if memo else None
 
         if fee:
             self.transaction.fee = fee
