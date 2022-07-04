@@ -30,7 +30,7 @@ setup_requires = ["pytest-runner"] if {"pytest", "test", "ptr"}.intersection(sys
 setuptools.setup(
     name="solar-crypto",
     description="A simple Cryptography Implementation in Python for the Solar Blockchain.",
-    version="3.0.0",
+    version="3.1.0",
     author="Solar-Network",
     author_email="hello@solar.org",
     url="https://github.com/Solar-network/python-crypto",
