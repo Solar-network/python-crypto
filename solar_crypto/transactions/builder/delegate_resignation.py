@@ -6,7 +6,7 @@ class DelegateResignation(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_DELEGATE_RESIGNATION
 
-    def __init__(self, fee=None):
+    def __init__(self, fee: int = None):
         """Create a delegate resignation transaction
 
         Args:

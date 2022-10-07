@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import json
+import typing
 
 from solar_crypto.identity.private_key import PrivateKey
 from solar_crypto.utils.crypto import sign_schnorr, verify_schnorr
@@ -13,11 +16,11 @@ class Message(object):
                 raise TypeError("Invalid keyword argument %s" % k)
 
     @classmethod
-    def sign(cls, message, passphrase):
-        """Signs a message
+    def sign(cls, message: typing.Union[str, bytes], passphrase: str) -> Message:
+        """Sign a message with a given passphrase
 
         Args:
-            message (str/bytes): a message you wish to sign
+            message (str or bytes): a message you wish to sign
             passphrase (str): passphrase you wish to use to sign the message
 
         Returns:
@@ -28,18 +31,18 @@ class Message(object):
         signature = sign_schnorr(message_bytes, private_key)
         return cls(message=message, signature=signature, publicKey=private_key.public_key)
 
-    def verify(self):
+    def verify(self) -> bool:
         """Verify the Message object
 
         Returns:
-            bool: returns a boolean - true if verified, false if not
+            bool: true if verified, false if not
         """
         message = self.message if isinstance(self.message, bytes) else self.message.encode()
         public_key = self.publickey if hasattr(self, "publickey") else self.publicKey
         is_verified = verify_schnorr(message, public_key, self.signature)
         return is_verified
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Return a dictionary of the message
 
         Returns:
@@ -54,7 +57,7 @@ class Message(object):
         }
         return data
 
-    def to_json(self):
+    def to_json(self) -> str:
         """Returns a json string of the the message
 
         Returns:

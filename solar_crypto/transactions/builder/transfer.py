@@ -1,4 +1,4 @@
-from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_TRANSFER
+from solar_crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
 from solar_crypto.identity import address
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -7,7 +7,7 @@ class Transfer(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_TRANSFER
 
-    def __init__(self, memo=None, fee=None):
+    def __init__(self, memo: str = None, fee: int = None):
         """Create a transfer transaction
 
         Args:

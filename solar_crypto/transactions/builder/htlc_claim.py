@@ -13,7 +13,7 @@ class HtlcClaim(BaseTransactionBuilder):
         hash_type: HashingType = HashingType.SHA256,
         fee: int = None,
     ):
-        """Create a timelock transaction
+        """Create a HTLC claim transaction
 
         Args:
             lock_transaction_id (str): HTLC lock transaction ID we wish to claim

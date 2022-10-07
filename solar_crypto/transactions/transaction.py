@@ -49,11 +49,11 @@ class Transaction(object):
                 attribute_value = kwargs[attribute]
             setattr(self, attribute, attribute_value)
 
-    def get_id(self):
+    def get_id(self) -> str:
         """Convert the byte representation to a unique identifier
 
         Returns:
-            str:
+            str
         """
         return sha256(
             self.to_bytes(
@@ -61,7 +61,7 @@ class Transaction(object):
             )
         ).hexdigest()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Convert the transaction into a dictionary representation
 
         Returns:
@@ -76,7 +76,7 @@ class Transaction(object):
             data[key] = attribute.decode() if isinstance(attribute, bytes) else attribute
         return data
 
-    def to_json(self):
+    def to_json(self) -> str:
         data = self.to_dict()
         return json.dumps(data)
 
@@ -167,6 +167,14 @@ class Transaction(object):
         return Deserializer(serialized).deserialize()
 
     def verify(self):
+        """Verify transaction
+
+        Raises:
+            SolarInvalidTransaction: raised in case transaction can not be verified
+
+        Returns:
+            True: when transaction is verified
+        """
         msg = self.to_bytes()
 
         if self.version > 2:
@@ -181,7 +189,18 @@ class Transaction(object):
 
         return True
 
-    def verify_secondsig(self, secondPublicKey):
+    def verify_secondsig(self, secondPublicKey: str):
+        """Verify transaction's second signature
+
+        Args:
+            secondPublicKey (str)
+
+        Raises:
+            SolarInvalidTransaction: raised in case transaction can not be verified
+
+        Returns:
+            True: when second signature is verified
+        """
         msg = self.to_bytes(False, True)
 
         if self.version > 2:
@@ -196,7 +215,18 @@ class Transaction(object):
 
         return True
 
-    def verify_signatures(self, multi_signature_asset):
+    def verify_signatures(self, multi_signature_asset: dict):
+        """Verify multi-signatures
+
+        Args:
+            multi_signature_asset (dict): dictionary object containing multiple signatures
+
+        Raises:
+            SolarInvalidTransaction: raised in case transaction can not be verified
+
+        Returns:
+            True: when second signature is verified
+        """
         if not multi_signature_asset:
             raise SolarInvalidTransaction("Transaction could not be verified")
 

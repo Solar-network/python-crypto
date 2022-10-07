@@ -8,7 +8,7 @@ class LegacyTransfer(BaseTransactionBuilder):
     transaction_type = TRANSACTION_LEGACY_TRANSFER
 
     def __init__(self, recipientId, amount, memo=None, fee=None):
-        """Create a transfer transaction
+        """Create a legacy transfer transaction
 
         Args:
             recipientId (str): address to which you want to send coins

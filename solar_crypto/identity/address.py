@@ -9,7 +9,7 @@ from solar_crypto.configuration.network import get_network
 from solar_crypto.identity.private_key import PrivateKey
 
 
-def address_from_public_key(public_key, network_version=None):
+def address_from_public_key(public_key: str, network_version: int = None) -> str:
     """Get an address from a public key
 
     Args:
@@ -17,7 +17,7 @@ def address_from_public_key(public_key, network_version=None):
         network_version (int, optional):
 
     Returns:
-        bytes:
+        str: address string
     """
     if not network_version:
         network = get_network()
@@ -29,15 +29,15 @@ def address_from_public_key(public_key, network_version=None):
     return b58encode_check(seed).decode()
 
 
-def address_from_private_key(private_key, network_version=None):
+def address_from_private_key(private_key: str, network_version: int = None) -> str:
     """Get an address from private key
 
     Args:
-        private_key (string):
-        network_version (int, optional):
+        private_key (string)
+        network_version (int, optional)
 
     Returns:
-        TYPE: Description
+        str: address string
     """
     if not network_version:
         network = get_network()
@@ -50,7 +50,7 @@ def address_from_private_key(private_key, network_version=None):
     return b58encode_check(seed).decode()
 
 
-def address_from_passphrase(passphrase, network_version=None):
+def address_from_passphrase(passphrase: str, network_version: int = None) -> str:
     """Get an address from passphrase
 
     Args:
@@ -69,15 +69,15 @@ def address_from_passphrase(passphrase, network_version=None):
     return address
 
 
-def validate_address(address, network_version=None):
+def validate_address(address: str, network_version: int = None):
     """Validate a given address
 
     Args:
         address (str): address you wish to validate
-        network_version (None, optional): integer, version of the network
+        network_version (None, optional): custom network version, if none provided fallback to the default network version
 
     Returns:
-        bool:
+        bool
     """
     if not network_version:
         network = get_network()

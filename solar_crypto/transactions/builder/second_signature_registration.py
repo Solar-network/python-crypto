@@ -7,7 +7,7 @@ class SecondSignatureRegistration(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_SECOND_SIGNATURE_REGISTRATION
 
-    def __init__(self, second_passphrase, fee=None):
+    def __init__(self, second_passphrase: str, fee: int = None):
         """Create a second signature registration transaction
 
         Args:

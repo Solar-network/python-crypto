@@ -26,11 +26,11 @@ class BaseTransactionBuilder(object):
     def to_json(self):
         return self.transaction.to_json()
 
-    def sign(self, passphrase):
+    def sign(self, passphrase: str):
         """Sign the transaction using the given passphrase
 
         Args:
-            passphrase (str): passphrase associated with the account sending this transaction
+            passphrase (str): passphrase associated with the address sending this transaction
         """
         pvt = PrivateKey.from_passphrase(passphrase)
         self.transaction.senderPublicKey = PublicKey.from_passphrase(passphrase)
@@ -47,11 +47,11 @@ class BaseTransactionBuilder(object):
             self.transaction.signature = sig
             self.transaction.id = self.transaction.get_id()
 
-    def second_sign(self, passphrase):
+    def second_sign(self, passphrase: str):
         """Sign the transaction using the given second passphrase
 
         Args:
-            passphrase (str): 2nd passphrase associated with the account sending this transaction
+            passphrase (str): 2nd passphrase associated with the address sending this transaction
         """
         pvt = PrivateKey.from_passphrase(passphrase)
         msg = self.transaction.to_bytes(False, True, False)
@@ -67,7 +67,13 @@ class BaseTransactionBuilder(object):
             self.transaction.signSignature = sig
             self.transaction.id = self.transaction.get_id()
 
-    def multi_sign(self, passphrase, index):
+    def multi_sign(self, passphrase: str, index: int):
+        """Sign the transaction with one of multiple signatures
+
+        Args:
+            passphrase (str): passphrase signing the transaction
+            index (int): index of the passphrase signing the transaction
+        """
         if not self.transaction.signatures:
             self.transaction.signatures = []
 
@@ -107,7 +113,12 @@ class BaseTransactionBuilder(object):
     def set_sender_public_key(self, public_key):
         self.transaction.senderPublicKey = public_key
 
-    def set_expiration(self, expiration):
+    def set_expiration(self, expiration: HTLC_LOCK_EXPIRATION_TYPE):
+        """Set HTLC expiration
+
+        Args:
+            expiration (HTLC_LOCK_EXPIRATION_TYPE)
+        """
         if type(expiration) == int:
             self.transaction.expiration = expiration
         else:
@@ -132,4 +143,9 @@ class BaseTransactionBuilder(object):
         self.transaction.version = version
 
     def set_memo(self, value: str):
+        """Set memo value
+
+        Args:
+            value (str)
+        """
         self.transaction.memo = value.encode()

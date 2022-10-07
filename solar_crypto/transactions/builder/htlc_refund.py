@@ -6,8 +6,8 @@ class HtlcRefund(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_HTLC_REFUND
 
-    def __init__(self, lock_transaction_id, fee=None):
-        """Create a timelock transaction
+    def __init__(self, lock_transaction_id: str, fee: int = None):
+        """Create a HTLC refund transaction
 
         Args:
             lock_transaction_id (str) : HTLC lock transaction ID we wish to claim

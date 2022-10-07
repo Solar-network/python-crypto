@@ -15,6 +15,7 @@ class Vote(BaseTransactionBuilder):
     typeGroup = TRANSACTION_TYPE_GROUP.SOLAR.value
 
     def __init__(self):
+        """Create a vote transaction"""
         super().__init__()
 
         self.transaction.asset["votes"] = []

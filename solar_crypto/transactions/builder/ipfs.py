@@ -6,7 +6,7 @@ class IPFS(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_IPFS
 
-    def __init__(self, ipfs_cid=None, fee=None):
+    def __init__(self, ipfs_cid: str = None, fee: int = None):
         """Create an ipfs transaction
 
         Args:
