@@ -1,4 +1,4 @@
-from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_TRANSFER
+from solar_crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
 from solar_crypto.identity import address
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 

@@ -21,11 +21,14 @@ def test_vote_transaction_input_error():
     assert str(e.value) == "Only two decimal places are allowed."
 
 
-@pytest.mark.parametrize("vote", [
-    {"fun": 35.3, "deadlock": 64.7},
-    {"fun": 50, "deadlock": 50},
-    {"fun": Decimal(50), "deadlock": Decimal(50)},
-])
+@pytest.mark.parametrize(
+    "vote",
+    [
+        {"fun": 35.3, "deadlock": 64.7},
+        {"fun": 50, "deadlock": 50},
+        {"fun": Decimal(50), "deadlock": Decimal(50)},
+    ],
+)
 def test_vote_transaction_multiple_votes(vote):
     transaction = Vote()
     transaction.set_votes(vote)
@@ -43,10 +46,13 @@ def test_vote_transaction_multiple_votes(vote):
     transaction.verify()  # if no exception is raised, it means the transaction is valid
 
 
-@pytest.mark.parametrize("vote", [
-    {"fun": 50, "deadlock": 55},
-    {"fun": 50},
-])
+@pytest.mark.parametrize(
+    "vote",
+    [
+        {"fun": 50, "deadlock": 55},
+        {"fun": 50},
+    ],
+)
 def test_vote_transaction_must_equal_100(vote):
     transaction = Vote()
     with pytest.raises(SolarInvalidTransaction) as e:
@@ -80,11 +86,13 @@ def test_vote_transaction_using_list_ok():
 
     assert transaction_dict["nonce"] == 1
     assert transaction_dict["signature"]
-    assert OrderedDict(transaction_dict["asset"]["votes"]) == OrderedDict({
-        "awesome": 33.34,
-        "flossom": 33.33,
-        "possom": 33.33,
-    })
+    assert OrderedDict(transaction_dict["asset"]["votes"]) == OrderedDict(
+        {
+            "awesome": 33.34,
+            "flossom": 33.33,
+            "possom": 33.33,
+        }
+    )
     assert transaction_dict["type"] is SOLAR_TRANSACTION_VOTE
     assert transaction_dict["typeGroup"] == TRANSACTION_TYPE_GROUP.SOLAR.value
     assert transaction_dict["fee"] == 9000000
