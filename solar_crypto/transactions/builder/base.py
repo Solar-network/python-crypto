@@ -22,10 +22,10 @@ class BaseTransactionBuilder(object):
         if self.transaction.type != 0:
             self.transaction.amount = getattr(self, "amount", 0)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return self.transaction.to_dict()
 
-    def to_json(self):
+    def to_json(self) -> str:
         return self.transaction.to_json()
 
     def sign(self, passphrase: str):
@@ -94,13 +94,13 @@ class BaseTransactionBuilder(object):
             sig = sign_schnorr_legacy(msg, pvt)
             self.transaction.signatures.append(f"{index_formatted}{sig}")
 
-    def verify(self):
+    def verify(self) -> bool:
         return self.transaction.verify()
 
-    def verify_second(self, secondPublicKey: str):
+    def verify_second(self, secondPublicKey: str) -> bool:
         return self.transaction.verify_secondsig(secondPublicKey)
 
-    def verify_multisig(self, multi_signature_asset: dict):
+    def verify_multisig(self, multi_signature_asset: dict) -> bool:
         return self.transaction.verify_signatures(multi_signature_asset)
 
     def set_nonce(self, nonce: int):
