@@ -1,3 +1,5 @@
+from typing import Optional
+
 from solar_crypto.constants import TRANSACTION_IPFS, TRANSACTION_TYPE_GROUP
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -6,7 +8,7 @@ class IPFS(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_IPFS
 
-    def __init__(self, ipfs_cid: str = None, fee: int = None):
+    def __init__(self, ipfs_cid: Optional[str] = None, fee: Optional[int] = None):
         """Create an ipfs transaction
 
         Args:
@@ -21,7 +23,7 @@ class IPFS(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def get_type_group(self):
+    def get_type_group(self) -> int:
         return TRANSACTION_TYPE_GROUP.CORE.value
 
     def set_ipfs_cid(self, cid: str):

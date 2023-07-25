@@ -1,3 +1,5 @@
+from typing import Union
+
 from solar_crypto.configuration.fee import get_fee
 from solar_crypto.constants import HTLC_LOCK_EXPIRATION_TYPE, TRANSACTION_TYPE_GROUP
 from solar_crypto.identity.private_key import PrivateKey
@@ -95,22 +97,22 @@ class BaseTransactionBuilder(object):
     def verify(self):
         return self.transaction.verify()
 
-    def verify_second(self, secondPublicKey):
+    def verify_second(self, secondPublicKey: str):
         return self.transaction.verify_secondsig(secondPublicKey)
 
-    def verify_multisig(self, multi_signature_asset):
+    def verify_multisig(self, multi_signature_asset: dict):
         return self.transaction.verify_signatures(multi_signature_asset)
 
-    def set_nonce(self, nonce):
+    def set_nonce(self, nonce: int):
         self.transaction.nonce = nonce
 
     def set_fee(self, fee: int):
         self.transaction.fee = fee
 
-    def set_amount(self, amount):
+    def set_amount(self, amount: int):
         self.transaction.amount = amount
 
-    def set_sender_public_key(self, public_key):
+    def set_sender_public_key(self, public_key: str):
         self.transaction.senderPublicKey = public_key
 
     def set_expiration(self, expiration: HTLC_LOCK_EXPIRATION_TYPE):
@@ -128,18 +130,13 @@ class BaseTransactionBuilder(object):
             }
             self.transaction.expiration = types[expiration]
 
-    def set_type_group(self, type_group):
-        if type(type_group) == int:
-            self.transaction.typeGroup = type_group
+    def set_type_group(self, type_group: Union[int, TRANSACTION_TYPE_GROUP]):
+        if isinstance(type_group, TRANSACTION_TYPE_GROUP):
+            self.transaction.typeGroup = int(type_group)
         else:
-            types = {
-                TRANSACTION_TYPE_GROUP.TEST: 0,
-                TRANSACTION_TYPE_GROUP.CORE: 1,
-                TRANSACTION_TYPE_GROUP.RESERVED: 1000,
-            }
-            self.transaction.typeGroup = types[type_group]
+            self.transaction.typeGroup = type_group
 
-    def set_version(self, version):
+    def set_version(self, version: int):
         self.transaction.version = version
 
     def set_memo(self, value: str):

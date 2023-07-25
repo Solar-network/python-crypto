@@ -1,3 +1,5 @@
+from typing import Optional
+
 from solar_crypto.constants import (
     HTLC_LOCK_EXPIRATION_TYPE,
     TRANSACTION_HTLC_LOCK,
@@ -18,8 +20,8 @@ class HtlcLock(BaseTransactionBuilder):
         secret_hash: str,
         expiration_type: HTLC_LOCK_EXPIRATION_TYPE,
         expiration_value: int,
-        memo: str = None,
-        fee: int = None,
+        memo: Optional[str] = None,
+        fee: Optional[int] = None,
     ):
         """Create a HTLC lock transaction
 
@@ -56,5 +58,5 @@ class HtlcLock(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def get_type_group(self):
+    def get_type_group(self) -> int:
         return TRANSACTION_TYPE_GROUP.CORE.value

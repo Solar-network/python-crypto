@@ -8,10 +8,10 @@ from coincurve import PrivateKey as PvtKey
 
 class PrivateKey(object):
     def __init__(self, private_key: str):
-        self.private_key = PvtKey.from_hex(private_key)
+        self.private_key: PvtKey = PvtKey.from_hex(private_key)
         self.public_key = hexlify(self.private_key.public_key.format()).decode()
 
-    def sign(self, message: bytes, nonce: int = None) -> str:
+    def sign(self, message: bytes, nonce: int) -> str:
         """Sign a message with this private key object
 
         Args:
@@ -23,7 +23,7 @@ class PrivateKey(object):
         """
         from solar_crypto.utils.crypto import sign_schnorr  # circular imports
 
-        signature = sign_schnorr(message, self.private_key, nonce)
+        signature = sign_schnorr(message, self, nonce)
         return signature
 
     def to_hex(self) -> str:

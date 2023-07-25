@@ -1,5 +1,6 @@
 import hashlib
 from binascii import unhexlify
+from typing import Optional
 
 from base58 import b58decode_check, b58encode_check
 from binary.unsigned_integer.writer import write_bit8
@@ -9,7 +10,7 @@ from solar_crypto.configuration.network import get_network
 from solar_crypto.identity.private_key import PrivateKey
 
 
-def address_from_public_key(public_key: str, network_version: int = None) -> str:
+def address_from_public_key(public_key: str, network_version: Optional[int] = None) -> str:
     """Get an address from a public key
 
     Args:
@@ -29,7 +30,7 @@ def address_from_public_key(public_key: str, network_version: int = None) -> str
     return b58encode_check(seed).decode()
 
 
-def address_from_private_key(private_key: str, network_version: int = None) -> str:
+def address_from_private_key(private_key: str, network_version: Optional[int] = None) -> str:
     """Get an address from private key
 
     Args:
@@ -43,14 +44,14 @@ def address_from_private_key(private_key: str, network_version: int = None) -> s
         network = get_network()
         network_version = network["version"]
 
-    private_key = PrivateKey.from_hex(private_key)
+    pvt_key = PrivateKey.from_hex(private_key)
     ripemd160 = RIPEMD160.new()
-    ripemd160.update(unhexlify(private_key.public_key))
+    ripemd160.update(unhexlify(pvt_key.public_key))
     seed = write_bit8(network_version) + ripemd160.digest()
     return b58encode_check(seed).decode()
 
 
-def address_from_passphrase(passphrase: str, network_version: int = None) -> str:
+def address_from_passphrase(passphrase: str, network_version: Optional[int] = None) -> str:
     """Get an address from passphrase
 
     Args:
@@ -69,7 +70,7 @@ def address_from_passphrase(passphrase: str, network_version: int = None) -> str
     return address
 
 
-def validate_address(address: str, network_version: int = None):
+def validate_address(address: str, network_version: Optional[int] = None) -> bool:
     """Validate a given address
 
     Args:
