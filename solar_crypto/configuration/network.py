@@ -1,13 +1,15 @@
+from datetime import datetime
+
 from solar_crypto.networks.testnet import Testnet
 
-network = {}
+network: dict = {}
 
 
-def set_network(network_object):
+def set_network(network_object) -> dict:
     """Set what network you want to use in the crypto library
 
     Args:
-        network_object (Network object): Testnet, Mainnet
+        network_object (dict): testnet or mainnet
     """
     global network
     network = {
@@ -17,7 +19,7 @@ def set_network(network_object):
     }
 
 
-def get_network():
+def get_network() -> dict:
     """Get settings for a selected network, default network is testnet
 
     Returns:
@@ -28,7 +30,7 @@ def get_network():
     return network
 
 
-def set_custom_network(epoch, version, wif):
+def set_custom_network(epoch: datetime, version: int, wif: int) -> None:
     """Set custom network
 
     Args:
@@ -44,8 +46,8 @@ def set_custom_network(epoch, version, wif):
     }
 
 
-def get_network_version():
-    """Get currently set network version
+def get_network_version() -> int:
+    """Get network version of the currently set network
 
     Returns:
         int: network version

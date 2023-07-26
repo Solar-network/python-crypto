@@ -1,3 +1,5 @@
+from typing import Union
+
 from solar_crypto.configuration.fee import get_fee
 from solar_crypto.constants import HTLC_LOCK_EXPIRATION_TYPE, TRANSACTION_TYPE_GROUP
 from solar_crypto.identity.private_key import PrivateKey
@@ -20,17 +22,17 @@ class BaseTransactionBuilder(object):
         if self.transaction.type != 0:
             self.transaction.amount = getattr(self, "amount", 0)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return self.transaction.to_dict()
 
-    def to_json(self):
+    def to_json(self) -> str:
         return self.transaction.to_json()
 
-    def sign(self, passphrase):
+    def sign(self, passphrase: str):
         """Sign the transaction using the given passphrase
 
         Args:
-            passphrase (str): passphrase associated with the account sending this transaction
+            passphrase (str): passphrase associated with the address sending this transaction
         """
         pvt = PrivateKey.from_passphrase(passphrase)
         self.transaction.senderPublicKey = PublicKey.from_passphrase(passphrase)
@@ -47,11 +49,11 @@ class BaseTransactionBuilder(object):
             self.transaction.signature = sig
             self.transaction.id = self.transaction.get_id()
 
-    def second_sign(self, passphrase):
+    def second_sign(self, passphrase: str):
         """Sign the transaction using the given second passphrase
 
         Args:
-            passphrase (str): 2nd passphrase associated with the account sending this transaction
+            passphrase (str): 2nd passphrase associated with the address sending this transaction
         """
         pvt = PrivateKey.from_passphrase(passphrase)
         msg = self.transaction.to_bytes(False, True, False)
@@ -67,7 +69,13 @@ class BaseTransactionBuilder(object):
             self.transaction.signSignature = sig
             self.transaction.id = self.transaction.get_id()
 
-    def multi_sign(self, passphrase, index):
+    def multi_sign(self, passphrase: str, index: int):
+        """Sign the transaction with one of multiple signatures
+
+        Args:
+            passphrase (str): passphrase signing the transaction
+            index (int): index of the passphrase signing the transaction
+        """
         if not self.transaction.signatures:
             self.transaction.signatures = []
 
@@ -86,28 +94,33 @@ class BaseTransactionBuilder(object):
             sig = sign_schnorr_legacy(msg, pvt)
             self.transaction.signatures.append(f"{index_formatted}{sig}")
 
-    def verify(self):
+    def verify(self) -> bool:
         return self.transaction.verify()
 
-    def verify_second(self, secondPublicKey):
+    def verify_second(self, secondPublicKey: str) -> bool:
         return self.transaction.verify_secondsig(secondPublicKey)
 
-    def verify_multisig(self, multi_signature_asset):
+    def verify_multisig(self, multi_signature_asset: dict) -> bool:
         return self.transaction.verify_signatures(multi_signature_asset)
 
-    def set_nonce(self, nonce):
+    def set_nonce(self, nonce: int):
         self.transaction.nonce = nonce
 
     def set_fee(self, fee: int):
         self.transaction.fee = fee
 
-    def set_amount(self, amount):
+    def set_amount(self, amount: int):
         self.transaction.amount = amount
 
-    def set_sender_public_key(self, public_key):
+    def set_sender_public_key(self, public_key: str):
         self.transaction.senderPublicKey = public_key
 
-    def set_expiration(self, expiration):
+    def set_expiration(self, expiration: HTLC_LOCK_EXPIRATION_TYPE):
+        """Set HTLC expiration
+
+        Args:
+            expiration (HTLC_LOCK_EXPIRATION_TYPE)
+        """
         if type(expiration) == int:
             self.transaction.expiration = expiration
         else:
@@ -117,19 +130,19 @@ class BaseTransactionBuilder(object):
             }
             self.transaction.expiration = types[expiration]
 
-    def set_type_group(self, type_group):
-        if type(type_group) == int:
-            self.transaction.typeGroup = type_group
+    def set_type_group(self, type_group: Union[int, TRANSACTION_TYPE_GROUP]):
+        if isinstance(type_group, TRANSACTION_TYPE_GROUP):
+            self.transaction.typeGroup = int(type_group)
         else:
-            types = {
-                TRANSACTION_TYPE_GROUP.TEST: 0,
-                TRANSACTION_TYPE_GROUP.CORE: 1,
-                TRANSACTION_TYPE_GROUP.RESERVED: 1000,
-            }
-            self.transaction.typeGroup = types[type_group]
+            self.transaction.typeGroup = type_group
 
-    def set_version(self, version):
+    def set_version(self, version: int):
         self.transaction.version = version
 
     def set_memo(self, value: str):
+        """Set memo value
+
+        Args:
+            value (str)
+        """
         self.transaction.memo = value.encode()

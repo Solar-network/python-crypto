@@ -1,3 +1,5 @@
+import typing
+
 from solar_crypto.constants import TRANSACTION_FEES, TRANSACTION_MULTI_SIGNATURE_REGISTRATION
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -6,8 +8,8 @@ class MultiSignatureRegistration(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_MULTI_SIGNATURE_REGISTRATION
 
-    def __init__(self, fee=None):
-        """Create a new multi signature transaction
+    def __init__(self, fee: int = None):
+        """Create a multi signature transaction
 
         Args:
             fee (int, optional): fee used for the transaction (default is already set)
@@ -24,14 +26,14 @@ class MultiSignatureRegistration(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def set_min(self, minimum_participants):
+    def set_min(self, minimum_participants: int):
         self.transaction.asset["multiSignature"]["min"] = minimum_participants
 
-    def set_public_keys(self, public_keys):
+    def set_public_keys(self, public_keys: typing.List[str]):
         self.transaction.asset["multiSignature"]["publicKeys"] = public_keys
         self.transaction.fee = (len(public_keys) + 1) * self.transaction.fee
 
-    def add_participant(self, public_key):
+    def add_participant(self, public_key: str):
         self.transaction.asset["multiSignature"]["publicKeys"].append(public_key)
         self.transaction.fee = (
             len(self.transaction.asset["multiSignature"]["publicKeys"]) + 1

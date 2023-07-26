@@ -1,10 +1,12 @@
+import typing
+
 from solar_crypto.constants import SOLAR_TRANSACTION_FEES, TRANSACTION_FEES, TRANSACTION_TYPE_GROUP
 
 fees = TRANSACTION_FEES.copy()
 solar_fees = SOLAR_TRANSACTION_FEES.copy()
 
 
-def get_fee(transaction_type, type_group):
+def get_fee(transaction_type: int, type_group: int) -> typing.Union[int, None]:
     """Get a fee for a given transaction type
 
     Args:
@@ -12,14 +14,14 @@ def get_fee(transaction_type, type_group):
         type_group (int): transaction type group (TRANSACTION_TYPE_GROUP(Enum))
 
     Returns:
-        int: transaction fee
+        int | None: transaction fee or None if it doesn't exist
     """
     if type_group == TRANSACTION_TYPE_GROUP.SOLAR.value:
         return solar_fees.get(transaction_type)
     return fees.get(transaction_type)
 
 
-def set_fee(transaction_type, type_group, value):
+def set_fee(transaction_type: int, type_group: int, value: int) -> None:
     """Set a fee
 
     Args:

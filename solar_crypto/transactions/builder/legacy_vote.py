@@ -10,7 +10,7 @@ class LegacyVote(BaseTransactionBuilder):
     transaction_type = TRANSACTION_VOTE
 
     def __init__(self, vote=None, fee=None):
-        """Legacy vote transaction
+        """Create a legacy vote transaction
 
         Args:
             vote (str): address of a delegate you want to vote

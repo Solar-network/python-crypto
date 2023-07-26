@@ -1,3 +1,5 @@
+from typing import Optional
+
 from solar_crypto.constants import TRANSACTION_HTLC_REFUND, TRANSACTION_TYPE_GROUP
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -6,8 +8,8 @@ class HtlcRefund(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_HTLC_REFUND
 
-    def __init__(self, lock_transaction_id, fee=None):
-        """Create a timelock transaction
+    def __init__(self, lock_transaction_id: str, fee: Optional[int] = None):
+        """Create a HTLC refund transaction
 
         Args:
             lock_transaction_id (str) : HTLC lock transaction ID we wish to claim
@@ -24,5 +26,5 @@ class HtlcRefund(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def get_type_group(self):
+    def get_type_group(self) -> int:
         return TRANSACTION_TYPE_GROUP.CORE.value

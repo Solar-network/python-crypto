@@ -13,7 +13,7 @@ def sign_schnorr(msg: bytes, private_key: PrivateKey, nonce: int = None) -> str:
     Args:
         msg (bytes): a message you wish to sign
         private_key (PrivateKey): private key object
-        nonce (int): deterministic nonce
+        nonce (int): non-deterministic synthetic nonce
 
     Returns:
         str: returnes a hex string of a signature
@@ -28,7 +28,6 @@ def sign_schnorr_legacy(msg: bytes, private_key: PrivateKey) -> str:
     Args:
         msg (bytes): a message you wish to sign
         private_key (PrivateKey): private key object
-        nonce (int): deterministic nonce
 
     Returns:
         str: returnes a hex string of a signature
@@ -43,7 +42,7 @@ def verify_schnorr(msg: bytes, public_key: str, signature: str) -> bool:
     """Verifies a message using Schnorr BIP340
 
     Args:
-        msg (bytes): a message you wish to sign
+        msg (bytes): a message you wish to verify
         public_key (str)
         signature (str)
 
@@ -57,7 +56,7 @@ def verify_schnorr_legacy(msg: bytes, public_key: str, signature: str) -> bool:
     """Verifies a message using Legacy Schnorr
 
     Args:
-        msg (bytes): a message you wish to sign
+        msg (bytes): a message you wish to verify
         public_key (str)
         signature (str)
 

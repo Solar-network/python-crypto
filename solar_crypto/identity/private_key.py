@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from binascii import hexlify
 from hashlib import sha256
 
@@ -5,26 +7,26 @@ from coincurve import PrivateKey as PvtKey
 
 
 class PrivateKey(object):
-    def __init__(self, private_key):
-        self.private_key = PvtKey.from_hex(private_key)
+    def __init__(self, private_key: str):
+        self.private_key: PvtKey = PvtKey.from_hex(private_key)
         self.public_key = hexlify(self.private_key.public_key.format()).decode()
 
-    def sign(self, message, nonce=None):
+    def sign(self, message: bytes, nonce: int) -> str:
         """Sign a message with this private key object
 
         Args:
             message (bytes): bytes data you want to sign
-            nonce (int): deterministic nonce
+            nonce (int): non-deterministic synthetic nonce
 
         Returns:
             str: signature of the signed message
         """
         from solar_crypto.utils.crypto import sign_schnorr  # circular imports
 
-        signature = sign_schnorr(message, self.private_key, nonce)
+        signature = sign_schnorr(message, self, nonce)
         return signature
 
-    def to_hex(self):
+    def to_hex(self) -> str:
         """Returns a private key in hex format
 
         Returns:
@@ -33,7 +35,7 @@ class PrivateKey(object):
         return self.private_key.to_hex()
 
     @classmethod
-    def from_passphrase(cls, passphrase):
+    def from_passphrase(cls, passphrase: str) -> PrivateKey:
         """Create PrivateKey object from a given passphrase
 
         Args:
@@ -46,7 +48,7 @@ class PrivateKey(object):
         return cls(private_key)
 
     @classmethod
-    def from_hex(cls, private_key):
+    def from_hex(cls, private_key) -> PrivateKey:
         """Create PrivateKey object from a given hex private key
 
         Args:
