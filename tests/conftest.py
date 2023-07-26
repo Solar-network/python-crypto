@@ -175,20 +175,41 @@ def transaction_type_6_256():
 
 
 @pytest.fixture
-def transaction_type_7():
+def transaction_type_7_0():
     """Transaction of type "delegate resignation" """
     data = {
-        "version": 2,
-        "network": 23,
-        "typeGroup": 1,
-        "type": 7,
-        "nonce": 1,
-        "senderPublicKey": "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192",
-        "fee": 2500000000,
         "amount": 0,
-        "signature": "bdc048ca7eb5688cc01921aecf5914118cfc78eacc23825efa6d75094a683127cc02512dc59e1e0631fa8956f482eabc54933d23011a8337ea9cab99abed504d",
-        "id": "707b4deb339e717dfef44c40db0692015ce9bbab015c007b016b8a46b341e859",
-        "serialized": "ff02170100000007000100000000000000034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed19200f902950000000000bdc048ca7eb5688cc01921aecf5914118cfc78eacc23825efa6d75094a683127cc02512dc59e1e0631fa8956f482eabc54933d23011a8337ea9cab99abed504d",
+        "asset": {"resignationType": 0},
+        "fee": 0,
+        "id": "88b7fe286248a05a298a82a7b4a3ca8f07673c4b146b65e045215e4261e635c8",
+        "network": 30,
+        "senderPublicKey": "02f7458e6c4e278edb19e7e754f72523243e7b90fc5016b81585c4a5845574b0e8",
+        "signature": "0eb9caf2f20189cd7e1737be9e58a19b26c6b243b6323e3e12bb6f46a284d9066ca536f188d56c288b18058a10839581ad35e162757794d76c8d57f4d7dcc83f",
+        "nonce": 1,
+        "type": 7,
+        "typeGroup": 1,
+        "version": 3,
+        "serialized": "ff031e010000000700010000000000000002f7458e6c4e278edb19e7e754f72523243e7b90fc5016b81585c4a5845574b0e80000000000000000000eb9caf2f20189cd7e1737be9e58a19b26c6b243b6323e3e12bb6f46a284d9066ca536f188d56c288b18058a10839581ad35e162757794d76c8d57f4d7dcc83f",
+    }
+    return data
+
+
+@pytest.fixture
+def transaction_type_7_1():
+    """Transaction of type "delegate resignation" """
+    data = {
+        "amount": 0,
+        "asset": {"resignationType": 1},
+        "fee": 0,
+        "id": "081fc2c7eb0c50436154c9d1bee021073ceecc3fb85f7a85d19d9cf0a1adc84d",
+        "network": 30,
+        "senderPublicKey": "02f7458e6c4e278edb19e7e754f72523243e7b90fc5016b81585c4a5845574b0e8",
+        "signature": "e9e74f368916b9e8241c518ba18224de8758c4335fa0acd203a8db731c63c217101b3bdad653359d8a16157a282d647e99123c2a8f1e8c3fdb977a1c5b329d8c",
+        "nonce": 1,
+        "type": 7,
+        "typeGroup": 1,
+        "version": 3,
+        "serialized": "ff031e010000000700010000000000000002f7458e6c4e278edb19e7e754f72523243e7b90fc5016b81585c4a5845574b0e8000000000000000000fee9e74f368916b9e8241c518ba18224de8758c4335fa0acd203a8db731c63c217101b3bdad653359d8a16157a282d647e99123c2a8f1e8c3fdb977a1c5b329d8c",
     }
     return data
 
