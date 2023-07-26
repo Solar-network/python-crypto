@@ -7,7 +7,7 @@ class DelegateRegistration(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_DELEGATE_REGISTRATION
 
-    def __init__(self, username, fee=None):
+    def __init__(self, username: str, fee: int = None):
         """Create a delegate registration transaction
 
         Args:
@@ -21,7 +21,12 @@ class DelegateRegistration(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def sign(self, passphrase):
+    def sign(self, passphrase: str):
+        """Sign transaction
+
+        Args:
+            passphrase (str)
+        """
         public_key = PublicKey.from_passphrase(passphrase)
         self.transaction.asset["delegate"]["publicKey"] = public_key
         super().sign(passphrase)

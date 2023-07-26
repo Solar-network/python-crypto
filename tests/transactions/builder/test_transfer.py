@@ -1,7 +1,7 @@
 import pytest
 
 from solar_crypto.configuration.network import set_network
-from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_TRANSFER
+from solar_crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
 from solar_crypto.networks.testnet import Testnet
 from solar_crypto.transactions.builder.transfer import Transfer
 

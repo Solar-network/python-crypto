@@ -1,6 +1,7 @@
 import inspect
 from binascii import hexlify, unhexlify
 from importlib import import_module
+from typing import Union
 
 from binary.hex.writer import write_high
 from binary.unsigned_integer.writer import write_bit8, write_bit16, write_bit32, write_bit64
@@ -26,7 +27,7 @@ class Serializer(object):
 
     def serialize(
         self, skip_signature=True, skip_second_signature=True, skip_multi_signature=True, raw=False
-    ):
+    ) -> Union[bytes, str]:
         """Perform AIP11 compliant serialization
 
         Returns:
@@ -56,9 +57,10 @@ class Serializer(object):
             bytes_data, skip_signature, skip_second_signature, skip_multi_signature
         )
 
+        # TODO: change this so that we always return bytes instead of either bytes or str
         return bytes_data if raw else hexlify(bytes_data).decode()
 
-    def _handle_transaction_type(self, bytes_data):
+    def _handle_transaction_type(self, bytes_data) -> bytes:
         """Serialize transaction specific data (eg. delegate registration)
 
         Args:

@@ -1,4 +1,10 @@
-from solar_crypto.constants import TRANSACTION_HTLC_LOCK, TRANSACTION_TYPE_GROUP
+from typing import Optional
+
+from solar_crypto.constants import (
+    HTLC_LOCK_EXPIRATION_TYPE,
+    TRANSACTION_HTLC_LOCK,
+    TRANSACTION_TYPE_GROUP,
+)
 from solar_crypto.identity import address
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -9,15 +15,15 @@ class HtlcLock(BaseTransactionBuilder):
 
     def __init__(
         self,
-        recipient_id,
-        amount,
-        secret_hash,
-        expiration_type,
-        expiration_value,
-        memo=None,
-        fee=None,
+        recipient_id: str,
+        amount: int,
+        secret_hash: str,
+        expiration_type: HTLC_LOCK_EXPIRATION_TYPE,
+        expiration_value: int,
+        memo: Optional[str] = None,
+        fee: Optional[int] = None,
     ):
-        """Create a timelock transaction
+        """Create a HTLC lock transaction
 
         Args:
             recipient_id (str): recipient identifier
@@ -52,5 +58,5 @@ class HtlcLock(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def get_type_group(self):
+    def get_type_group(self) -> int:
         return TRANSACTION_TYPE_GROUP.CORE.value

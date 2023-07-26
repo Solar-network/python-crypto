@@ -1,4 +1,5 @@
 import hashlib
+from typing import Optional
 
 from base58 import b58encode_check
 from binary.unsigned_integer.writer import write_bit8
@@ -6,15 +7,15 @@ from binary.unsigned_integer.writer import write_bit8
 from solar_crypto.configuration.network import get_network
 
 
-def wif_from_passphrase(passphrase, network_wif=None):
+def wif_from_passphrase(passphrase: str, network_wif: Optional[int] = None) -> str:
     """Get wif from passphrase
 
     Args:
-        passphrase (bytes):
-        network_wif (int, optional):
+        passphrase (str)
+        network_wif (int, optional)
 
     Returns:
-        string: wif
+        str: wif string
     """
     if not network_wif:
         network = get_network()

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from solar_crypto.constants import TRANSACTION_HTLC_CLAIM, TRANSACTION_TYPE_GROUP, HashingType
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -11,9 +13,9 @@ class HtlcClaim(BaseTransactionBuilder):
         lock_transaction_id: str,
         unlock_secret: str,
         hash_type: HashingType = HashingType.SHA256,
-        fee: int = None,
+        fee: Optional[int] = None,
     ):
-        """Create a timelock transaction
+        """Create a HTLC claim transaction
 
         Args:
             lock_transaction_id (str): HTLC lock transaction ID we wish to claim
@@ -34,5 +36,5 @@ class HtlcClaim(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def get_type_group(self):
+    def get_type_group(self) -> int:
         return TRANSACTION_TYPE_GROUP.CORE.value
