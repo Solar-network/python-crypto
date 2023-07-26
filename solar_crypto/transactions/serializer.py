@@ -46,7 +46,7 @@ class Serializer(object):
         bytes_data += write_bit64(self.transaction.get("fee"))
 
         if self.transaction.get("memo"):
-            memo_length = len(self.transaction.get("memo"))
+            memo_length = len(self.transaction.get("memo").encode())
             bytes_data += write_bit8(memo_length)
             bytes_data += self.transaction["memo"].encode()
         else:
