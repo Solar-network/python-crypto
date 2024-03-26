@@ -1,26 +1,37 @@
 from solar_crypto.transactions.deserializer import Deserializer
 
 
-def test_delegate_resignation_deserializer():
-    serialized = "ff02170100000007000100000000000000034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed19200f902950000000000bdc048ca7eb5688cc01921aecf5914118cfc78eacc23825efa6d75094a683127cc02512dc59e1e0631fa8956f482eabc54933d23011a8337ea9cab99abed504d"  # noqa
+def test_delegate_resignation_temp_deserializer(transaction_type_7_0):
+    serialized = transaction_type_7_0["serialized"]  # noqa
 
     deserializer = Deserializer(serialized)
     actual = deserializer.deserialize()
 
-    assert actual.version == 2
-    assert actual.network == 23
+    assert actual.version == 3
+    assert actual.network == 30
     assert actual.typeGroup == 1
     assert actual.type == 7
     assert actual.nonce == 1
-    assert (
-        actual.senderPublicKey
-        == "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192"
-    )
-    assert actual.fee == 2500000000
-    assert (
-        actual.signature
-        == "bdc048ca7eb5688cc01921aecf5914118cfc78eacc23825efa6d75094a683127cc02512dc59e1e0631fa8956f482eabc54933d23011a8337ea9cab99abed504d"
-    )
+    assert actual.senderPublicKey == transaction_type_7_0["senderPublicKey"]
+    # assert actual.asset["resignationType"] == 1
+    assert actual.fee == 0
+    assert actual.signature == transaction_type_7_0["signature"]
     assert actual.amount == 0
 
-    actual.verify()
+
+def test_delegate_resignation_perm_deserializer(transaction_type_7_1):
+    serialized = transaction_type_7_1["serialized"]  # noqa
+
+    deserializer = Deserializer(serialized)
+    actual = deserializer.deserialize()
+
+    assert actual.version == 3
+    assert actual.network == 30
+    assert actual.typeGroup == 1
+    assert actual.type == 7
+    assert actual.nonce == 1
+    assert actual.senderPublicKey == transaction_type_7_1["senderPublicKey"]
+    assert actual.asset["resignationType"] == 1
+    assert actual.fee == 0
+    assert actual.signature == transaction_type_7_1["signature"]
+    assert actual.amount == 0

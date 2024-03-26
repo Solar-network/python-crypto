@@ -1,4 +1,6 @@
-from solar_crypto.constants import TRANSACTION_TYPE_GROUP, TRANSACTION_TRANSFER
+from typing import Optional
+
+from solar_crypto.constants import TRANSACTION_TRANSFER, TRANSACTION_TYPE_GROUP
 from solar_crypto.identity import address
 from solar_crypto.transactions.builder.base import BaseTransactionBuilder
 
@@ -7,7 +9,7 @@ class Transfer(BaseTransactionBuilder):
 
     transaction_type = TRANSACTION_TRANSFER
 
-    def __init__(self, memo=None, fee=None):
+    def __init__(self, memo: Optional[str] = None, fee: Optional[int] = None):
         """Create a transfer transaction
 
         Args:
@@ -25,10 +27,10 @@ class Transfer(BaseTransactionBuilder):
         if fee:
             self.transaction.fee = fee
 
-    def get_type_group(self):
+    def get_type_group(self) -> int:
         return TRANSACTION_TYPE_GROUP.CORE.value
 
-    def add_transfer(self, amount, recipient_id):
+    def add_transfer(self, amount: int, recipient_id: str):
         if not address.validate_address(recipient_id):
             raise ValueError("Invalid recipient address")
 

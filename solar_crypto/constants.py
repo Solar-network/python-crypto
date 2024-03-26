@@ -82,3 +82,9 @@ class HashingType(Enum):
     Keccak256 = 6
     Keccak384 = 7
     Keccak512 = 8
+
+
+class ResignationType(Enum):
+    Temporary = 0
+    Permanent = 1
+    NotResigned = 2

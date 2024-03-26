@@ -49,11 +49,11 @@ class Transaction(object):
                 attribute_value = kwargs[attribute]
             setattr(self, attribute, attribute_value)
 
-    def get_id(self):
+    def get_id(self) -> str:
         """Convert the byte representation to a unique identifier
 
         Returns:
-            str:
+            str
         """
         return sha256(
             self.to_bytes(
@@ -61,7 +61,7 @@ class Transaction(object):
             )
         ).hexdigest()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Convert the transaction into a dictionary representation
 
         Returns:
@@ -76,11 +76,16 @@ class Transaction(object):
             data[key] = attribute.decode() if isinstance(attribute, bytes) else attribute
         return data
 
-    def to_json(self):
+    def to_json(self) -> str:
         data = self.to_dict()
         return json.dumps(data)
 
-    def to_bytes(self, skip_signature=True, skip_second_signature=True, skip_multi_signature=True):
+    def to_bytes(
+        self,
+        skip_signature: bool = True,
+        skip_second_signature: bool = True,
+        skip_multi_signature: bool = True,
+    ) -> bytes:
         """Convert the transaction to its byte representation
 
         Args:
@@ -98,7 +103,7 @@ class Transaction(object):
             raw=True,
         )
 
-    def parse_signatures(self, serialized, start_offset):
+    def parse_signatures(self, serialized: str, start_offset: int):
         """Parse the signature, second signature and multi signatures
 
         Args:
@@ -139,7 +144,12 @@ class Transaction(object):
 
         return
 
-    def serialize(self, skip_signature=True, skip_second_signature=True, skip_multi_signature=True):
+    def serialize(
+        self,
+        skip_signature: bool = True,
+        skip_second_signature: bool = True,
+        skip_multi_signature: bool = True,
+    ) -> str:
         """Perform AIP11 compliant serialization.
 
         Args:
@@ -155,7 +165,7 @@ class Transaction(object):
             skip_signature, skip_second_signature, skip_multi_signature
         )
 
-    def deserialize(self, serialized):
+    def deserialize(self, serialized: str) -> "Transaction":
         """Perform AIP11 compliant deserialization.
 
         Args:
@@ -166,7 +176,15 @@ class Transaction(object):
         """
         return Deserializer(serialized).deserialize()
 
-    def verify(self):
+    def verify(self) -> bool:
+        """Verify transaction
+
+        Raises:
+            SolarInvalidTransaction: raised in case transaction can not be verified
+
+        Returns:
+            True: when transaction is verified
+        """
         msg = self.to_bytes()
 
         if self.version > 2:
@@ -181,7 +199,18 @@ class Transaction(object):
 
         return True
 
-    def verify_secondsig(self, secondPublicKey):
+    def verify_secondsig(self, secondPublicKey: str) -> bool:
+        """Verify transaction's second signature
+
+        Args:
+            secondPublicKey (str)
+
+        Raises:
+            SolarInvalidTransaction: raised in case transaction can not be verified
+
+        Returns:
+            True: when second signature is verified
+        """
         msg = self.to_bytes(False, True)
 
         if self.version > 2:
@@ -196,7 +225,18 @@ class Transaction(object):
 
         return True
 
-    def verify_signatures(self, multi_signature_asset):
+    def verify_signatures(self, multi_signature_asset: dict) -> bool:
+        """Verify multi-signatures
+
+        Args:
+            multi_signature_asset (dict): dictionary object containing multiple signatures
+
+        Raises:
+            SolarInvalidTransaction: raised in case transaction can not be verified
+
+        Returns:
+            True: when second signature is verified
+        """
         if not multi_signature_asset:
             raise SolarInvalidTransaction("Transaction could not be verified")
 
@@ -239,7 +279,7 @@ class Transaction(object):
 
         return verified
 
-    def _handle_transaction_type(self, bytes_data):
+    def _handle_transaction_type(self, bytes_data: bytes):
         """Handled each transaction type differently
 
         Args:
@@ -263,8 +303,12 @@ class Transaction(object):
         return bytes_data
 
     def _handle_signature(
-        self, bytes_data, skip_signature, skip_second_signature, skip_multi_signature
-    ):
+        self,
+        bytes_data: bytes,
+        skip_signature: bool,
+        skip_second_signature: bool,
+        skip_multi_signature: bool,
+    ) -> bytes:
         """Internal method, used to handle the signature
 
         Args:
